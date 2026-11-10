@@ -1,0 +1,42 @@
+{"at": "2026-11-10T11:10:18.257953+00:00", "event": "settings", "version": "v0", "min_interval": 15.0, "max_attempts": 3}
+{"at": "2026-11-10T11:10:18.272083+00:00", "event": "request", "version": "v0", "number": 1, "attempt": 1, "model": "qwen/qwen3.8-27b"}
+{"at": "2026-11-10T11:10:19.889570+00:00", "event": "error", "version": "v0", "number": 1, "attempt": 1, "code": 400, "error": "BadRequestError"}
+{"at": "2026-11-10T11:10:33.272420+00:00", "event": "request", "version": "v0", "number": 2, "attempt": 1, "model": "qwen/qwen3.8-27b"}
+{"at": "2026-11-10T11:10:33.787979+00:00", "event": "response", "version": "v0", "number": 2, "attempt": 1, "seconds": 0.516}
+{"at": "2026-11-10T11:10:48.273037+00:00", "event": "request", "version": "v0", "number": 3, "attempt": 1, "model": "qwen/qwen3.8-27b"}
+{"at": "2026-11-10T11:10:49.164415+00:00", "event": "response", "version": "v0", "number": 3, "attempt": 1, "seconds": 0.891}
+{"at": "2026-11-10T11:11:03.273580+00:00", "event": "request", "version": "v0", "number": 4, "attempt": 1, "model": "qwen/qwen3.8-27b"}
+{"at": "2026-11-10T11:11:03.921609+00:00", "event": "response", "version": "v0", "number": 4, "attempt": 1, "seconds": 0.648}
+{"at": "2026-11-10T11:11:18.273876+00:00", "event": "request", "version": "v0", "number": 5, "attempt": 1, "model": "qwen/qwen3.8-27b"}
+{"at": "2026-11-10T11:11:18.912075+00:00", "event": "response", "version": "v0", "number": 5, "attempt": 1, "seconds": 0.638}
+{"at": "2026-11-10T11:11:33.274406+00:00", "event": "request", "version": "v0", "number": 6, "attempt": 1, "model": "qwen/qwen3.8-27b"}
+{"at": "2026-11-10T11:11:33.984165+00:00", "event": "response", "version": "v0", "number": 6, "attempt": 1, "seconds": 0.71}
+{"at": "2026-11-10T11:11:48.274982+00:00", "event": "request", "version": "v0", "number": 7, "attempt": 1, "model": "qwen/qwen3.8-27b"}
+{"at": "2026-11-10T11:11:48.822395+00:00", "event": "error", "version": "v0", "number": 7, "attempt": 1, "code": 400, "error": "BadRequestError"}
+{"at": "2026-11-10T11:12:03.275737+00:00", "event": "request", "version": "v0", "number": 8, "attempt": 1, "model": "qwen/qwen3.8-27b"}
+{"at": "2026-11-10T11:12:04.408314+00:00", "event": "response", "version": "v0", "number": 8, "attempt": 1, "seconds": 1.133}
+{"at": "2026-11-10T11:12:18.276208+00:00", "event": "request", "version": "v0", "number": 9, "attempt": 1, "model": "qwen/qwen3.8-27b"}
+{"at": "2026-11-10T11:12:19.000977+00:00", "event": "response", "version": "v0", "number": 9, "attempt": 1, "seconds": 0.725}
+{"at": "2026-11-10T11:12:33.276731+00:00", "event": "request", "version": "v0", "number": 10, "attempt": 1, "model": "qwen/qwen3.8-27b"}
+{"at": "2026-11-10T11:12:33.910511+00:00", "event": "response", "version": "v0", "number": 10, "attempt": 1, "seconds": 0.634}
+{"at": "2026-11-10T11:12:48.277290+00:00", "event": "request", "version": "v0", "number": 11, "attempt": 1, "model": "qwen/qwen3.8-27b"}
+{"at": "2026-11-10T11:12:48.888605+00:00", "event": "response", "version": "v0", "number": 11, "attempt": 1, "seconds": 0.611}
+{"at": "2026-11-10T11:13:03.277745+00:00", "event": "request", "version": "v0", "number": 12, "attempt": 1, "model": "qwen/qwen3.8-27b"}
+{"at": "2026-11-10T11:13:04.143925+00:00", "event": "response", "version": "v0", "number": 12, "attempt": 1, "seconds": 0.866}
+{"at": "2026-11-10T11:13:18.278415+00:00", "event": "request", "version": "v0", "number": 13, "attempt": 1, "model": "qwen/qwen3.8-27b"}
+{"at": "2026-11-10T11:13:18.878271+00:00", "event": "error", "version": "v0", "number": 13, "attempt": 1, "code": 400, "error": "BadRequestError"}
+{"at": "2026-11-10T11:13:33.279182+00:00", "event": "request", "version": "v0", "number": 14, "attempt": 1, "model": "qwen/qwen3.8-27b"}
+{"at": "2026-11-10T11:13:34.364283+00:00", "event": "response", "version": "v0", "number": 14, "attempt": 1, "seconds": 1.085}
+{"at": "2026-11-10T11:13:48.279868+00:00", "event": "request", "version": "v0", "number": 15, "attempt": 1, "model": "qwen/qwen3.8-27b"}
+{"at": "2026-11-10T11:13:49.770456+00:00", "event": "response", "version": "v0", "number": 15, "attempt": 1, "seconds": 1.491}
+{"at": "2026-11-10T11:14:03.280258+00:00", "event": "request", "version": "v0", "number": 16, "attempt": 1, "model": "qwen/qwen3.8-27b"}
+{"at": "2026-11-10T11:14:03.846463+00:00", "event": "response", "version": "v0", "number": 16, "attempt": 1, "seconds": 0.566}
+{"at": "2026-11-10T11:14:18.280853+00:00", "event": "request", "version": "v0", "number": 17, "attempt": 1, "model": "qwen/qwen3.8-27b"}
+{"at": "2026-11-10T11:14:18.803009+00:00", "event": "response", "version": "v0", "number": 17, "attempt": 1, "seconds": 0.522}
+{"at": "2026-11-10T11:14:33.281234+00:00", "event": "request", "version": "v0", "number": 18, "attempt": 1, "model": "qwen/qwen3.8-27b"}
+{"at": "2026-11-10T11:14:33.771956+00:00", "event": "response", "version": "v0", "number": 18, "attempt": 1, "seconds": 0.491}
+{"at": "2026-11-10T11:14:48.281808+00:00", "event": "request", "version": "v0", "number": 19, "attempt": 1, "model": "qwen/qwen3.8-27b"}
+{"at": "2026-11-10T11:14:48.819479+00:00", "event": "error", "version": "v0", "number": 19, "attempt": 1, "code": 400, "error": "BadRequestError"}
+{"at": "2026-11-10T11:15:03.282509+00:00", "event": "request", "version": "v0", "number": 20, "attempt": 1, "model": "qwen/qwen3.8-27b"}
+{"at": "2026-11-10T11:15:03.826292+00:00", "event": "response", "version": "v0", "number": 20, "attempt": 1, "seconds": 0.544}
+{"at": "2026-11-10T11:15:04.816799+00:00", "event": "finished", "version": "v0"}

@@ -1,0 +1,5 @@
+"version","provider","model","total_cases","measured_cases","provider_error_cases","passed_cases","case_accuracy","tool_routing_accuracy","argument_accuracy","multiturn_accuracy","run_file"
+"v0","groq","openai/gpt-oss-120b","20","20","0","13","0.65","0.8","0.65","0.8333","runs/v0_B_base_groq_20261110T182244730565.json"
+"v1","groq","openai/gpt-oss-120b","20","20","0","16","0.8","0.9","0.8","0.8333","runs/v1_B_base_groq_20261110T182835864967.json"
+"v2","groq","openai/gpt-oss-120b","20","20","0","17","0.85","0.95","0.85","1.0","runs/v2_B_base_groq_20261110T183811591909.json"
+"v3","groq","openai/gpt-oss-120b","20","20","0","17","0.85","0.95","0.85","1.0","runs/v3_B_base_groq_20261110T184556678670.json"
