@@ -150,6 +150,8 @@ Lỗi đặc thù của model nhỏ (đếm từ run JSON):
 
 Chi tiết đóng góp của từng thành viên nằm trong [TEAM.md](../../TEAM.md) và các báo cáo cá nhân `report/team/MSSV_HoTen.md`.
 
+- **Nguyễn Đức Hiếu — 2A202603772:** Setup và tích hợp Groq; thực hiện baseline, tối ưu prompt/tool declaration v1–v3 (CP1–CP2), lưu bằng chứng và review CP3–CP4. Accuracy base **65% → 80% → 85% → 85%**; kiểm thử khi bàn giao **62 passed, 17 skipped, 0 failed**. Bằng chứng: [báo cáo cá nhân](2A202603772_NguyenDucHieu.md), [commit CP1–CP2](https://github.com/Hie24/K5-L3B-DAY03-HH-ResearchAgentToolEval/commit/5b7dd24b292f2afa7ecc417bb46f846215b0d536).
+
 ## 7. Hạn chế và hướng cải thiện — B6. Reflection
 
 - Fix nào thuộc `system_prompt.md`?
