@@ -12,7 +12,7 @@
 | STT | Họ tên | MSSV | Email | GitHub | Vai trò |
 | --: | ------ | ---- | ----- | ------ | ------- |
 |   1 | Nguyễn Đức Hiếu | 2A202603772 | 26ai.hieund6@vinuni.edu.vn | [Hie24](https://github.com/Hie24) | CP1 & CP2 (Setup, Groq Provider, Baseline v0 & Tối ưu v1–v3) |
-|   2 | Nguyễn Mạnh Quân | 2A202603776 | 26ai.quannm9@vinuni.edu.vn | — | CP3 & CP4 (Tool mới `calculator`, Unit tests, 10 case eval nhóm) |
+|   2 | Nguyễn Mạnh Quân | 2A202603776 | 26ai.quannm9@vinuni.edu.vn | osgi23 | CP3 & CP4 (Tool mới `calculator`, Unit tests, 10 case eval nhóm) |
 |   3 | Lê Danh Giang | 2A202603912 | 26ai.giangld@vinuni.edu.vn | `giangj` | CP5 (Streamlit Demo UI, Live Chat Transcript, Tổng hợp Báo cáo) |
 
 ## Cá nhân
