@@ -8,7 +8,7 @@
 
 ## 1. Thông tin nhóm
 
-- Tên nhóm: `K5-L3B-DAY03-HH`
+- Tên nhóm: `HH`
 - Thành viên và phân công: xem [TEAM.md](../../TEAM.md)
   - Nguyễn Đức Hiếu (`2A202603772`) — CP1 & CP2 (Setup, Provider Groq, Baseline v0 & Tối ưu v1–v3)
   - Nguyễn Mạnh Quân (`2A202603776`) — CP3 & CP4 (Tool mới `calculator`, Unit tests, 10 case `eval_group.json`)
