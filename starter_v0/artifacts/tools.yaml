@@ -127,7 +127,7 @@ tools:
 
   # ---------------- Custom team tools (CP3) ----------------
   - name: calculator
-    description: "Thực hiện tính toán biểu thức số học an toàn (cộng, trừ, nhân, chia, phần trăm, lũy thừa). DÙNG KHI: người dùng yêu cầu tính toán con số hoặc biểu thức số học cụ thể (ví dụ: '150 * 1.25', '1000 / 4')."
+    description: "Tính biểu thức số học bằng AST: +, -, *, /, //, % (chia lấy dư), ** và ngoặc. Dùng khi đã có số liệu cụ thể cần tính; không dùng để tìm dữ liệu còn thiếu hoặc tính tài chính cần độ chính xác thập phân tuyệt đối. Viết phần trăm thành tỷ lệ, ví dụ tăng 15%: 120 * 1.15, không dùng cú pháp 15%."
     parameters:
       type: object
       properties:

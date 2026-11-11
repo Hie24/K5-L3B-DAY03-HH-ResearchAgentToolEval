@@ -90,7 +90,16 @@ def run_model_tool_loop(
     all_tool_events: list[dict[str, Any]] = []
 
     for round_index in range(1, max_tool_rounds + 1):
-        response = provider.complete(working_messages, tools, model=model, temperature=0.0)
+        try:
+            response = provider.complete(working_messages, tools, model=model, temperature=0.0)
+        except Exception as exc:
+            return {
+                "status": "provider_error",
+                "error": type(exc).__name__,
+                "assistant_text": f"Provider gặp lỗi {type(exc).__name__}. Kiểm tra kết quả tool đã lưu trước khi thử lại.",
+                "rounds": rounds,
+                "tool_events": all_tool_events,
+            }
         calls = response.tool_calls
         round_record: dict[str, Any] = {
             "round": round_index,

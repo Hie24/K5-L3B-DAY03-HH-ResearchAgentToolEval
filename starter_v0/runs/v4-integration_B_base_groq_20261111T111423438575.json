@@ -1,0 +1,1788 @@
+{
+  "run_id": "v4-integration_B_base_groq_20261111T111423438575",
+  "version": "v4-integration",
+  "artifact_version": "v4-integration+p7ae25695d3f2+t19acd1e40905",
+  "prompt_hash": "7ae25695d3f29966f7dd15baf8efb66cec8846b456ca088b1f8a7868ea7ac2fd",
+  "tools_hash": "19acd1e409051b2bad1e820bb9d5fe4db1eefe323c455ec6acd19f8a01031fd6",
+  "phase": "B",
+  "suite": "base",
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b",
+  "system_prompt": "C:\\Users\\nguye\\Downloads\\LAB_03\\K5-L3B-DAY03-HH-ResearchAgentToolEval\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "C:\\Users\\nguye\\Downloads\\LAB_03\\K5-L3B-DAY03-HH-ResearchAgentToolEval\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_base.json",
+  "dataset_id": "day03_v2_research_base",
+  "dataset_role": "base",
+  "description": "Core eval cho research agent: routing đúng tool + đúng args, hỏi lại khi thiếu (ask_user), xác nhận trước khi gửi, và xử lý câu ngoài phạm vi / không cần tool. Chấm trên tool_calls + args (subset). KHÔNG sửa file này — chỉ thêm case vào eval_group.json.",
+  "generated_at": "2026-11-11T11:14:23",
+  "summary": {
+    "total_cases": 20,
+    "measured_cases": 20,
+    "provider_error_cases": 0,
+    "passed_cases": 17,
+    "case_accuracy": 0.85,
+    "tool_routing_accuracy": 0.95,
+    "argument_accuracy": 0.85,
+    "multiturn_accuracy": 1.0,
+    "failure_counts": {
+      "wrong_tool": 2,
+      "wrong_boundary": 1
+    },
+    "observed_mismatch_counts": {
+      "wrong_arg_value": 2,
+      "missing_tool_call": 1
+    }
+  },
+  "results": [
+    {
+      "id": "R01_user_tweets_routing",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_user_tweets_name_to_handle",
+        "difficulty": "medium",
+        "what_it_tests": "Tin CỦA một người nổi tiếng → map tên Sam Altman thành handle sama rồi gọi get_user_tweets."
+      },
+      "input": "Tweet mới nhất của Sam Altman là gì?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "sama"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "limit": 1,
+              "screenname": "sama"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "limit": 1,
+            "screenname": "sama"
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "screenname": "sama",
+            "items": [
+              {
+                "title": "RT @fouadmatin: Today’s GPT-6 Cyber release is a meaningful step for defenders: stronger vulnerability research and bett",
+                "summary": "RT @fouadmatin: Today’s GPT-6 Cyber release is a meaningful step for defenders: stronger vulnerability research and better alignment. We’ve…",
+                "url": "https://x.com/sama/status/2118471941002842341",
+                "source": "@sama",
+                "date": "Thu Nov 05 22:34:04 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 53,
+                  "views": "47787"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R02_search_tweets_routing",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_search_tweets",
+        "difficulty": "easy",
+        "what_it_tests": "Tweet theo CHỦ ĐỀ → search_tweets, không phải get_user_tweets."
+      },
+      "input": "Mọi người đang bàn gì về GPT-5 trên Twitter?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {}
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "limit": 5,
+              "query": "GPT-5",
+              "search_type": "Latest"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "limit": 5,
+            "query": "GPT-5",
+            "search_type": "Latest"
+          },
+          "result": {
+            "tool": "search_tweets",
+            "query": "GPT-5",
+            "search_type": "Latest",
+            "items": [
+              {
+                "title": "https://t.co/yFFyL39CkP",
+                "summary": "https://t.co/yFFyL39CkP",
+                "url": "https://x.com/aiwarts/status/2120367276033822864",
+                "source": "@aiwarts",
+                "date": "Wed Nov 11 04:05:27 +0000 2026",
+                "metrics": {
+                  "favorites": 1,
+                  "retweets": 0,
+                  "views": "95"
+                }
+              },
+              {
+                "title": "プロンプトと記憶まとめたのでこれからMuseに渡すけど…再現性がイマイチだったときにGPTモデル呼ぶ話をMuseとじぴどっちにもしたら一筋縄ではいかなそうなんだが？😌5歳児でもわかるように教えてください",
+                "summary": "プロンプトと記憶まとめたのでこれからMuseに渡すけど…再現性がイマイチだったときにGPTモデル呼ぶ話をMuseとじぴどっちにもしたら一筋縄ではいかなそうなんだが？😌5歳児でもわかるように教えてください",
+                "url": "https://x.com/_krn2511_/status/2120367160145088661",
+                "source": "@_krn2511_",
+                "date": "Wed Nov 11 04:05:00 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "3"
+                }
+              },
+              {
+                "title": "1. Open Gemini / Grok / GPT Image 2.0",
+                "summary": "1. Open Gemini / Grok / GPT Image 2.0\n2. Upload your photo\n3. Copy the prompt\n4. Generate\n5. Prompt\nCreate an ultra-realistic, high-quality portrait of a stylish young man sitting casually on a metal outdoor staircase. He is wearing black aviator sunglasses, a sky-blue graphic T-shirt with vintage music prints, dark blue distressed skinny jeans with ripped knees, clean white sneakers, and a black wristwatch. He has thick, styled black hair, a neatly trimmed beard, and a confident, relaxed expression. His legs are naturally positioned on different steps, with both hands resting casually near his knees. The background features beautiful orange autumn foliage mixed with turquoise and teal tones, creating a vibrant cinematic bokeh effect. Soft natural daylight, shallow depth of field, DSLR photography, 85mm portrait lens, sharp facial details, realistic skin texture, professional color grading, warm orange and cool cyan contrast, fashionable casual aesthetic, full-body composition, vertical 9:16 aspect ratio, photorealistic, 4K quality. Preserve the original face and identity if a reference photo is provided. N",
+                "url": "https://x.com/ShamshadMa75100/status/2120366865012896153",
+                "source": "@ShamshadMa75100",
+                "date": "Wed Nov 11 04:03:49 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "14"
+                }
+              },
+              {
+                "title": "THE 10 BEST CODING IDES IN THE AGE OF CODEX AND CLAUDE CODE",
+                "summary": "THE 10 BEST CODING IDES IN THE AGE OF CODEX AND CLAUDE CODE\n\nA coding IDE  is no longer only a place you type. OpenAI Codex and Anthropic's Claude Code run as terminal agents that read a repo, edit files, run tests and open pull requests. The editor's job is to host those agents, show diffs you can trust, and keep debugging and review close to the code.\n\nThis list ranks ten editors for that job. Official prices and docs were checked on November 11, 2026. Adoption figures are from the Stack Overflow 2026 Developer Survey, published October 6, with 30,903 valid responses. On the IDE question (n = 13,193), Visual Studio Code was used regularly by 70.9% of respondents. On the coding-agent question (n = 12,255), 65.5% had used Claude Code in the past year and 58.7% had used GitHub Copilot, ahead of OpenAI Codex at 29.5% and Cursor at 25.5%. Multiple answers were allowed, so these shares are reach, not exclusive market share, and the sample is self-selected. Of respondents who use coding assistants or agents, 73% use them daily.\n\nCodex is included in ChatGPT plans. Free and Go ($8 a month) have limited access. Plus at $20 a month is the practical starting point for the CLI, the IDE extension, the desktop app and Codex on the web. Pro starts at $100 a month, and you can also pay per token with an API key. Current models include the GPT-6 and GPT-6.1 families (Sol, Terra, Luna and Astra), plus earlier GPT-5.6 variants.\n\nClaude Code is included with Claude Pro at $20 a month, or $17 a month if you pay $200 a year up front, and with Max at $100 and Ultra at $200. It is not on the Free plan. Pro includes Opus, Sonnet and Haiku. Fable is billed with usage credits on Pro, and is included up to half the weekly limit on Max and Ultra. Claude Code 2.1.321, shipped November 9, made Claude Fable 5.2 (claude-fable-5-2) the default Fable model, with a 1M-token context. Official integrations exist for VS Code and its forks, and for JetBrains IDEs. Everywhere else, run claude in the terminal.\n\nThe Agent Client Protocol (ACP) lets an editor host Codex, Claude Agent, OpenCode and similar harnesses in a panel. Zed and JetBrains Air are the clearest ACP hosts.\n\n📊 Comparison at a glance\n\nPrices are US-dollar list prices, before tax, as of November 11, 2026. \"Paid from\" is the cheapest individual plan usable for daily agent work, not the free tier.\n\n| Rank | Editor | Paid from | Codex | Claude Code | SO IDE use |\n| --- | --- | --- | --- | --- | --- |\n| 1 | Cursor | $30 Premium (third-party models) | Official extension | Official extension | 14.9% |\n| 2 | VS Code + Copilot | $10 Copilot Pro | Official extension | Official extension | 70.9% |\n| 3 | JetBrains IDEs + AI | $10 AI Pro, plus IDE license | Air / AI Chat | Official plugin + CLI | IntelliJ 24.3% |\n| 4 | Zed | $0 with your own agents, or $10 Pro | ACP registry | ACP registry | 11.4% |\n| 5 | Google Antigravity | $0, or Google AI Pro | Not a first-party host | Not a first-party host | 0.4% |\n| 6 | Devin Desktop | $20 Pro | Official extension + ACP | Official extension + ACP | Windsurf 3.2% |\n| 7 | Kiro | $20 Pro | Models + terminal CLI | Official extension | 2.8% |\n| 8 | Neovim | $0, plus your agent plan | Terminal, community plugins | Terminal, community plugins | 14.7% |\n| 9 | Xcode | $0 on macOS | Built-in agent (26.3) | Built-in Claude Agent (26.3) | 10.0% |\n| 10 | Warp | $20 Build ($18 billed yearly) | First-class CLI host | First-class CLI host | 5.2% as an agent |\n\nAntigravity's 0.4% IDE figure and 16.0% agent figure come from different survey questions. Windsurf was renamed Devin Desktop on June 2, 2026, during the survey window of June 23 to August 5.\n\n1. Cursor\n\nCursor is a Visual Studio Code fork with its own agent, Tab completion, cloud agents, automations and a code-review bot (Bugbot). In the survey it was the sixth most used editor at 14.9%, and 25.5% of agent-question respondents had used it as a coding assistant. It is number one because it is still the most complete AI editor if you want agents, inline edits and a VS Code-shaped workspace in one app, and you can install the official Codex and Claude Code extensions beside Cursor's own agent.\n\nPrice: Free has limited agent and chat use. Plus is $8 a month ($80 a year) and includes only Cursor's own models: Grok 4.7, Grok 4.6, Grok 4.5 and Composer 2.5. Premium is $30 a month ($300 a year) and is the first plan that unlocks Claude, GPT and Gemini, billed at API list price from prepaid credit. Super is $100 a month, Ultra is $200, and Teams seats start at $30.\n\nAI features: a multi-file agent, Tab and inline edits, codebase chat, cloud agents, automations and Bugbot on Premium and above. Third-party models on Premium and above include Claude Opus 5.5, Sonnet 5.5, Fable, GPT-5.6 Sol / Terra / Luna, and Gemini 4 Argon and Carbon (Carbon has introductory API pricing in Cursor's docs through November 30).\n\nCodex and Claude Code: Anthropic documents a direct Cursor install of the same Claude Code extension used in VS Code. OpenAI documents the Codex IDE extension for Cursor, signed in with ChatGPT or an API key.\n\nBest for: VS Code users who want the deepest built-in agent editor and will pay Premium if they want Claude or GPT inside Cursor's own UI.\n\nWeakness: Plus is Grok-only, and third-party models are metered from the first request. OpenAI's help center says it plans to wind down the contract that supplies OpenAI models to Cursor, and has proposed a transition period of November 12, 2026. The official end date is not yet confirmed. Documented workarounds are a bring-your-own OpenAI API key for local Chat and Agent, the Codex IDE extension, or a compatible gateway. Bring-your-own-key does not cover Cursor Tab, Auto, Cloud Agents, automations or the Cursor CLI.\n\n2. Visual Studio Code, with Copilot and the official agent extensions\n\nVS Code is still the default editor. It is free, including for commercial use, and 70.9% of survey respondents used it regularly. GitHub Copilot is an extension, not a fork, and was used by 58.7% of agent-question respondents, second only to Claude Code. Both labs ship official integrations here first, so VS Code is the reference host, and Copilot is the lowest-cost full assistant that stays in the editor you already have.\n\nPrice: the editor is $0. Copilot Free has limited chat and agent use, with auto model selection only. Copilot Pro is $10 a month and includes $15 of GitHub AI Credits (1,000 base credits plus a $5 flex allotment that GitHub may change). Completions are unmetered on paid plans. Pro+ is $39 a month ($70 of credits). Max is $100 ($200 of credits). Business is $19 per granted seat per month (1,900 credits per user). Enterprise is $39 (3,900 credits). One GitHub AI Credit equals $0.01, which is not the same unit as a JetBrains AI Credit.\n\nAI features: inline completions, agent mode, Copilot CLI, pull-request review, and Copilot in the cloud. Pro+ and Max can delegate cloud work to third-party agents, including Claude and OpenAI Codex, marked as Preview. The model list includes Claude Fable 5.2 and Claude Opus and Sonnet 5.5; availability varies by plan. Paid individual plans have a 30% Copilot Fusion model-cost discount through November 30, 2026, per GitHub's billing docs.\n\nCodex and Claude Code: install the official Codex extension and the official Claude Code extension (anthropic.claude-code) and sign in with your ChatGPT or Claude plan. You can run all three in the same window. Running claude in the integrated terminal still needs the standalone CLI.\n\nBest for: teams on GitHub, and anyone who wants official Codex and Claude Code support without switching forks.\n\nWeakness: the deepest Claude or GPT harness is still the lab's extension or CLI, so you may run two or three panels. Credit math is easy to misread because base and flex allotments are listed separately.\n\n3. JetBrains IDEs, with AI Assistant, Junie and Air\n\nIntelliJ IDEA, PyCharm, WebStorm, GoLand, Rider and Android Studio remain the standard for language-aware refactoring and debugging. IntelliJ IDEA alone was used by 24.3% of survey respondents; other JetBrains IDEs appear throughout the top 20, and those shares cannot be added together. JetBrains AI was used by 12.8% of agent-question respondents. If your team lives in IntelliJ or PyCharm, a VS Code fork is a step down in refactoring quality, and JetBrains now hosts the same agents inside that tooling.\n\nPrice: the IDE is a paid subscription (student, startup and nonprofit discounts apply). AI is a separate add-on. Official docs list individual AI Pro at $10 a month with 10 AI credits per 30 days, and AI Ultimate at $30 with 35 credits. Each JetBrains AI Credit equals $1 of model usage, 100 times a GitHub AI Credit. The same help page also lists $20 / 20 credits and $60 / 70 credits in a second table for organization migrations, so confirm the org price on the JetBrains store. Air Business is $20 per AI seat per month on top of a free Basic plan.\n\nAI features: AI Assistant for chat and completion, Junie as JetBrains' own coding agent (it uses the IDE's inspections, refactorings and test runner), and Air as the environment that can run agents in the working tree, a Git worktree or a Docker container. Air bundles Junie, Claude Agent, Codex, Gemini CLI, Pi and GitHub Copilot.\n\nCodex and Claude Code: Anthropic's official \"Claude Code [Beta]\" plugin runs the claude CLI in the IDE terminal and connects diffs and selections. OpenAI documents JetBrains support by opening AI Chat and selecting Codex. Air can also attach both over ACP, but a Claude subscription does not authorize Claude Agent in that chat surface; for subscription billing, run Claude Code in the terminal tab. ACP agents do not need a JetBrains AI subscription if you bring your own login or key.\n\nBest for: JVM, Python, web and .NET teams that will not leave IntelliJ, PyCharm, Rider or Android Studio.\n\nWeakness: two bills (IDE plus AI), a credit system that is easy to confuse with GitHub's, and a split between Anthropic's plugin, JetBrains' Claude Agent and the terminal CLI.\n\n4. Zed\n\nZed is a GPU-accelerated, open-source editor written in Rust (GPL-3.0) for macOS, Windows and Linux. It was used regularly by 11.4% of survey respondents, and 57.3% of people who had used it wanted to keep using it. It belongs here if you already pay for Claude Code or Codex and want a fast native shell around them, without a second AI-editor subscription.\n\nPrice: Personal is $0 forever and includes the full editor plus unlimited use of your own API keys or external agents such as Claude Agent and Codex. Hosted edit predictions on the free plan are capped; confirm the live FAQ for the monthly limit. Pro is $10 a month, with unlimited edit predictions and $5 of hosted tokens, then overage at API list price plus 10%. Business is $30 per seat per month for org policies.\n\nAI features: the Agent Panel runs Zed's own agent on hosted models, your keys (OpenAI, Anthropic, Google, Bedrock, Ollama, OpenRouter and others) or local models. The ACP registry lists Claude Agent, Codex, OpenCode, Copilot, Cursor, Gemini CLI and Pi, each billed by its own vendor.\n\nCodex and Claude Code: install Claude Agent or Codex from the ACP registry and start a thread in the Agent Panel. An Anthropic key set up for Zed's built-in agent does not pay for Claude Agent. You can also run either CLI in Zed's terminal.\n\nBest for: people who want a fast open-source editor and the freedom to keep billing with Anthropic or OpenAI.\n\nWeakness: the extension library is much smaller than VS Code's, and Windows support is newer than the macOS and Linux builds.\n\n5. Google Antigravity\n\nAntigravity is Google's agent-first platform: a desktop app, an IDE, a CLI, and official extensions for VS Code, Visual Studio, JetBrains, Zed, Xcode and Eclipse. On November 10, 2026, Google rolled out Gemini 4 Carbon in the app, CLI and IDE extensions for Google AI Ultra subscribers, and previewed /swarm for multi-agent work. It is the most generous $0 way to run an agent IDE, and the native home of Gemini 4 Argon and Carbon. 16.0% of agent-question respondents had used it, though only 0.4% ticked it as a regular IDE.\n\nPrice: individuals can start at $0 with a personal Google account. The free plan includes a variety of agent models, unlimited Tab completions and Command requests, and basic weekly rate limits. Higher limits ride on a Google AI subscription. Google AI Pro is listed at $19.99 a month in the US and includes expanded Antigravity access and Gemini 4 Argon. Google AI Ultra starts at $99.99 a month in the US ($199.99 for the higher Ultra tier) and is the plan Google is using for Gemini 4 Carbon. Official docs say there is currently no bring-your-own-key option.\n\nAI features: agents work across the editor, the terminal and a Chrome profile, and they report back with artifacts such as plans, walkthroughs, screenshots and browser recordings.\n\nCodex and Claude Code: Antigravity is not an official host for those two CLIs. Ultra plans get third-party models inside Antigravity's own picker, which is not the same as running the Codex or Claude Code harness. You can still run either CLI in the terminal.\n\nBest for: people who want a capable free agent IDE, or who already pay for Google AI Pro or Ultra.\n\nWeakness: no BYOK, the newest Gemini models are gated to paid Google AI plans, and account and country limits apply.\n\n6. Devin Desktop, formerly Windsurf\n\nCognition renamed Windsurf to Devin Desktop on June 2, 2026. The editor is still a VS Code-class fork and now opens on an Agent Command Center, a board of local and cloud agent sessions. A September 8 changelog entry said Cascade was removed and Devin Local is now the built-in agent. It belongs here as the Windsurf successor, built around running several local and cloud agents, including third-party ACP agents, under one account.\n\nPrice: Free includes a light agent quota, limited models, and unlimited Tab completions and inline edits. Pro is $20 a month and adds higher quotas, frontier models from OpenAI, Claude, Gemini and SpaceXAI, plus open-source models, free use of SWE-2, Devin Cloud, and extra usage at API pricing. Max is $200 a month. Teams is $80 a month plus $40 per full dev seat, for up to 100 users. Pro, Max and Teams can use your ChatGPT plan.\n\nAI features: Devin Local, Devin Cloud, the Command Center, and ACP for third-party agents.\n\nCodex and Claude Code: OpenAI still lists Windsurf alongside VS Code and Cursor as an official Codex extension target. Anthropic says the Claude Code extension installs in Devin Desktop from Open VSX. ACP is the other path for Codex, Claude Agent and OpenCode.\n\nBest for: teams that want Devin's cloud agent and a local editor on one bill, and people who manage many agent sessions at once.\n\nWeakness: the rename still splits docs and forum answers between Windsurf and Devin Desktop. The free agent quota is light, so daily agent work means Pro. Survey usage was modest: Windsurf 3.2% as an IDE, 6.5% as an agent, and Devin 2.9% as an agent.\n\n7. Kiro\n\nKiro is Amazon Web Services' agentic IDE, also available as a CLI, on the web and on iOS. It is built around spec-driven development: a prompt becomes requirements, a design and a task list, and the agent works through the tasks after you approve them. It supports Open VSX extensions and can import VS Code settings. 2.8% of survey respondents used it regularly as an IDE, and it is the only widely shipped editor that makes a written spec the default path.\n\nPrice: Free is perpetual and includes 50 credits a month, with open-weight models and Claude Sonnet 4.5, subject to rate limits. Pro is $20 a month; official proration examples work out to 1,000 included credits. Pro+ is $40, Pro Max is $100 and Power is $200, with Power officially listed at 10,000 credits. Independent trackers also list 2,000 credits on Pro+ and 5,000 on Pro Max; confirm those figures on https://t.co/xzAe1BA4zH before you budget. Add-on credits are $0.04 each. Team credit-pool seats are $20 a month and add 500 shared credits per seat.\n\nAI features: spec mode, hooks, and a CLI and web/iOS surface that share the same harness. Default routing is Auto. Paid plans include GPT-5.6 Sol and Claude Opus 5.5. There is no bring-your-own-key path on the public pricing page.\n\nCodex and Claude Code: the official Claude Code extension can be installed from Open VSX. Codex is available as a model family inside Kiro, which is not the same as the Codex CLI harness. You can run either CLI in the terminal.\n\nBest for: AWS-centric teams, and anyone who wants a design approved before the agent writes code.\n\nWeakness: the free credit grant is small, and premium models burn credits faster. Content from free and individual users may be used to improve the service unless you opt out, a weaker default than Cursor with Privacy Mode on.\n\n8. Neovim\n\nNeovim is a free, open-source, modal editor (Apache 2.0) with built-in LSP support. 14.7% of survey respondents used it regularly, almost identical to Cursor's 14.9%. Among people who had already used it, 69.9% wanted to keep using it, one of the highest admiration scores in the IDE table. You run claude or codex in a split and stay on SSH, tmux and servers where a GUI fork will not go.\n\nPrice: $0 for the editor. You pay only for Claude, ChatGPT, Copilot or API usage. Copilot has an official Neovim integration.\n\nAI features: there is no first-party Neovim agent from Anthropic or OpenAI. Community plugins such as coder/claudecode.nvim and Avante.nvim fill the gap. Copilot provides official completions and chat. Review community plugins before you install them; none is an official Anthropic or OpenAI product.\n\nCodex and Claude Code: the supported official path is the CLI in :terminal. Claude Code has a vim mode under /config.\n\nBest for: terminal-first developers, remote servers, and people who already have a Neovim config they will not abandon.\n\nWeakness: no official Claude Code or Codex GUI plugin. You assemble the experience yourself, and you own the breakage when APIs change.\n\n9. Xcode\n\nXcode is Apple's IDE for macOS, iOS, iPadOS, watchOS and visionOS, and it is free on a Mac. 10.0% of survey respondents used it regularly. Since Xcode 26.3 (macOS Sequoia 15.6 or later), Apple has shipped built-in coding agents. For Apple-platform work, Interface Builder, SwiftUI previews, simulators and signing are still unique, and that stack now hosts Claude Agent and Codex inside the IDE.\n\nPrice: the IDE is free. Agent usage bills through the account you attach in Settings > Intelligence > Agents.\n\nAI features: Apple's Intelligence panel can install Claude Agent, built on the Claude Agent SDK, and Codex as a built-in agent. Agents can edit project files, change settings, build, and check work in Previews.\n\nCodex and Claude Code: OpenAI's Codex IDE docs say to open the coding assistant, start a chat and choose Codex. Apple also exposes Xcode over MCP, so the Claude Code CLI can attach with a documented xcrun mcpbridge setup and keep the full CLI feature set. If you need skills, hooks and /rewind exactly as in the CLI, use the CLI plus MCP.\n\nBest for: iOS and Mac developers who want agents inside the official Apple toolchain.\n\nWeakness: it is Mac-only, and the wrong default for backend or web work.\n\n10. Warp\n\nWarp is a GPU-accelerated terminal that has grown into an agent workspace, with a modern input editor, inline code review, Warp Agent, cloud agents, and first-class hosting of other CLIs. It was used by 5.2% of agent-question respondents. If your daily loop is already Codex or Claude Code in a terminal, Warp adds review, notifications and remote control without forcing a VS Code fork.\n\nPrice: Free includes the terminal, Warp Agent CLI access, bring-your-own inference, and limited cloud-agent use, with extra usage at pay-as-you-go rates. Build is $20 a month, or $18 a month billed annually, and includes $20 of agent usage at API rates plus full Warp Agent access. Max includes $200 of agent usage a month. Business is $45 per user per month ($20 of usage per seat) with SSO, for up to 25 seats.\n\nAI features: Warp Agent, mixed-model routing, and a published model set that includes Fable 5, Claude Opus 5, GPT-5.6, Gemini 3.1 Pro, GLM 5.2 and Kimi K3.\n\nCodex and Claude Code: Warp auto-detects both CLIs in a pane and adds a rich input editor, code-review comments, attach-as-context, vertical-tab status and Remote Control. Third-party CLIs stay in their terminal tab rather than Warp's conversation panel.\n\nBest for: developers who live in the terminal and want Claude Code or Codex with better review and multi-pane control.\n\nWeakness: it is not a full language IDE. You will still want a language IDE for deep debugging and large refactorings.\n\n🧭 Which one to pick\n\nCursor Premium at $30 if you want Claude or GPT in Cursor's own agent; Plus at $8 if Grok and Composer are enough. Install the Claude Code and Codex extensions anyway, especially while OpenAI's Cursor-supply contract is in flux.\n\nVS Code with Copilot Pro at $10, plus the two official extensions, is the official host and the lowest serious paid assistant. Copilot Business is $19 a seat for GitHub-centered teams.\n\nIf you will not leave IntelliJ, PyCharm, Rider or Android Studio, add Anthropic's Claude Code plugin and, if you want a JetBrains-native agent, AI Ultimate at $30, or run Junie, Claude Agent and Codex through Air with your existing lab logins.\n\nIf you already pay for Claude Pro or ChatGPT Plus and want a fast open-source editor with no second AI bill, use Zed's free Personal plan and attach both agents over ACP.\n\nIf your budget is $0, start with Google Antigravity's individual plan or Copilot Free inside VS Code. Antigravity is the more generous free agent IDE. Zed's editor is free, but its hosted AI is not.\n\nDevin Desktop Pro at $20 if you want many agents on one board, including a cloud agent. Kiro Pro at $20 if you want a written spec before code. Neovim plus the CLIs if you work on a server or in a modal config. Xcode 26.3 if you build for Apple platforms. Warp Build at $20, or Warp Free with the CLIs and your own keys, if your home is the terminal.\n\nPick the editor whose diffs, debugger and extensions you already trust. The agent can be swapped later more easily than that review surface.\n\nAlso worth knowing, but not in the ten: Trae, ByteDance's VS Code fork, is shipping (Free, a region-limited Lite plan at $8, then Pro $20, Pro+ $60, Ultra $200) but had only 0.7% regular IDE use. Cline and OpenCode are open-source harnesses you can drop into VS Code, JetBrains or Zed. Visual Studio remains widely used (27.6%) and has Copilot, but no official Claude Code extension; use the CLI in its terminal. Void, an open-source VS Code fork, was archived on June 2, 2026, and is no longer maintained.\n\nPrices and model catalogs change quickly. Recheck the vendor pages below before you switch a team.\n\nSources\n\nhttps://t.co/SNnax0exWP\n\nhttps://t.co/Gxak1avvae\n\nhttps://t.co/NrKNFBj1O1\n\nhttps://t.co/vfneYEAsWE\n\nhttps://t.co/WS3F2YShb0\n\nhttps://t.co/plvuflC7D5\n\nhttps://t.co/kLvv2Fql1r\n\nhttps://t.co/C40ru0XJop\n\nhttps://t.co/IhwDjus5lQ\n\nhttps://t.co/DZ73HFxusJ\n\nhttps://t.co/Fml5Uf3yjI\n\nhttps://t.co/nCsgf1kXGR\n\nhttps://t.co/XzEjsNBlO8\n\nhttps://t.co/Nff28PNW6w\n\nhttps://t.co/QYGrJBB6It\n\nhttps://t.co/vRIxQlq5SW\n\nhttps://t.co/lq015KrkBd\n\nhttps://t.co/MgBQBiWQXL\n\nhttps://t.co/bj2ZaShe6P\n\nhttps://t.co/rnngW9QVjC\n\nhttps://t.co/nKUth3avsh\n\nhttps://t.co/cnBFghC2e3\n\nhttps://t.co/6SM5oj2KpY\n\nhttps://t.co/RwFtzyiObS\n\nhttps://t.co/lMcfggEo2Z\n\nhttps://t.co/DAd74uGBnV\n\nhttps://t.co/o1T6155x5F\n\nhttps://t.co/xve2lQDkls\n\nhttps://t.co/giHLfJ3c6q\n\nhttps://t.co/oVh8iYmqWJ\n\nhttps://t.co/iOR5JIHgME",
+                "url": "https://x.com/amitmuflis/status/2120366776479535331",
+                "source": "@amitmuflis",
+                "date": "Wed Nov 11 04:03:28 +0000 2026",
+                "metrics": {
+                  "favorites": 1,
+                  "retweets": 0,
+                  "views": "80"
+                }
+              },
+              {
+                "title": "사례도 구체적입니다. 1,000개 에이전트로 페르마의 마지막 정리 Lean 형식화를 30시간에 끝냈고, 서브에이전트 1,000여 개로 8일간 부팅되는 OS 시제품을 만들었다고 합니다.",
+                "summary": "사례도 구체적입니다. 1,000개 에이전트로 페르마의 마지막 정리 Lean 형식화를 30시간에 끝냈고, 서브에이전트 1,000여 개로 8일간 부팅되는 OS 시제품을 만들었다고 합니다.\n\n다만 모두 Anthropic 자체 측정이고, OpenAI의 GPT-6.2 Astra는 아직 공식 발표 전입니다.\n\nhttps://t.co/pT4sI3VyN7",
+                "url": "https://x.com/JS422731/status/2120366457548923205",
+                "source": "@JS422731",
+                "date": "Wed Nov 11 04:02:12 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "14"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R03_web_news_routing",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_web_news",
+        "difficulty": "medium",
+        "what_it_tests": "Tin thời sự trên web → web_search topic=news, timeframe=day (hôm nay)."
+      },
+      "input": "Tin tức AI hôm nay có gì nổi bật?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "max_results": 5,
+              "query": "AI news today",
+              "timeframe": "day",
+              "topic": "news"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "query: expected 'AI', got 'AI news today'"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "max_results": 5,
+            "query": "AI news today",
+            "timeframe": "day",
+            "topic": "news"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "AI news today",
+            "topic": "news",
+            "timeframe": "day",
+            "items": [
+              {
+                "title": "EXCLUSIVE: Anthropic eyes $1.4 trillion IPO valuation in test of Wall Street's AI fervor | Reuters",
+                "url": "https://www.reuters.com/business/anthropic-ipo-raise-much-644-billion-latest-draft-prospectus-shows-2026-11-10",
+                "source": "reuters.com",
+                "summary": "Nov 10 (Reuters) - Anthropic's blockbuster IPO will value the Claude chatbot creator ​at up to $1.4 trillion, slightly short of some investors' expectations, setting up a key test of Wall Street's faith in the AI boom it helped ignite.\n\nThe company ‌is kicking off the roadshow for a share sale expected to set a benchmark for the sector, following years of hype that fueled a massive influx of capital into AI companies and sent the US stock market to all-time highs. [...] The Reuters Daily Briefing newsletter provides all the news you need to start your day. Sign up here.\n\nAnthropic's owners are plowing ahead despite a recent selloff across the tech landscape, as investors question whether the AI boom's returns will justify the massive spending and mounting debt costs in an elevated interest-rate environment. [...] Anthropic will also raise $26 billion via a separate private placement deal with cornerstone investors, including Alphabet's (GOOGL.O) Google, Nvidia (NVDA.O) — ⁠whose CEO is subject to a probe over his affair with an alleged Chinese spy — and Advanced Micro Devices (AMD.O).\n\nThe IPO is the year's most closely watched since Elon Musk's SpaceX (SPCX.O), which raised $75 billion at ​a nearly $1.75 trillion valuation in June.",
+                "score": 0.5874941
+              },
+              {
+                "title": "CoreWeave Says Demand Is Outstripping Capacity – CFO Defends AI Expansion: ‘Today’s Environment Very Profitable’ For Differentiated Technology — TradingView News",
+                "url": "https://www.tradingview.com/news/stocktwits:aa9d3b640094b:0-coreweave-says-demand-is-outstripping-capacity-cfo-defends-ai-expansion-today-s-environment-very-profitable-for-differentiated-technology",
+                "source": "tradingview.com",
+                "summary": "Shares of peers Iren Ltd (IREN) and Nebius (NBIS) rallied 4.5% and nearly 9% respectively.\n\nRetail investors and analysts especially praised CoreWeave’s analyst call, where management outlined robust demand for cloud services, said the midterm election results had no impact, and described a coordinated plan to fund capital spending through debt and customer prepayments.\n\nCoreWeave Makes The Case For Sustained AI Demand [...] Stocktwits\nStocktwits\n\n# CoreWeave Says Demand Is Outstripping Capacity – CFO Defends AI Expansion: ‘Today’s Environment Very Profitable’ For Differentiated Technology\n\nCoreWeave delivered better-than-expected quarterly results and boosted its annual forecasts on Tuesday, reviving investor sentiment amid a difficult stretch for the neocloud sector and sending its shares more than 7% higher in overnight trading. [...] “We have 10x as much qualified demand as available capacity through the end of 2027. And demand for 2028 is already several times larger than our available capacity even before we have brought it formally to market,” CoreWeave CEO Michael Intrator said in the earnings call.",
+                "score": 0.5660431
+              },
+              {
+                "title": "CoreWeave Says Demand Is Outstripping Capacity – CFO Defends AI Expansion: ‘Today’s Environment Very Profitable’ For Differentiated Technology",
+                "url": "https://finance.yahoo.com/markets/stocks/articles/coreweave-says-demand-outstripping-capacity-022740451.html",
+                "source": "finance.yahoo.com",
+                "summary": "1. Deirdre Bosa Live!\n\n   Deirdre Bosa Live!\n2. AI\n\nTrending \n\n October inflation data\n Stock market today\n Wall Street's $1.6T rebound\n Nvidia live updates\n\nStocktwits\n\n# CoreWeave Says Demand Is Outstripping Capacity – CFO Defends AI Expansion: ‘Today’s Environment Very Profitable’ For Differentiated Technology\n\nYuvraj Malik\n\n4 min read\n\n CRWV\n\n  +15.46%\n IREN\n\n  -2.34%\n NBIS\n\n  +4.38% [...] +4.38%\n\n Third-quarter revenue rose 168%, and backlog increased to $132.5 billion.\n Fears about the durability of data center spending by Big Tech companies and the debt-fueled business models weighed on sentiment for neocloud players.\n Retail sentiment for CRWV flipped to 'extremely bullish' from 'bearish.'",
+                "score": 0.45871297
+              },
+              {
+                "title": "Hands-on experience prepares Wayne State engineers for Michigan’s AI-powered manufacturing future - Today@Wayne - Wayne State University",
+                "url": "https://today.wayne.edu/news/2026/11/10/hands-on-experience-prepares-wayne-state-engineers-for-michigans-ai-powered-manufacturing-future-70535",
+                "source": "today.wayne.edu",
+                "summary": "Rather than simply program a machine to repeat a sequence of movements, students investigate how AI can give automated systems greater flexibility and autonomy.\n\n“Computer science students may understand AI, but they don't know how to think about what the real need is,” Chinnam said. “We bridge that domain knowledge by exposing students to what is possible through AI.” [...] The approach is already producing results. Chinnam said a group of approximately 10 students spent substantial time working in the lab during fall 2025, and several subsequently secured positions with leading companies.\n\nOne recent graduate of the artificial intelligence master’s program, Gokula Kumaran Kiruthiga Gopal, landed a position as an AI engineer with Panasonic. [...] The initiative addresses a growing workforce challenge for Michigan, where manufacturing remains central to the economy. According to the state’s AI and Workforce Plan, an estimated 75% of manufacturing jobs will require some form of upskilling as artificial intelligence and automation become more prevalent. The state estimates that responsible AI adoption could generate up to $70 billion in economic impact and support 130,000 jobs.",
+                "score": 0.45217365
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R04_read_url_routing",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "routing_read_url",
+        "difficulty": "easy",
+        "what_it_tests": "Đã có link cụ thể → read_url, không phải web_search."
+      },
+      "input": "Tóm tắt bài này giúp mình: https://openai.com/blog/gpt-5",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://openai.com/blog/gpt-5"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://openai.com/blog/gpt-5"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "fetch",
+          "args": {
+            "url": "https://openai.com/blog/gpt-5"
+          },
+          "result": {
+            "tool": "read_url",
+            "url": "https://openai.com/blog/gpt-5",
+            "items": [
+              {
+                "title": "OpenAI",
+                "url": "https://openai.com/blog/gpt-5",
+                "source": "openai.com",
+                "summary": "OpenAI\n\n# 404\n\nOne stitch has slipped loose\n\nThe pattern still holds its shape\n\nPick up a new thread\n\nby [gpt-6-astra(opens in a new window)](https://chatgpt.com/?surface=work&model=gpt-6-astra-wm&openaicom-did=76539789-7839-4902-a1db-f8507060b1b0&openaicom_referred=true)"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R05_limit_arg",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "arg_limit",
+        "difficulty": "easy",
+        "what_it_tests": "Trích đúng limit=10 từ '10 tweet'."
+      },
+      "input": "Lấy 10 tweet mới nhất của Elon Musk",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "elonmusk",
+              "limit": 10
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "limit": 10,
+              "screenname": "elonmusk"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "limit": 10,
+            "screenname": "elonmusk"
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "screenname": "elonmusk",
+            "items": [
+              {
+                "title": "SpaceX has ordered 100 GW/year of HJT solar manufacturing equipment from Singulus in Germany. ",
+                "summary": "SpaceX has ordered 100 GW/year of HJT solar manufacturing equipment from Singulus in Germany. \n\nThis is for Starmind to create a sentient sun.",
+                "url": "https://x.com/elonmusk/status/2120302471210033426",
+                "source": "@elonmusk",
+                "date": "Tue Nov 10 23:47:57 +0000 2026",
+                "metrics": {
+                  "favorites": 19816,
+                  "retweets": 2003,
+                  "views": "1603212"
+                }
+              },
+              {
+                "title": "RT @ns123abc: 🚨 BREAKING: The FCC accepts SpaceX's application to acquire nationwide 800 MHz spectrum",
+                "summary": "RT @ns123abc: 🚨 BREAKING: The FCC accepts SpaceX's application to acquire nationwide 800 MHz spectrum\n\nVerizon, AT&amp;T and T-Mobile all told…",
+                "url": "https://x.com/elonmusk/status/2120278105051042195",
+                "source": "@elonmusk",
+                "date": "Tue Nov 10 22:11:07 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 2588,
+                  "views": "525714"
+                }
+              },
+              {
+                "title": "RT @SawyerMerritt: Here is SpaceX's new @Starlink Mini 2 with quick-swap battery. You can get up to 4.5 hours of use on ",
+                "summary": "RT @SawyerMerritt: Here is SpaceX's new @Starlink Mini 2 with quick-swap battery. You can get up to 4.5 hours of use on a single charge.\n\nT…",
+                "url": "https://x.com/elonmusk/status/2120253907435655331",
+                "source": "@elonmusk",
+                "date": "Tue Nov 10 20:34:58 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 478,
+                  "views": "560110"
+                }
+              },
+              {
+                "title": "RT @nextbigfuture: SpaceX is making moves to become the first AI carrier $SPCX ",
+                "summary": "RT @nextbigfuture: SpaceX is making moves to become the first AI carrier $SPCX \n\n• Current cell towers are still mostly “dumb” radios. The…",
+                "url": "https://x.com/elonmusk/status/2120252018799563074",
+                "source": "@elonmusk",
+                "date": "Tue Nov 10 20:27:28 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 342,
+                  "views": "523608"
+                }
+              },
+              {
+                "title": "RT @NURM_Dima: CLAUDIA, Ship 42, Starbase. Do you copy?",
+                "summary": "RT @NURM_Dima: CLAUDIA, Ship 42, Starbase. Do you copy?\nNo tower has ever caught a ship coming back from orbit. Starship Flight 15 will try…",
+                "url": "https://x.com/elonmusk/status/2120249788431990910",
+                "source": "@elonmusk",
+                "date": "Tue Nov 10 20:18:36 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 321,
+                  "views": "535418"
+                }
+              },
+              {
+                "title": "RT @ADFIntl: 🚨The EU's Digital Services Act threatens freedom of speech GLOBALLY.",
+                "summary": "RT @ADFIntl: 🚨The EU's Digital Services Act threatens freedom of speech GLOBALLY.\n\nWhat they say: the DSA prevents the spread of \"illegal c…",
+                "url": "https://x.com/elonmusk/status/2120204749480104133",
+                "source": "@elonmusk",
+                "date": "Tue Nov 10 17:19:38 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 666,
+                  "views": "636387"
+                }
+              },
+              {
+                "title": "RT @XFreeze: Elon Musk just revealed a massive update on Grok 4.8, and SpaceXSI has completely rebuilt its reinforcement",
+                "summary": "RT @XFreeze: Elon Musk just revealed a massive update on Grok 4.8, and SpaceXSI has completely rebuilt its reinforcement learning and infer…",
+                "url": "https://x.com/elonmusk/status/2120102894817173862",
+                "source": "@elonmusk",
+                "date": "Tue Nov 10 10:34:54 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 581,
+                  "views": "699631"
+                }
+              },
+              {
+                "title": "Turns out that the Starlink software, built for managing the movement of vast amounts of data through space and to the g",
+                "summary": "Turns out that the Starlink software, built for managing the movement of vast amounts of data through space and to the ground, is also very well suited to training super intelligence",
+                "url": "https://x.com/elonmusk/status/2120102767624880364",
+                "source": "@elonmusk",
+                "date": "Tue Nov 10 10:34:24 +0000 2026",
+                "metrics": {
+                  "favorites": 100269,
+                  "retweets": 8649,
+                  "views": "6460027"
+                }
+              },
+              {
+                "title": "RT @XFreeze: Elon Musk just revealed something huge about Grok's new SI training and inference infrastructure",
+                "summary": "RT @XFreeze: Elon Musk just revealed something huge about Grok's new SI training and inference infrastructure\n\nThe engineering behind Starl…",
+                "url": "https://x.com/elonmusk/status/2120101380144992635",
+                "source": "@elonmusk",
+                "date": "Tue Nov 10 10:28:53 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 296,
+                  "views": "621686"
+                }
+              },
+              {
+                "title": "RT @beffjezos: Taking the Shinkansen and all I can think about is how do we not have this between SF and LA...",
+                "summary": "RT @beffjezos: Taking the Shinkansen and all I can think about is how do we not have this between SF and LA...\n\n if only you knew how great…",
+                "url": "https://x.com/elonmusk/status/2120090806765932705",
+                "source": "@elonmusk",
+                "date": "Tue Nov 10 09:46:52 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 179,
+                  "views": "674609"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R06_timeframe_arg",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "arg_timeframe",
+        "difficulty": "medium",
+        "what_it_tests": "'tuần này' → timeframe=week."
+      },
+      "input": "Tin công nghệ trong tuần này",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "topic": "news",
+              "timeframe": "week"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "max_results": 5,
+              "query": "technology news",
+              "timeframe": "week",
+              "topic": "news"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "max_results": 5,
+            "query": "technology news",
+            "timeframe": "week",
+            "topic": "news"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "technology news",
+            "topic": "news",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "Palantir harvests battlefield data that Ukraine pays for ‘with blood’ | Technology News | Al Jazeera",
+                "url": "https://www.aljazeera.com/news/2026/11/5/palantir-mines-battlefield-intelligence-but-is-ukraine-paying-with-blood",
+                "source": "aljazeera.com",
+                "summary": "The pinnacle of the collaboration between Palantir and Ukraine’s Ministry of Defence came in January with the launch of a specialised software platform, the Brave1 Dataroom, which uses battlefield data to train artificial intelligence for military applications.\n\nBut prominent figures in Ukraine’s defence sector have questioned their government’s decision to share the country’s valuable asset with a private tech company under undisclosed terms. [...] Similar solutions are available to governments for civil purposes, including border control, health services, tax and revenue – and mass surveillance.\n\nWith more data, systems use statistical learning to recognise patterns to make accurate predictions, enabling military systems to make split-second, automated tactical decisions.\n\nUnder this premise, large datasets based on real-life scenarios are coveted by companies aiming to outperform their competitors. [...] Amid tensions between Washington and Europe, several countries are now refraining from using Palantir’s products. France’s Prime Minister Sebastien Lecornu in June said domestic intelligence services would ditch Palantir’s products in an effort to avoid “strategic dependency”. Germany’s military also said it would no longer use the company’s products.",
+                "score": 0.61138195
+              },
+              {
+                "title": "Tech Weekly: Volatile Tech Stocks Shape Midterms Week | INN",
+                "url": "https://investingnews.com/top-tech-news",
+                "source": "investingnews.com",
+                "summary": "Welcome to the Investing News Network's weekly brief on tech news and tech stocks driving the market.\n\nWe also break down next week's catalysts to help you prepare for the week ahead.\n\n### In this article:\n\n This week's tech sector performance\n Top tech news of the week\n Major tech stocks report earnings\n 3 tech stocks moving markets this week\n Tech ETF performance\n Tech news to watch next week\n\n### This week's tech sector performance [...] Apple reported record September-quarter revenue of US$114.5 billion, up 12 percent from a year earlier. iPhone sales hit a September-quarter record and services revenue reached an all-time high, while iPad and wearables sales fell.\n\nFor the holiday quarter, Apple expects revenue to grow 7 to 10 percent, with profit margins squeezed by higher memory chip costs.\n\n#### Palantir Technologies (NASDAQ:PLTR) [...] The S&P 500 (INDEXSP:.INX) and the Nasdaq-100 posted minor advances of 0.4 percent and 0.7 percent, respectively. Advanced Micro Devices (AMD) (NASDAQ:AMD) was up over 9 percent in extended trading after its results showed record data center revenue and stronger-than-expected Q4 guidance. Meta Platforms (NASDAQ:META) rose 2.4 percent as strong AI chip demand reinforced confidence in hyperscale infrastructure investments.",
+                "score": 0.6002469
+              },
+              {
+                "title": "NASA Awards Moon Base Transportation, Technology, Science Projects - NASA",
+                "url": "https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects",
+                "source": "nasa.gov",
+                "summary": "### Highlights\n\nHubble Learns Galactic History From Stars\n\n3 min read\n\n### Hubble Learns Galactic History From Stars\n\narticle  2 days ago NASA’s Hubble Uncovers Case of Missing Oxygen in Nearby Dwarf Galaxies\n\n5 min read\n\n### NASA’s Hubble Uncovers Case of Missing Oxygen in Nearby Dwarf Galaxies\n\narticle  5 days ago NASA Explores Potential Commercial Servicing for Hubble Telescope\n\n3 min read\n\n### NASA Explores Potential Commercial Servicing for Hubble Telescope\n\narticle  1 week ago [...] 3 min read\n\n### NASA Explores Potential Commercial Servicing for Hubble Telescope\n\narticle  1 week ago Send Your Name to Titan Aboard NASA’s Dragonfly Mission\n\n2 min read\n\n### Send Your Name to Titan Aboard NASA’s Dragonfly Mission\n\narticle  1 week ago TIME Best Inventions of 2026\n\n1 min read\n\n### TIME Best Inventions of 2026\n\narticle  3 weeks ago\n\n### Highlights\n\nLa NASA anuncia la cobertura de la misión lunar Artemis II\n\n11 min read [...] 3 min read\n\n### NASA Navigation Experiment Shows Promise for Planetary Landings\n\narticle  3 days ago NASA University Challenge Ignites Trajectory of Drone Entrepreneur\n\n4 min read\n\n### NASA University Challenge Ignites Trajectory of Drone Entrepreneur\n\narticle  1 week ago NASA Ames Unitary Plan Wind Tunnel\n\n1 min read\n\n### NASA Ames Unitary Plan Wind Tunnel\n\narticle  3 weeks ago\n\n### Highlights\n\nHigh-speed Intelligent Robust Autonomous Terrain Exploration\n\n2 min read",
+                "score": 0.5607639
+              },
+              {
+                "title": "Nearshoring Reshaping Mexico's Tech Budgets",
+                "url": "https://mexicobusiness.news/tech/news/nearshoring-reshaping-mexicos-tech-budgets",
+                "source": "mexicobusiness.news",
+                "summary": "Nestlé Doubles Mexico Investment to US$2 Billion by 2030\n\nNestle\n\n3\n\nCybersecurity\n\nMexican CISOs Face Expanding AI Burden\n\nTech\n\n4\n\nChemicals\n\nMexico’s Industrial, Petrochemical Sectors at a Crossroads\n\nOil platform\n\n5\n\nFinance & Fintech\n\nMaximizing Processing Margins with Card Schemes, Wallets\n\nCard\n\n6\n\nOil & Gas\n\nHarbour Energy Advances Zama Field with Lakam Ha FPSO\n\nOil platform\n\n7\n\nAI, Cloud & Data\n\nOracle, Google Cloud Unveil Localized AI Infrastructure\n\nData\n\nMexico Business News [...] Reading...\n\nNearshoring is reshaping Mexico’s technology spending by increasing the importance of automation, cloud services, industrial connectivity and cybersecurity. Select estimates that organizational ICT spending will reach MX$547 billion in 2026 (US$29.36 billion), up from MX$489 billion in 2023. However, the expansion is uneven: manufacturing is not the largest technology spender, and federal ICT budgets have contracted since 2024.",
+                "score": 0.5340962
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R07_search_type_arg",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "arg_search_type",
+        "difficulty": "medium",
+        "what_it_tests": "'phổ biến/top' → search_type=Top (không phải Latest)."
+      },
+      "input": "Cho mình các tweet phổ biến (top) nhất về OpenAI",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "search_type": "Top"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "limit": 5,
+              "query": "OpenAI",
+              "search_type": "Top"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "limit": 5,
+            "query": "OpenAI",
+            "search_type": "Top"
+          },
+          "result": {
+            "tool": "search_tweets",
+            "query": "OpenAI",
+            "search_type": "Top",
+            "items": [
+              {
+                "title": "I still don't understand why everyone is not using this yet. Thanks to it, a year ago I increased my income to 15,000 do",
+                "summary": "I still don't understand why everyone is not using this yet. Thanks to it, a year ago I increased my income to 15,000 dollars a month\n\nAndrey Karpathy, co-founder of OpenAI, published a simple idea that got 25 million views: stop using AI to write code, use it to build a second brain\n\nYou point Claude Code to a folder, drop any source in there (an article, transcript, PDF) and Claude reads it, links it, and saves it into a living wiki of everything you know. It compounds like interest: the more you feed it, the smarter it gets\n\nHere is the gist:\n\nInstall Obsidian, create a vault, open it in Claude Code\n\nPaste the file with Karpathy's wiki idea and tell Claude to build it\n\nClaude creates three folders: raw for sources, wiki for its pages, CLAUDE\nwhich runs everything\n\nDrop any source into raw and say ingest this\n\nAsk questions across everything, forever\n\n5 minutes to set up, and you never start with an empty chat again\n\nThe full instructions can be found in the article below",
+                "url": "https://x.com/Bober_smart/status/2119070145284841481",
+                "source": "@Bober_smart",
+                "date": "Sat Nov 07 14:11:07 +0000 2026",
+                "metrics": {
+                  "favorites": 1195,
+                  "retweets": 129,
+                  "views": "96854"
+                }
+              },
+              {
+                "title": "This is f*cking insane. Anthropic engineer Andrej Karpathy:",
+                "summary": "This is f*cking insane. Anthropic engineer Andrej Karpathy:\n\n\"The biggest mistake in AI right now is forcing agents to work before you master the harness around the model\n\nWe made that mistake at OpenAI in 2016. It cost us 5 years\"\n\nIn just 6 minutes, he explains why the agent is not the product. The foundation is\n\nOpus 5.5 → Harness → Loops → Graphs → Agents That Emerge on Their Own\n\nDemos are easy. Products take a decade\n\nWorth more than most $1,000 agent engineering courses\n\nBookmark and watch it today\n\nThen read the full Graph Engineering guide below ↓",
+                "url": "https://x.com/res1dualedge/status/2119793106820251958",
+                "source": "@res1dualedge",
+                "date": "Mon Nov 09 14:03:55 +0000 2026",
+                "metrics": {
+                  "favorites": 368,
+                  "retweets": 33,
+                  "views": "61924"
+                }
+              },
+              {
+                "title": "Today, we’re bringing GPT-Image-2.6 to Codex and the API.",
+                "summary": "Today, we’re bringing GPT-Image-2.6 to Codex and the API.\n\nImage-2.6 Flare and Sunburst, our two new API image models, generate images 50% faster than before.\n\nAt medium or high quality, Sunburst keeps details more consistent from one edit to the next. https://t.co/iNhtjqKueJ",
+                "url": "https://x.com/OpenAIDevs/status/2118124753340756055",
+                "source": "@OpenAIDevs",
+                "date": "Wed Nov 04 23:34:28 +0000 2026",
+                "metrics": {
+                  "favorites": 3777,
+                  "retweets": 317,
+                  "views": "387497"
+                }
+              },
+              {
+                "title": "This is f*cking insane. OpenAI CEO Sam Altman:",
+                "summary": "This is f*cking insane. OpenAI CEO Sam Altman:\n\n\"We are going to see 10-person billion-dollar companies pretty soon\n\nIf I were 22 right now, I would feel like the luckiest kid in history\"\n\nIn 22 seconds, he explains why the next billion-dollar company won't need a building full of people, just a few founders and their agents\n\nChatGPT → Codex → Agent Builder → Agents SDK → Evals → A 10-Person Company Run By Agents\n\nMost people will feel motivated for 3 minutes, then go back to scrolling\n\nThe few who act will start building their company this weekend\n\nSave this before it disappears from your feed\n\nEverything below is free:\n\nFind what to automate first\nhttps://t.co/CVaTL5jXHB\n\nHow companies put AI to work\nhttps://t.co/EfPautasVX\n\nCodex in the cloud\nhttps://t.co/wYBuugoGzU\n\nCodex skills\nhttps://t.co/KIwM8reiAt\n\nAgent Builder (agents without code)\nhttps://t.co/y5lVjIVWNE\n\nFunction calling (give your agents tools)\nhttps://t.co/hlQ0OrhsDr\n\nAgents SDK for JavaScript\nhttps://t.co/wNfa3neVSQ\n\nAgents SDK examples\nhttps://t.co/TnPiIML4if\n\nA customer service agent team you can copy\nhttps://t.co/9TYXiRzBm7\n\nVoice agents\nhttps://t.co/wBnMrKEKMd\n\nEvals (check your agents' work)\nhttps://t.co/tUueczMWZP\n\nAll of this costs $0\n\nThe 10-person billion-dollar company will be built by someone who opened these links, not someone who scrolled past them\n\nBookmark it and start with the first link tonight\n\nThen read how to set up the agent team behind a tiny company in the harness engineering guide below ↓",
+                "url": "https://x.com/godsystemsmd/status/2118707511813447984",
+                "source": "@godsystemsmd",
+                "date": "Fri Nov 06 14:10:09 +0000 2026",
+                "metrics": {
+                  "favorites": 491,
+                  "retweets": 94,
+                  "views": "81431"
+                }
+              },
+              {
+                "title": "This is f*cking insane. OpenAI CEO Sam Altman:",
+                "summary": "This is f*cking insane. OpenAI CEO Sam Altman:\n\n\"We are going to see 10-person billion-dollar companies pretty soon\n\nIf I were 22 right now, I would feel like the luckiest kid in history\"\n\nIn 22 seconds, he explains why the next billion-dollar company won’t need an office full of people, just a few founders and a team of agents\n\nChatGPT → Codex → Agent Builder → Agents SDK → Evals → A 10-Person Company Run By Agents\n\n99% people will feel motivated for 3 minutes, then keep scrolling...\n\nThe few who actually open the links will start building their company this weekend\n\nSave this before it vanishes from your feed\n\nEverything below is FREE:\n\nFind what to automate first\nhttps://t.co/YWHdgRnuzP\n\nHow companies put AI to work\nhttps://t.co/pvlQEhqgEz\n\nCodex in the cloud\nhttps://t.co/zZWUdokyny\n\nCodex skills\nhttps://t.co/2hdcb5KdBy\n\nAgent Builder (agents without code)\nhttps://t.co/4vG52j4T8i\n\nFunction calling (give your agents tools)\nhttps://t.co/UtjC1UOx2c\n\nAgents SDK for JavaScript\nhttps://t.co/uawnMmnI9p\n\nAgents SDK examples\nhttps://t.co/OWi0bWpApP\n\nA customer service agent team you can copy\nhttps://t.co/GRVZLYi4Pf\n\nVoice agents\nhttps://t.co/1SUmRzYIvA\n\nEvals (check your agents' work)\nhttps://t.co/sH92SCsLJF\n\nAll of this costs $0\n\nThe next 10-person billion-dollar company will be built by someone who opens these links tonight, not someone who scrolls past them\n\nBookmark it and start with the first link right now\n\nThen read how to set up the agent team behind a tiny company in the harness engineering guide below ↓",
+                "url": "https://x.com/shikamarutsai/status/2119542201944518994",
+                "source": "@shikamarutsai",
+                "date": "Sun Nov 08 21:26:54 +0000 2026",
+                "metrics": {
+                  "favorites": 1378,
+                  "retweets": 209,
+                  "views": "281173"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R08_out_of_scope",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "out_of_scope",
+        "difficulty": "easy",
+        "what_it_tests": "Câu ngoài phạm vi research → KHÔNG gọi tool, từ chối/định hướng."
+      },
+      "input": "Giải giúp mình bài toán tích phân: nguyên hàm của x^2 là gì?",
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "∫ x² dx = \\(\\displaystyle \\frac{x^{3}}{3}+C\\)\n\n**Giải thích nhanh:**  \n- Đạo hàm của \\(x^{n}\\) là \\(n x^{n-1}\\).  \n- Để tìm nguyên hàm (tích phân bất định) của \\(x^{2}\\), ta tăng số mũ lên 1 và chia cho số mũ mới:  \n\n\\[\n\\int x^{2}\\,dx = \\frac{x^{2+1}}{2+1}+C = \\frac{x^{3}}{3}+C,\n\\]\n\ntrong đó \\(C\\) là hằng số tùy ý.",
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "R09_no_tool_capability",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "no_tool_meta",
+        "difficulty": "easy",
+        "what_it_tests": "Câu hỏi meta → trả lời thẳng, KHÔNG gọi tool."
+      },
+      "input": "Bạn là gì và làm được những gì?",
+      "expect": {
+        "no_tool": true,
+        "behavior": "answer_without_tool"
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Chào bạn! Tôi là một trợ lý nghiên cứu nhanh nhạy, được thiết kế để hỗ trợ bạn trong việc:\n\n- **Tìm kiếm và thu thập thông tin** từ các nguồn khác nhau như Twitter/X (bài đăng của một tài khoản, thảo luận về một chủ đề), web (tin tức, kiến thức chung), hoặc cơ sở dữ liệu nội bộ.\n- **Trích xuất và tóm tắt nội dung** từ các URL, bài báo khoa học trên arXiv, hoặc các tài liệu PDF.\n- **Thực hiện các phép tính** số học nhanh chóng bằng công cụ tính toán.\n- **Định dạng và trình bày** các kết quả thu thập được thành báo cáo, bản tin markdown, danh sách gạch đầu dòng, v.v.\n- **Gửi tin nhắn** đã được người dùng xác nhận tới kênh Telegram của nhóm (sau khi có sự đồng ý rõ ràng).\n\nTôi luôn tuân thủ các quy tắc bảo mật và quy định nội bộ, không tự tạo dữ liệu mà không có nguồn thực tế, và luôn yêu cầu xác nhận khi cần thực hiện hành động như gửi tin. Nếu bạn có bất kỳ yêu cầu nào—tìm kiếm thông tin, tóm tắt tài liệu, tính toán, hoặc chuẩn bị bản tin—chỉ cần cho tôi biết chi tiết, tôi sẽ hỗ trợ ngay!",
+        "case_failure_type": "unnecessary_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "R10_missing_handle",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "clarify_missing_handle",
+        "difficulty": "medium",
+        "what_it_tests": "Thiếu handle → ask_user, KHÔNG đoán bừa người nào."
+      },
+      "input": "Tóm tắt 5 tweet mới nhất giúp mình",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "options": [],
+              "question": "Bạn muốn tóm tắt 5 tweet mới nhất của tài khoản X nào? Vui lòng cung cấp tên người dùng (screenname) không có dấu @.",
+              "response_type": "text"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "options": [],
+            "question": "Bạn muốn tóm tắt 5 tweet mới nhất của tài khoản X nào? Vui lòng cung cấp tên người dùng (screenname) không có dấu @.",
+            "response_type": "text"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn muốn tóm tắt 5 tweet mới nhất của tài khoản X nào? Vui lòng cung cấp tên người dùng (screenname) không có dấu @.",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "R11_missing_url",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "clarify_missing_url",
+        "difficulty": "medium",
+        "what_it_tests": "Nói 'bài này' nhưng không có link → ask_user xin URL."
+      },
+      "input": "Tóm tắt bài viết này hộ mình",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn có thể cung cấp URL của bài viết hoặc dán nội dung văn bản cần tóm tắt không?",
+              "response_type": "text"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn có thể cung cấp URL của bài viết hoặc dán nội dung văn bản cần tóm tắt không?",
+            "response_type": "text"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn có thể cung cấp URL của bài viết hoặc dán nội dung văn bản cần tóm tắt không?",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "R12_confirm_before_send",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "confirm_before_write",
+        "difficulty": "medium",
+        "what_it_tests": "Hành động ghi (gửi) → xác nhận trước (ask_user yes_no), không tự gửi."
+      },
+      "input": "Đăng bản tin này lên Telegram giúp mình",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn muốn đăng bản tin nào lên Telegram? Vui lòng cung cấp nội dung chính xác của tin nhắn.",
+              "response_type": "text"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_boundary",
+        "failures": [
+          "response_type: expected 'yes_no', got 'text'"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn muốn đăng bản tin nào lên Telegram? Vui lòng cung cấp nội dung chính xác của tin nhắn.",
+            "response_type": "text"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn muốn đăng bản tin nào lên Telegram? Vui lòng cung cấp nội dung chính xác của tin nhắn.",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "R13_parallel_web_and_tweets",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "parallel_tool_calls",
+        "difficulty": "hard",
+        "what_it_tests": "Một request cần hai nguồn → gọi cả web_search và search_tweets; eval không phụ thuộc thứ tự tool call."
+      },
+      "input": "Tìm trên web tin AI hôm nay và tìm thêm tweet về AI.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AI",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          },
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "max_results": 5,
+              "query": "AI",
+              "timeframe": "day",
+              "topic": "news"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "missing tool call social_search"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "max_results": 5,
+            "query": "AI",
+            "timeframe": "day",
+            "topic": "news"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "AI",
+            "topic": "news",
+            "timeframe": "day",
+            "items": [
+              {
+                "title": "The AI Race is Putting Patients at Risk - Progressive.org",
+                "url": "https://progressive.org/latest/the-ai-race-is-putting-patients-at-risk-adirim-20261110",
+                "source": "progressive.org",
+                "summary": "Indeed, the most frightening risks involving AI are already moving from theory to capability. Frontier models let non-experts code new applications quickly, and soon it may be possible to use AI to create biological agents that can be weaponized. The White House’s own AI Action Plan warns that AI could create new pathways for bad actors to synthesize dangerous pathogens and calls for stronger screening and national security assessment of AI tools and systems. Anthropic has already said its [...] AI in health care offers many cases that regulatory frameworks should be addressing. A hospital can use AI for patient care and clinical decision support; an insurer for utilization management (e.g., automating care denials); a teenager for mental health advice; a public health department for outbreak detection; and a bad actor for infiltrating a hospital network. Different uses carry different risks and require separate risk-benefit analysis for determining regulatory guardrails. [...] Japan created an AI Strategy Headquarters headed by the prime minister and adopted a national AI basic plan. The United Kingdom and Australia are linking their AI safety institutes in order to better evaluate frontier AI model risks. These systems differ, but they have one thing in common - national AI governance.",
+                "score": 0.6001298
+              },
+              {
+                "title": "Chapman Advances Healthcare AI Research and Training | Chapman Newsroom",
+                "url": "https://news.chapman.edu/2026/11/10/chapman-advances-healthcare-ai-research-and-training",
+                "source": "news.chapman.edu",
+                "summary": "Totonchy sees the skepticism around AI in higher education as an opportunity.  \n\n“Generative AI quickly gained a negative reputation because it was seen as a tool for cheating,” she said. “That misses the point. These tools can work alongside humans, handling routine tasks so people can focus on analysis and decision-making. The sooner institutions move past resistance, the sooner AI can support that work.” \n\nSTUDENTS PUT AI TO WORK [...] To address bias in clinical decision-making tools, Wang founded the Healthcare AI Initiative (HAI) at Chapman, bringing together researchers working on pressing healthcare challenges. HAI examines ethical questions surrounding AI, including data privacy, and develops equitable machine learning approaches.  \n\nWang also developed an AI elective within the School of Pharmacy, focused on practical applications for future clinicians. [...] “Every pharmacist has heard the rumors that AI will take pharmacists’ jobs,” Wang said. “But early exposure helps students. As future clinicians, they learn where the real focus should be in relation to AI. That’s something my students learn in this course.”  \n\nWang also works with students on research projects, extending that learning beyond the classroom. Two PharmD students, Elena Wu ’27 and Harvey Duong ’27, have collaborated with her on studies using AI to analyze large datasets.",
+                "score": 0.5269362
+              },
+              {
+                "title": "Gilbert + Tobin rethinks the business of law with AI",
+                "url": "https://openai.com/index/gilbert-tobin-sam-nickless",
+                "source": "openai.com",
+                "summary": "The opportunity is bigger than doing the same work a little more quickly. Used well, AI can raise the quality and volume of what an organisation produces – and give people more time for the complex, strategic work where their expertise and judgement create the greatest value.\n\nFind out more about Gilbert + Tobin’s work with OpenAI through the case studyhere.\n\n## Keep reading\n\nImage 2: Cooley customer story Option A art card\n\nHow Cooley is accelerating IPO work with ChatGPT Sep 17, 2026 [...] Governance should enable responsible use. Our message was simple: AI is not cheating. It is another tool people can use to apply their judgement. They still need to define the task, check the output and take responsibility for the final work.\n\n## You’ve noticed that adoption is unusually high for your firm, with 87% active usage among enabled ChatGPT users, more than twice the rate Gilbert + Tobin typically sees for other tools. How did leadership shape that culture? [...] Gilbert + Tobin began by giving its people room to experiment with AI, then introduced ChatGPT Enterprise, ChatGPT Work and Codex to move from individual assistance to defined, multistep agentic workflows, with people responsible for review and approval.\n\nWe spoke with Sam Nickless, Partner and Chief Executive Officer at Gilbert + Tobin, about leading adoption from the front, where he’s seeing the value of AI, and his advice for other CEOs.",
+                "score": 0.51594
+              },
+              {
+                "title": "Survey: Patient comfort with AI varies by level of provider involvement | AHA News",
+                "url": "https://www.aha.org/news/headline/2026-11-10-survey-patient-comfort-ai-varies-level-provider-involvement",
+                "source": "aha.org",
+                "summary": "A Gallup survey published Nov. 9 on patient comfort with artificial intelligence in care found that 56% of U.S. adults who visited a primary care provider in the past year are comfortable with AI making diagnosis or treatment decisions, as long as they can be changed or overridden by their provider. The survey found that 38% of patients are comfortable when AI assists and their provider makes the decision. Results showed that 9% of patients are comfortable with AI making treatment decisions [...] Christine Moutier, M.D., chief medical officer at the American Foundation for Suicide Prevention, discusses the usage of artificial intelligence chatbots among…\n\nHeadline\n\nAHA launches new homepage on artificial intelligence policy and advocacy\n\nThe AHA Nov. 3 launched a new webpage, Artificial Intelligence Policy and Advocacy, featuring AHA policy letters, statements, fact sheets, news and other…\n\nHeadline\n\nVirtual session to discuss how hospitals put AI governance into practice [...] The West Health Accelerator at the AHA’s Health Research & Educational Trust will host a virtual session Oct. 29 at 2:30 p.m. ET on how hospitals are…\n\nHeadline\n\nAHA details recommendations to FDA on regulatory frameworks for GenAI-enabled medical devices\n\nThe AHA provided recommendations to the Food and Drug Administration Oct. 19 on potential regulatory frameworks for generative artificial intelligence-enabled…\n\nHeadline\n\nAHRQ announces AI initiative on medical evidence reviews, data",
+                "score": 0.48017395
+              },
+              {
+                "title": "Jensen Huang’s Apology May Be the Only Correct Use of AI - The Atlantic",
+                "url": "https://www.theatlantic.com/newsletters/2026/11/jensen-huang-ai-apology-nvidia/689366",
+                "source": "theatlantic.com",
+                "summary": "People (me) are always saying about AI, “This is a solution looking for a problem!” and “Who would possibly want to delegate things like knowing information about your childrenor creating works of art to a third-party series of zeroes and ones?” But there are some things in life that nobody wants to do, such as get a root canal, amputate a limb, or deal with your cable provider. Or, perhaps, apologize simultaneously to your employees and your wife of 40 years for jeopardizing your business and",
+                "score": 0.43116498
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R14_out_of_scope_coding",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "out_of_scope_coding",
+        "difficulty": "easy",
+        "what_it_tests": "Câu coding ngoài phạm vi research/news → KHÔNG gọi tool."
+      },
+      "input": "Viết giúp mình một hàm Python tính Fibonacci bằng recursion.",
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Dưới đây là một hàm Python đơn giản tính số Fibonacci thứ n bằng đệ quy. Hàm sẽ trả về giá trị Fibonacci cho chỉ số `n` (với `F(0) = 0` và `F(1) = 1`).  \n\n```python\ndef fibonacci(n: int) -> int:\n    \"\"\"\n    Tính số Fibonacci thứ n bằng đệ quy.\n\n    Tham số:\n        n (int): Chỉ số của dãy Fibonacci (n >= 0).\n\n    Trả về:\n        int: Giá trị Fibonacci tại vị trí n.\n\n    Lưu ý:\n        - Đệ quy thuần sẽ có độ phức tạp O(2^n), nên chỉ thích hợp cho n\n          nhỏ (thường < 30). Đối với n lớn hơn, nên dùng memoization\n          hoặc phương pháp lặp để tránh tính lại các giá trị.\n    \"\"\"\n    if n < 0:\n        raise ValueError(\"n phải là số nguyên không âm\")\n    if n == 0:\n        return 0\n    if n == 1:\n        return 1\n    # Đệ quy: F(n) = F(n-1) + F(n-2)\n    return fibonacci(n - 1) + fibonacci(n - 2)\n\n\n# Ví dụ sử dụng\nif __name__ == \"__main__\":\n    for i in range(10):\n        print(f\"F({i}) = {fibonacci(i)}\")\n```\n\n**Giải thích nhanh**  \n- Các trường hợp cơ sở (`n == 0` và `n == 1`) trả về giá trị đã biết.  \n- Với các giá trị lớn hơn, hàm gọi lại chính nó để tính `F(n‑1)` và `F(n‑2)`, sau đó cộng lại.  \n\nNếu bạn cần tính các giá trị lớn hơn một cách hiệu quả hơn, có thể bổ sung **memoization** (lưu trữ các kết quả đã tính) hoặc chuyển sang thuật toán lặp. Nếu muốn mình viết phiên bản có memoization, cứ cho mình biết nhé!",
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "M01_clarify_then_fill",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_clarify_fill",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: carry limit=5 từ lượt 1 + map tên Elon Musk thành handle elonmusk từ lượt 2."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tóm tắt 5 tweet mới nhất giúp mình"
+        },
+        {
+          "role": "user",
+          "content": "Của Elon Musk nhé"
+        },
+        {
+          "role": "user",
+          "content": "Giữ đúng 5 tweet, đừng đổi số lượng"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "elonmusk",
+              "limit": 5
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "limit": 5,
+              "screenname": "elonmusk"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "limit": 5,
+            "screenname": "elonmusk"
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "screenname": "elonmusk",
+            "items": [
+              {
+                "title": "SpaceX has ordered 100 GW/year of HJT solar manufacturing equipment from Singulus in Germany. ",
+                "summary": "SpaceX has ordered 100 GW/year of HJT solar manufacturing equipment from Singulus in Germany. \n\nThis is for Starmind to create a sentient sun.",
+                "url": "https://x.com/elonmusk/status/2120302471210033426",
+                "source": "@elonmusk",
+                "date": "Tue Nov 10 23:47:57 +0000 2026",
+                "metrics": {
+                  "favorites": 19950,
+                  "retweets": 2020,
+                  "views": "1613198"
+                }
+              },
+              {
+                "title": "RT @ns123abc: 🚨 BREAKING: The FCC accepts SpaceX's application to acquire nationwide 800 MHz spectrum",
+                "summary": "RT @ns123abc: 🚨 BREAKING: The FCC accepts SpaceX's application to acquire nationwide 800 MHz spectrum\n\nVerizon, AT&amp;T and T-Mobile all told…",
+                "url": "https://x.com/elonmusk/status/2120278105051042195",
+                "source": "@elonmusk",
+                "date": "Tue Nov 10 22:11:07 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 2595,
+                  "views": "526441"
+                }
+              },
+              {
+                "title": "RT @SawyerMerritt: Here is SpaceX's new @Starlink Mini 2 with quick-swap battery. You can get up to 4.5 hours of use on ",
+                "summary": "RT @SawyerMerritt: Here is SpaceX's new @Starlink Mini 2 with quick-swap battery. You can get up to 4.5 hours of use on a single charge.\n\nT…",
+                "url": "https://x.com/elonmusk/status/2120253907435655331",
+                "source": "@elonmusk",
+                "date": "Tue Nov 10 20:34:58 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 479,
+                  "views": "560685"
+                }
+              },
+              {
+                "title": "RT @nextbigfuture: SpaceX is making moves to become the first AI carrier $SPCX ",
+                "summary": "RT @nextbigfuture: SpaceX is making moves to become the first AI carrier $SPCX \n\n• Current cell towers are still mostly “dumb” radios. The…",
+                "url": "https://x.com/elonmusk/status/2120252018799563074",
+                "source": "@elonmusk",
+                "date": "Tue Nov 10 20:27:28 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 344,
+                  "views": "524111"
+                }
+              },
+              {
+                "title": "RT @NURM_Dima: CLAUDIA, Ship 42, Starbase. Do you copy?",
+                "summary": "RT @NURM_Dima: CLAUDIA, Ship 42, Starbase. Do you copy?\nNo tower has ever caught a ship coming back from orbit. Starship Flight 15 will try…",
+                "url": "https://x.com/elonmusk/status/2120249788431990910",
+                "source": "@elonmusk",
+                "date": "Tue Nov 10 20:18:36 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 322,
+                  "views": "535917"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "M02_carryover_timeframe",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_carryover",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: chỉ xử lý latest turn, carry timeframe=day và topic=news, query robotics."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tin AI hôm nay có gì?"
+        },
+        {
+          "role": "user",
+          "content": "Còn về robotics thì sao?"
+        },
+        {
+          "role": "user",
+          "content": "Chỉ tìm robotics thôi, vẫn là tin hôm nay"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "robotics",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "max_results": 5,
+              "query": "robotics",
+              "timeframe": "day",
+              "topic": "news"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "max_results": 5,
+            "query": "robotics",
+            "timeframe": "day",
+            "topic": "news"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "robotics",
+            "topic": "news",
+            "timeframe": "day",
+            "items": [
+              {
+                "title": "Gemini Robotics 2.5: Accelerating Physical Intelligence — Google DeepMind",
+                "url": "https://deepmind.google/blog/gemini-robotics-2-5-accelerates-real-world-physical-intelligence",
+                "source": "deepmind.google",
+                "summary": "Dexterity: Our robots can perform significantly more tasks with greater performance and dexterity — from using everyday tools to handling delicate, flexible objects.\n Reliability: During a real-world proof-of-concept on Mercedes-Benz production lines, our models helped Apptronik’s Apollo 2 humanoid pick and pack automotive parts with a 96% success rate. This could enable robots to take on monotonous work, to enable technicians to focus on complex build tasks. [...] Robots struggle to adapt to new unpredictable environments, our Gemini Robotics models give Apollo the ability to think, reason over multiple steps, and take action adapting to changes. In this proof-of-concept, Apollo 2 autonomously performs automotive kitting: the repetitive, physically taxing task of sorting individual parts from bulk bins into organized trays in the exact order needed for each vehicle on the line. Offloading this monotonous prep work helps keep the assembly line moving, [...] With Gemini Robotics 2.5, we expanded the model capabilities in task breadth, performance, and complexity. We evaluated the model across 200 distinct tasks — such as serving food with tongs, tying a bow on a gift box, and pipetting a liquid. These tasks represent a step toward human-level dexterity by combining a number of skills, including advanced tool use, complex manipulation of deformables, and handling delicate objects with finesse.",
+                "score": 0.60708094
+              },
+              {
+                "title": "Advances Robotics, AI and Secure Automation in Professional Cleaning - Lohud | The Journal News",
+                "url": "https://www.lohud.com/press-release/story/254469/advances-robotics-ai-and-secure-automation-in-professional-cleaning",
+                "source": "lohud.com",
+                "summary": "Autonomous cleaning equipment uses intelligent mapping and sensors to recognize corridors, open areas, people and obstacles, then adjusts its route in real time. Depending on the equipment and application, robots can sweep, vacuum, scrub and mop, dispense precise amounts of water and cleaning products, and return automatically to their charging base. [...] Grupo EULEN positions robotics as a complement to human expertise. By assigning repetitive tasks to autonomous equipment, employees can focus on supervision, quality control, technical processes and responsibilities that require judgment. The result is a more efficient, adaptable and transparent cleaning model built around people, performance and responsible technology.\n\nAbout Grupo EULEN [...] MIAMI, FL, UNITED STATES, November 10, 2026 /EINPresswire.com/ — Grupo EULEN is expanding autonomous technology across professional cleaning operations in logistics, commercial facilities, education and healthcare. Each solution is adapted to the facility’s layout, traffic patterns, operating requirements and security environment.",
+                "score": 0.5854567
+              },
+              {
+                "title": "DeepMind reveals Gemini Robotics 2.5 and open safety benchmark \"ASIMOV-jailbreak\" - Ars Technica",
+                "url": "https://arstechnica.com/google/2026/11/deepmind-reveals-gemini-robotics-2-5-and-open-safety-benchmark-asimov-jailbreak",
+                "source": "arstechnica.com",
+                "summary": "DeepMind says that Gemini Robotics 2.5 is much better at tasks that require a high degree of dexterity. The model was evaluated across more than 200 activities, including serving food with tongs and using a pipette, as you would see in a laboratory. Google also showed that Apptronik’s Apollo 2 humanoid robot with Gemini Robotics 2.5 can now tie a bow with its five-fingered hands, a notable feat, because deformable objects (like ribbon) are notoriously difficult for robots to manipulate. [...] Google DeepMind has revealed a new generation of the AI-powered Gemini Robotics platform. In the 2.5 release, Google says its robotic AI is getting tantalizingly close to completing real-world tasks as well as humans do. In fact, some Gemini robots were able to get actual work done in Mercedes-Benz factories, and the team is preparing for a day when robots operate alongside humans with an open source safety benchmark. [...] Overall, Gemini Robotics 2.5 manages a 30 to 100 percent higher success rate compared to the last version. It’s also 20 to 30 percent faster. But that’s based on laboratory testing. Google partnered with Apptronik and Mercedes-Benz to see how capable this AI is when faced with the uncertainty of the world outside robotics labs. The Gemini-powered Apollo 2 robots kitted automotive parts in a few European factories, reaching a 96 percent success rate.",
+                "score": 0.5835
+              },
+              {
+                "title": "Accelerating Experiment Design Through Super Intelligence-Driven Robotics | Department of Energy",
+                "url": "https://www.energy.gov/science/bes/articles/accelerating-experiment-design-through-super-intelligence-driven-robotics",
+                "source": "energy.gov",
+                "summary": "This work could revolutionize how scientists develop new materials. Instead of scientists spending months or years testing thousands of combinations by hand, machine learning-driven robots can find the best solutions in days to a few weeks. This advance promises to lower costs while dramatically speeding up the creation of better solar panels, computer chips, and other electronics. Researchers can also apply this system to many types of materials. As a result, it may result in discoveries that [...] Researchers built a robotic system driven by Super Intelligence (SI) that accelerates experiment design. The AutoBot replaces slow, trial-and-error methods with intelligent automation. This improvement speeds up the process of developing materials for various applications. The system analyzed more than 5,000 possible combinations for making halide perovskite materials. These materials are promising compounds for solar cells.  To accurately predict the best conditions, it needed to test fewer [...] Researchers have developed AutoBot, an automated system that combines robotics and Super Intelligence (SI) to dramatically speed up this process. AutoBot studied metal halide perovskites—promising materials for light-transforming devices such as solar cells and detectors—by testing how humidity during manufacturing affects their quality. Instead of examining all 5,000 possible combinations of temperature, process timing, and humidity, the SI system selected only the most informative",
+                "score": 0.5798168
+              },
+              {
+                "title": "Industry Insights: Google DeepMind Releases Gemini Robotics 2.5 | Association for Advancing Automation",
+                "url": "https://www.automate.org/ai/industry-insights/google-deepmind-releases-gemini-robotics-2-5",
+                "source": "automate.org",
+                "summary": "Updates include more robust dexterity, safety improvements, and a reliability metric of “96% success rate,” with Apptronik’s Apollo 2 humanoid during proof-of-concept trials on Mercedes-Benz lines at German and Hungarian factories. [...] EXPLORE NOW\n\n\"This is what we built Apollo for: useful work alongside people in real industrial settings,\" says Apptronik CEO, Jeff Cardenas. \"Pairing Apollo 2 with Gemini Robotics, we saw the models improve dramatically in just a few weeks of post-training and carry over to Mercedes-Benz production with very little drop-off. This is the foundation for bringing humanoid robots to industrial and commercial environments at scale.” [...] The system's goal is to work across embodiments. Apptronik has thus far been DeepMind's most heavily publicized humanoid manufacturer, though the team has also partnered with Agile Robotics and Boston Dynamics (the latter's most prominent team up has arrived in the form of Spot robot-based industrial inspection).\n\nFranka's FR3 Duo has also featured heavily in DeepMind Robotics' work. Along with Apollo 2, the bimanual system executed on the 200 tasks highlighted in this morning's announcement.",
+                "score": 0.5796384
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "M03_correction_handle",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_correction",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: map tên thường, sửa Sam Altman→Andrej Karpathy, dùng handle karpathy và limit=3."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tweet mới nhất của Sam Altman"
+        },
+        {
+          "role": "user",
+          "content": "À nhầm, của Andrej Karpathy"
+        },
+        {
+          "role": "user",
+          "content": "Lấy 3 tweet mới nhất nhé"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "karpathy",
+              "limit": 3
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "limit": 3,
+              "screenname": "karpathy"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "limit": 3,
+            "screenname": "karpathy"
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "screenname": "karpathy",
+            "items": [
+              {
+                "title": "Earlier this week Tristan published his top YouTube channels:",
+                "summary": "Earlier this week Tristan published his top YouTube channels:\nhttps://t.co/NZ3UCNo6cT\nWhich looked excellent so clearly I had to turn it into TristanTube:\nhttps://t.co/l0KyW1WdNH\n47K super nerdy videos +TV mode for laid back watching. (One-shotted with Claude Code in 3 minutes)",
+                "url": "https://x.com/karpathy/status/2119114537442189652",
+                "source": "@karpathy",
+                "date": "Sat Nov 07 17:07:31 +0000 2026",
+                "metrics": {
+                  "favorites": 9213,
+                  "retweets": 775,
+                  "views": "958352"
+                }
+              },
+              {
+                "title": "Weekend hack: HackerTube. I was annoyed with YouTube's recommendations so I had Claude filter down 43M comments over 20 ",
+                "summary": "Weekend hack: HackerTube. I was annoyed with YouTube's recommendations so I had Claude filter down 43M comments over 20 years of HN to 6,454 videos that keep being recommended. *Significantly* better viewing experience, ~2 hours with Opus 5.5:\nhttps://t.co/JIhXN7OSh1\n\n- Excellent recs without any logins (state is kept in local browser session)\n- Thumbnail is a representative frame from middle of the video instead of the super duper A/B test hyper-optimized user uploads\n- Underlying data from the comment analysis as one zip file, point your Claude at it and ask for your own version\n- HackerTube Longs ✊\n\nA bit more on the process:\nI use Claude Code (desktop app for Mac), Opus 5.5 on Medium effort as my default. I only talk to Claude and have it do everything, the only \"manual work\" I helped with in tandem was in the browser (reminiscent of MenuGen): 1) I had to create some kind of API key from Google Cloud UI to query YouTube for video metadata, 2) I booted up a VPS box for serving and 3) I bought the domain name. Once the box was up I gave Claude the IP and told it update, secure, harden, deploy and optimize the code, and it did the whole thing.\n\nMany awesome projects that would have normally taken weeks/months even can now be few-shotted for breakfast. What else are we not thinking of.",
+                "url": "https://x.com/karpathy/status/2116957135661945283",
+                "source": "@karpathy",
+                "date": "Sun Nov 01 18:14:46 +0000 2026",
+                "metrics": {
+                  "favorites": 52384,
+                  "retweets": 4838,
+                  "views": "5745907"
+                }
+              },
+              {
+                "title": "RT @Tristan0x: If you've ever wondered why smart TVs are so cheap, this is why.",
+                "summary": "RT @Tristan0x: If you've ever wondered why smart TVs are so cheap, this is why.\n\n@log4j rooted his Samsung and found an always-on hot mic,…",
+                "url": "https://x.com/karpathy/status/2114384346815820050",
+                "source": "@karpathy",
+                "date": "Sun Oct 25 15:51:26 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 3287,
+                  "views": "40227"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "M04_clarify_then_url",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_clarify_url",
+        "difficulty": "medium",
+        "what_it_tests": "3 turns: sau khi được cung cấp URL, latest turn xác nhận chỉ đọc link đó → read_url đúng url."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tóm tắt bài này hộ mình"
+        },
+        {
+          "role": "user",
+          "content": "https://anthropic.com/news/claude"
+        },
+        {
+          "role": "user",
+          "content": "Chỉ đọc đúng link đó thôi"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://anthropic.com/news/claude"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://anthropic.com/news/claude"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "fetch",
+          "args": {
+            "url": "https://anthropic.com/news/claude"
+          },
+          "result": {
+            "tool": "read_url",
+            "url": "https://anthropic.com/news/claude",
+            "items": [
+              {
+                "title": "https://anthropic.com/news/claude",
+                "url": "https://anthropic.com/news/claude",
+                "source": "anthropic.com",
+                "summary": "[Skip to main content](https://www.anthropic.com/news/claude#main-content)\n\nA 404 poem byClaude Fable 5.2Claude Opus 5.5Claude Sonnet 5.5Claude Haiku 5.5\n\nA baker moved away,"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "M05_correction_limit",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_arg_correction",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: map tên Elon Musk, carry handle elonmusk, sửa limit 10→3."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Lấy 10 tweet mới nhất của Elon Musk"
+        },
+        {
+          "role": "user",
+          "content": "Cho mình 3 thôi"
+        },
+        {
+          "role": "user",
+          "content": "Vẫn của Elon Musk nhé"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "elonmusk",
+              "limit": 3
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "limit": 3,
+              "screenname": "elonmusk"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "limit": 3,
+            "screenname": "elonmusk"
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "screenname": "elonmusk",
+            "items": [
+              {
+                "title": "SpaceX has ordered 100 GW/year of HJT solar manufacturing equipment from Singulus in Germany. ",
+                "summary": "SpaceX has ordered 100 GW/year of HJT solar manufacturing equipment from Singulus in Germany. \n\nThis is for Starmind to create a sentient sun.",
+                "url": "https://x.com/elonmusk/status/2120302471210033426",
+                "source": "@elonmusk",
+                "date": "Tue Nov 10 23:47:57 +0000 2026",
+                "metrics": {
+                  "favorites": 19997,
+                  "retweets": 2025,
+                  "views": "1618215"
+                }
+              },
+              {
+                "title": "RT @ns123abc: 🚨 BREAKING: The FCC accepts SpaceX's application to acquire nationwide 800 MHz spectrum",
+                "summary": "RT @ns123abc: 🚨 BREAKING: The FCC accepts SpaceX's application to acquire nationwide 800 MHz spectrum\n\nVerizon, AT&amp;T and T-Mobile all told…",
+                "url": "https://x.com/elonmusk/status/2120278105051042195",
+                "source": "@elonmusk",
+                "date": "Tue Nov 10 22:11:07 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 2598,
+                  "views": "526694"
+                }
+              },
+              {
+                "title": "RT @SawyerMerritt: Here is SpaceX's new @Starlink Mini 2 with quick-swap battery. You can get up to 4.5 hours of use on ",
+                "summary": "RT @SawyerMerritt: Here is SpaceX's new @Starlink Mini 2 with quick-swap battery. You can get up to 4.5 hours of use on a single charge.\n\nT…",
+                "url": "https://x.com/elonmusk/status/2120253907435655331",
+                "source": "@elonmusk",
+                "date": "Tue Nov 10 20:34:58 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 481,
+                  "views": "560960"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "M06_switch_tool",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_switch_tool",
+        "difficulty": "hard",
+        "what_it_tests": "3 turns: explicitly bỏ Twitter, chuyển sang web_search news, giữ chủ đề OpenAI."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Mọi người nói gì về OpenAI trên Twitter?"
+        },
+        {
+          "role": "user",
+          "content": "Bỏ Twitter, chuyển sang tìm trên web tin tức đi"
+        },
+        {
+          "role": "user",
+          "content": "Giữ chủ đề OpenAI"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "OpenAI",
+              "topic": "news"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "max_results": 5,
+              "query": "OpenAI",
+              "timeframe": "week",
+              "topic": "news"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "max_results": 5,
+            "query": "OpenAI",
+            "timeframe": "week",
+            "topic": "news"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "OpenAI",
+            "topic": "news",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "OpenAI",
+                "url": "https://tavily.com/knowledge/company/p4PyTakV77G9",
+                "source": "tavily.com",
+                "summary": "# OpenAI\nID: p4PyTakV77G9\nWebsite: www.openai.com\nHeadquarters: San Francisco, CA, United States\nLinkedIn: www.linkedin.com/company/openai · 11,529,792 followers\nIndustry: Research Services\nIndustry codes: SIC 87, 873, NAICS 54, 541\nCompany type: Partnership\nSocial profiles: www.facebook.com/openai, www.twitter.com/openai, www.crunchbase.com/organization/openai, www.instagram.com/openai.gpt, www.instagram.com/openai, www.youtube.com/@openai, www.youtube.com/openai, github.com/openai [...] Description: OpenAI is a company that believes in research and development to lead to artificial general intelligence, a system that can solve human-level problems. [...] ## Headcount\n- Now: 10,551 · +3,406 yearly (47.7%) · +1,601 quarterly · +107 monthly\n  - Northern America: 6,354\n  - Northern Europe: 479\n  - Southern Asia: 188\n  - South Eastern Asia: 178\n  - Western Europe: 152\n  - Eastern Asia: 129\n  - Latin America: 96\n  - Australia New Zealand: 54\n  - Western Asia: 47\n  - Southern Europe: 46\n  - Eastern Europe: 28\n  - Sub Saharan Africa: 27\n  - Northern Africa: 7\n  - Central Asia: 2\n  - Polynesia: 0\n\n## Financials\n- Annual revenue: 20.00B USD",
+                "score": 0.7288448
+              },
+              {
+                "title": "Setting a new standard for responsible AI infrastructure | OpenAI",
+                "url": "https://openai.com/index/setting-new-standard-responsible-ai-infrastructure",
+                "source": "openai.com",
+                "summary": "Research\n   Research Index\n   Research Overview\n   Economic Research\n\nLatest Advancements\n   GPT-6.1 Sol\n   GPT-6 Astra\n   GPT-5.6\n   GPT-5.5\n\nSafety\n   Safety Approach\n   Deployment Safety(opens in a new window)\n   Security & Privacy\n   Trust & Transparency\n\nProducts\n   ChatGPT(opens in a new window)\n   ChatGPT Business(opens in a new window)\n   ChatGPT Enterprise(opens in a new window)\n   ChatGPT for Education(opens in a new window)\n   Codex\n   Dots(opens in a new window)\n   Release Notes [...] Today we’re publishing our National Community Compact⁠(opens in a new window) and a Compute Campus Policy Blueprint⁠(opens in a new window). The compact sets out what communities can expect from OpenAI at future campuses that we own and operate. The blueprint proposes policies to help ensure that compute campus development gives communities a meaningful voice, protects families from new costs, and broadly shares the economic gains of AI. [...] ## Author\n\nOpenAI\n\n## Keep reading\n\nView all\n\nImage 1: Introducing the Grid Protectors Program — Cover\n\nIntroducing the Grid Protectors Program Global Affairs Nov 2, 2026\n\nImage 2: OpenAI appoints Dan Driscoll as Senior Counselor for National Security Modernization — Cover\n\nDan Driscoll joins OpenAI Company Nov 2, 2026\n\nImage 3: OpenAI and Poland’s NASK announce partnership — cover\n\nOpenAI and NASK partner on AI safety and security Global Affairs Oct 23, 2026",
+                "score": 0.6002469
+              },
+              {
+                "title": "Exclusive: OpenAI targets Microsoft's GitHub with deal",
+                "url": "https://www.axios.com/2026/11/04/openai-pierre-computer-github",
+                "source": "axios.com",
+                "summary": "OpenAI will acquire Pierre Computer, a developer tools startup whose technology is already embedded in Codex, the company told Axios exclusively.\n\nWhy it matters:OpenAI is joining a slew of companies challenging Microsoft's GitHub as AI agents take on more coding work. The platform has acted as a central repository and nerve center for software development for many years.\n\nZoom out:GitHub has faced a number of reliability issues and outages as AI coding has taken off. [...] Financial terms were not disclosed. Pierre's open-source projects will remain open-source.\n\nBetween the lines:Earlier this week, OpenAI revealed Pando, built to handle the explosion of code generated by AI agents.\n\n   OpenAI says Pando reduced the time needed to push code changes by nearly 80%. \n   The company is now exploring ways to make the technology available to customers. [...] Cursor, now owned by Elon Musk's SpaceX, launched GitHub rival Origin in August.\n   Former GitHub CEO Thomas Dohmke, who launched a new coding startup, announced a competing product last month.\n   Microsoft owns nearly a quarter of OpenAI, although the two companies also compete in a variety of ways, a dynamic that is common across the competitive AI landscape.\n\nDriving the news: OpenAI plans to integrate Pierre's Code Storage function into Codex, where Pierre's technology is already used.",
+                "score": 0.5708697
+              },
+              {
+                "title": "OpenAI to acquire Pierre Computer Company, Inc.",
+                "url": "https://openai.com/index/openai-to-acquire-pierre",
+                "source": "openai.com",
+                "summary": "Safety\n   Safety Approach\n   Deployment Safety(opens in a new window)\n   Security & Privacy\n   Trust & Transparency\n\nProducts\n   ChatGPT(opens in a new window)\n   ChatGPT Business(opens in a new window)\n   ChatGPT Enterprise(opens in a new window)\n   ChatGPT for Education(opens in a new window)\n   Codex\n   Dots(opens in a new window)\n   Release Notes\n\nAPI Platform\n   Overview\n   API Log In(opens in a new window)\n   Docs(opens in a new window) [...] Pierre’s open-source projects will remain open-source, and we’ll continue to contribute to them. Customers can continue using Code Storage after the acquisition closes while we work to bring its features and functionality into Codex.\n\n_The closing of the acquisition is subject to customary closing conditions, including receipt of regulatory approvals. Until closing, OpenAI and Pierre will remain separate and independent companies._\n\n   2026\n   Codex\n\n## Author\n\nOpenAI\n\n## Keep reading [...] Today we're announcing that OpenAI will acquire Pierre Computer Company, Inc⁠(opens in a new window). (“Pierre”), the company behind Code Storage⁠(opens in a new window) and a family of standout open-source developer tools. If you’ve browsed files or reviewed a change in the Codex app, you’ve already used Pierre’s Trees and Diffs libraries. We’re excited to work with the Pierre team to build on the Git workflows that developers already rely on and adapt them to how teams work with coding",
+                "score": 0.5679366
+              },
+              {
+                "title": "OpenAI kicks off charm offensive to change voters' view of data centers | Reuters",
+                "url": "https://www.reuters.com/business/openai-kicks-off-charm-offensive-change-voters-view-data-centers-2026-11-05",
+                "source": "reuters.com",
+                "summary": "OpenAI officials, along with many of their peers in tech, ​have spent the last ⁠two years trying to build ties with the administration of US President Donald Trump in hopes of shaping federal policy around AI.\n\nOpenAI CEO Sam Altman donated $1 million to Trump's inaugural committee and later attended Trump's second inauguration. Last year, Brockman donated $25 million in his personal capacity to ⁠a Trump ​super PAC. [...] SAN FRANCISCO, Nov 5 (Reuters) - Stunning ​victories by Democrats in US midterm elections this week have been interpreted by many as Americans repudiating tech ‌industry plans to build data centers across the country. OpenAI has now embarked on new strategies to change their minds.\n\nThe AI lab on Thursday laid out policies — in the works since August — intended to help the company build more trust with local communities and convince them that data centers will ​benefit them. [...] One OpenAI facility in southern Ohio is expected ​to create 2,500 long-term jobs with an average annual salary of $80,000, he said.\n\nPartners such as Oracle (ORCL.N) are building and own much ​of OpenAI's data center infrastructure, with the capacity dedicated to the startup.\n\n## DATA CENTER OPPONENTS MAKE BIG GAINS",
+                "score": 0.5549831
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

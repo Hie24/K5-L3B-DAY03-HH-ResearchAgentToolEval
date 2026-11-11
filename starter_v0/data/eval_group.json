@@ -185,11 +185,11 @@
       "turns": [
         {
           "role": "user",
-          "content": "Đăng bản tin tổng hợp này lên kênh Telegram giúp mình"
+          "content": "Đăng nguyên văn bản tin này lên kênh Telegram giúp mình: Bản tin nội bộ: Ngân sách nghiên cứu quý này là 120 triệu đồng."
         },
         {
           "role": "assistant",
-          "content": "Bạn có đồng ý gửi bản tin này lên kênh Telegram không?"
+          "content": "Bạn có đồng ý gửi nguyên văn: Bản tin nội bộ: Ngân sách nghiên cứu quý này là 120 triệu đồng. lên kênh Telegram không?"
         },
         {
           "role": "user",
@@ -202,6 +202,7 @@
           {
             "name": "send",
             "args": {
+              "text": "Bản tin nội bộ: Ngân sách nghiên cứu quý này là 120 triệu đồng.",
               "confirmed": true
             }
           }

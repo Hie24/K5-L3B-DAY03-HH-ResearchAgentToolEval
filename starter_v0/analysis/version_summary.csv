@@ -3,3 +3,5 @@
 "v1","groq","openai/gpt-oss-120b","20","20","0","16","0.8","0.9","0.8","0.8333","runs/v1_B_base_groq_20261110T182835864967.json"
 "v2","groq","openai/gpt-oss-120b","20","20","0","17","0.85","0.95","0.85","1.0","runs/v2_B_base_groq_20261110T183811591909.json"
 "v3","groq","openai/gpt-oss-120b","20","20","0","17","0.85","0.95","0.85","1.0","runs/v3_B_base_groq_20261110T184556678670.json"
+v4-integration,groq,openai/gpt-oss-120b,20,20,0,17,0.85,0.95,0.85,1.0,runs/v4-integration_B_base_groq_20261111T111423438575.json
+v4-integration,groq,openai/gpt-oss-120b,10,10,0,9,0.9,1.0,0.9,1.0,runs/v4-integration_B_group_groq_20261111T110724190757.json

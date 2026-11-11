@@ -1,0 +1,824 @@
+{
+  "run_id": "v4-integration_B_group_groq_20261111T110724190757",
+  "version": "v4-integration",
+  "artifact_version": "v4-integration+p7ae25695d3f2+t19acd1e40905",
+  "prompt_hash": "7ae25695d3f29966f7dd15baf8efb66cec8846b456ca088b1f8a7868ea7ac2fd",
+  "tools_hash": "19acd1e409051b2bad1e820bb9d5fe4db1eefe323c455ec6acd19f8a01031fd6",
+  "phase": "B",
+  "suite": "group",
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b",
+  "system_prompt": "C:\\Users\\nguye\\Downloads\\LAB_03\\K5-L3B-DAY03-HH-ResearchAgentToolEval\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "C:\\Users\\nguye\\Downloads\\LAB_03\\K5-L3B-DAY03-HH-ResearchAgentToolEval\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_group.json",
+  "dataset_id": "day03_v2_research_group",
+  "dataset_role": "group",
+  "description": "Bộ 10 eval cases do nhóm thiết kế (5 single turn + 5 multi turn), bao gồm kiểm tra tool mới calculator, kiểm tra rào chắn an toàn, xử lý thiếu thông tin, và kế thừa ngữ cảnh đa lượt.",
+  "generated_at": "2026-11-11T11:07:24",
+  "summary": {
+    "total_cases": 10,
+    "measured_cases": 10,
+    "provider_error_cases": 0,
+    "passed_cases": 9,
+    "case_accuracy": 0.9,
+    "tool_routing_accuracy": 1.0,
+    "argument_accuracy": 0.9,
+    "multiturn_accuracy": 1.0,
+    "failure_counts": {
+      "wrong_arg_value": 1
+    },
+    "observed_mismatch_counts": {
+      "wrong_arg_value": 1
+    }
+  },
+  "results": [
+    {
+      "id": "G01_calculator_growth",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "new_tool_routing",
+        "difficulty": "easy",
+        "what_it_tests": "Kiểm tra model nhận diện phép tính tăng trưởng số học và định tuyến chính xác tới tool mới calculator"
+      },
+      "input": "Tính giúp mình doanh thu dự kiến nếu tăng trưởng 15% từ 120 tỷ: 120 * 1.15",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "calculator",
+            "args": {
+              "expression": "120 * 1.15"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "calculator",
+            "args": {
+              "expression": "120 * 1.15"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "calculator",
+          "args": {
+            "expression": "120 * 1.15"
+          },
+          "result": {
+            "tool": "calculate",
+            "expression": "120 * 1.15",
+            "result": 138
+          }
+        }
+      ]
+    },
+    {
+      "id": "G02_calculator_budget_division",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "new_tool_routing",
+        "difficulty": "easy",
+        "what_it_tests": "Kiểm tra model định tuyến phép tính chia ngân sách vào tool mới calculator"
+      },
+      "input": "Chia đều ngân sách 1000 triệu cho 4 quý trong năm: 1000 / 4",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "calculator",
+            "args": {
+              "expression": "1000 / 4"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "calculator",
+            "args": {
+              "expression": "1000 / 4"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "calculator",
+          "args": {
+            "expression": "1000 / 4"
+          },
+          "result": {
+            "tool": "calculate",
+            "expression": "1000 / 4",
+            "result": 250
+          }
+        }
+      ]
+    },
+    {
+      "id": "G03_social_search_ai_agents",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "social_search_routing",
+        "difficulty": "medium",
+        "what_it_tests": "Kiểm tra tìm kiếm từ khóa thảo luận mạng xã hội gọi social_search thay vì timeline"
+      },
+      "input": "Mọi người đang bàn gì về AI Agent trên mạng xã hội Twitter?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI Agent"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "limit": 5,
+              "query": "AI Agent",
+              "search_type": "Latest"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "limit": 5,
+            "query": "AI Agent",
+            "search_type": "Latest"
+          },
+          "result": {
+            "tool": "search_tweets",
+            "query": "AI Agent",
+            "search_type": "Latest",
+            "items": [
+              {
+                "title": "🚨重磅！Qwen4-Max Preview 即将上线！",
+                "summary": "🚨重磅！Qwen4-Max Preview 即将上线！\n\n要点速览：\n🔹Qwen4-Max 预览版现已上线，首发登陆阿里 Token Plan\n🔹限时最低 1折 即可体验\n🔹知识储备更深、世界认知更立体，Coding + Agentic 能力大幅进阶\n🔹擅长复杂编程、专业办公、前端设计、专业软件操作及长程任务\n🔹支持对话模式 & Agent 模式\n🔹已第一时间接入千问办公、Qoder、千问APP、QwenStudio 等产品\n\n#Qwen4 #Qwen4Max #阿里大模型 #TokenPlan #AI新突破 #千问大模型 #刘大一恒",
+                "url": "https://x.com/NFT_Chen/status/2120367100351132128",
+                "source": "@NFT_Chen",
+                "date": "Wed Nov 11 04:04:45 +0000 2026",
+                "metrics": {
+                  "favorites": 1,
+                  "retweets": 0,
+                  "views": "30"
+                }
+              },
+              {
+                "title": "@RadTV__ I think editing is mostly solved. I made this with my agent. It one-shotted it. ",
+                "summary": "@RadTV__ I think editing is mostly solved. I made this with my agent. It one-shotted it. \n\n https://t.co/Xznumo3LW7",
+                "url": "https://x.com/AIandDesign/status/2120366977403548054",
+                "source": "@AIandDesign",
+                "date": "Wed Nov 11 04:04:16 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "1"
+                }
+              },
+              {
+                "title": "@vikas_avnish If an agent solved the same problem last month, the first job is to find that path, not to run a second at",
+                "summary": "@vikas_avnish If an agent solved the same problem last month, the first job is to find that path, not to run a second attempt from scratch. A daily loop that stores the fix, the files, and the reason, then makes them searchable, stops the redo. Keep a record of what worked, and reuse it first.",
+                "url": "https://x.com/HaoqxXp/status/2120366941974200476",
+                "source": "@HaoqxXp",
+                "date": "Wed Nov 11 04:04:08 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "3"
+                }
+              },
+              {
+                "title": "⚡️ Claupet 270 Just Transformed Into a More Complete #AI Agent Development Workspace + Video",
+                "summary": "⚡️ Claupet 270 Just Transformed Into a More Complete #AI Agent Development Workspace + Video\n\n-Fact Checker: ✅: 8 ❌: 0 || 8/8 → Score: 100% 🦾\n-Prediction: 📈 4 Positive | 📉 2 Negative\n\nhttps://t.co/sGdeNcoI3x",
+                "url": "https://x.com/undercode_news/status/2120366914992316453",
+                "source": "@undercode_news",
+                "date": "Wed Nov 11 04:04:01 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "1"
+                }
+              },
+              {
+                "title": "ChatGPT 这次开始盯上商家了",
+                "summary": "ChatGPT 这次开始盯上商家了\n\nOpenAI 推出 Businesses in ChatGPT，商家可以认领资料、上传商品库存，再由Business Agent 帮顾客回答问题\n\n以前用户问 AI 怎么做事\n\n现在用户可能直接问 AI：这件商品哪里买？\n\n电商流量入口，可能真的要变了 https://t.co/zeGKwsZFU7",
+                "url": "https://x.com/ChantoziQ/status/2120366909228974212",
+                "source": "@ChantoziQ",
+                "date": "Wed Nov 11 04:04:00 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "2"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G04_web_news_vietnam_tech",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "news_args_convention",
+        "difficulty": "medium",
+        "what_it_tests": "Kiểm tra tìm tin tức web đặt đúng topic=news và timeframe=day"
+      },
+      "input": "Tin tức công nghệ Việt Nam hôm nay có gì mới?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "công nghệ Việt Nam",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "max_results": 5,
+              "query": "tin công nghệ Việt Nam",
+              "timeframe": "day",
+              "topic": "news"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_arg_value",
+        "failures": [
+          "query: expected 'công nghệ Việt Nam', got 'tin công nghệ Việt Nam'"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "max_results": 5,
+            "query": "tin công nghệ Việt Nam",
+            "timeframe": "day",
+            "topic": "news"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "tin công nghệ Việt Nam",
+            "topic": "news",
+            "timeframe": "day",
+            "items": [
+              {
+                "title": "Từ AI đến lượng tử, FPT đề xuất 5 hướng hợp tác công nghệ Việt Nam - Nhật Bản",
+                "url": "https://vtcnews.vn/tu-ai-den-luong-tu-fpt-de-xuat-5-huong-hop-tac-cong-nghe-viet-nam-nhat-ban-ar1050416.html",
+                "source": "vtcnews.vn",
+                "summary": "VNPT và Symphony hợp tác cung cấp dịch vụ truyền dẫn quốc tế, cho phép đối tác sử dụng hạ tầng mạng theo nhu cầu và thanh toán tương ứng với mức sử dụng.\n\nDoanh thu công nghiệp công nghệ số Việt Nam đạt hơn 250 tỷ USD\n\n### Doanh thu công nghiệp công nghệ số Việt Nam đạt hơn 250 tỷ USD\n\nTrong 10 tháng đầu năm 2026, doanh thu công nghiệp công nghệ số ước đạt 254,6 tỷ USD, trong khi các nền tảng AI hỗ trợ công vụ thu hút khoảng 761.000 tài khoản. [...] ### SotaTek hợp tác DeepX phát triển giải pháp AI bán dẫn tại Việt Nam\n\nSotaTek và DeepX hợp tác phát triển giải pháp AI bán dẫn, hướng đến các lĩnh vực sản xuất, robot, giám sát và giao thông tại Việt Nam.\n\n### AI Trái Đất tìm kiếm AI ngoài hành tinh\n\nNVIDIA hợp tác với các nhà thiên văn sử dụng AI để tìm kiếm tín hiệu từ nền văn minh ngoài Trái Đất, với giả thuyết những nền văn minh này cũng có thể sở hữu AI.\n\n### Người Việt sẵn sàng giao việc ‘đi chợ’ cho AI [...] vtcnews.vn\n\nCùng chuyên mục\n\n### Công nghệ 11/11: Robot cần 'vú em', OPPO có điện thoại pin 12.000 mAh\n\nFigure AI tuyển người giám sát robot với mức lương hơn 1 triệu đồng/giờ, OPPO hé lộ điện thoại pin 12.000 mAh... là một số tin công nghệ đáng chú ý ngày 11/11.\n\n### Người cha dùng AI khiến tivi cứ 10 phút lại ra đề kiểm tra trẻ\n\nMột người cha ở Trung Quốc đã phát triển ứng dụng AI trên tivi, yêu cầu trẻ trả lời cu hỏi sau mỗi 10 phút xem để tiếp tục chương trình.",
+                "score": 0.68794453
+              },
+              {
+                "title": "FPT mở rộng hợp tác với Nhật Bản trong lĩnh vực UAV và kinh tế tầm thấp | Tin nhanh chứng khoán",
+                "url": "https://m.tinnhanhchungkhoan.vn/fpt-mo-rong-hop-tac-voi-nhat-ban-trong-linh-vuc-uav-va-kinh-te-tam-thap-post401127.amp",
+                "source": "m.tinnhanhchungkhoan.vn",
+                "summary": "## Công nghệ\n\n# FPT mở rộng hợp tác với Nhật Bản trong lĩnh vực UAV và kinh tế tầm thấp\n\n(ĐTCK) Tại Diễn đàn công tư về hợp tác kinh tế và khoa học công nghệ Việt Nam - Nhật Bản diễn ra ngày 9/11 tại Tokyo, FPT đề xuất năm trụ cột đồng kiến tạo về AI, lượng tử, nhn lực và tài chính công nghệ, đồng thời trao biên bản ghi nhớ hợp tác với các đối tác Nhật Bản về thiết bị bay không người lái (UAV) và kinh tế tầm thấp. [...] Thứ nhất là xy dựng hạ tầng AI chủ quyền, tin cậy, kết nối AI Factory, dữ liệu và năng lực ứng dụng của hai nước trên nguyên tắc mỗi bên làm chủ hạ tầng và dữ liệu của mình. Thứ hai là chuyển đổi AI cho doanh nghiệp và chuỗi cung ứng trong các lĩnh vực ô tô, điện tử, logistics và năng lượng. Thứ ba là đào tạo quy mô lớn hàng chục nghìn kỹ sư AI và lượng tử, thành thạo tiếng Nhật. Thứ tư là thành lập Quỹ đồng sáng tạo Việt Nam – Nhật Bản. Thứ năm là thúc đẩy hợp tác trong kỷ nguyên lượng tử. [...] FPT có mặt tại Nhật Bản từ năm 2005, là doanh nghiệp công nghệ thông tin đầu tiên của Việt Nam có pháp nhn tại đy. Hiện FPT có 18 văn phòng và trung tm phát triển cùng hơn 5.500 nhn sự tại Nhật Bản và hơn 15.000 kỹ sư, chuyên gia công nghệ trên toàn cầu phục vụ khách hàng Nhật Bản.\n\nThủy Anh\n\n## Tin liên quan\n\n## Sức hấp dẫn của FPT khi khối ngoại dừng bán ròng và nền tảng nội tại vững chắc\n\n## FPT mở rộng nền tảng công nghệ dài hạn tại Đan Mạch",
+                "score": 0.65301627
+              },
+              {
+                "title": "Bước tiến trong đào tạo và phát triển nhân lực trí tuệ nhân tạo",
+                "url": "https://www.vietnam.vn/buoc-tien-trong-dao-tao-va-phat-trien-nhan-luc-tri-tue-nhan-tao",
+                "source": "vietnam.vn",
+                "summary": "AI đang trở thành công nghệ nền tảng, tác động su rộng đến các lĩnh vực, từ sản xuất công nghiệp, y tế, giáo dục, tài chính đến quản trị và cung cấp dịch vụ công. Tuy nhiên, để chuyển hóa tiềm năng công nghệ thành giá trị thực tiễn, Việt Nam cần đội ngũ nhn lực đủ năng lực nghiên cứu, làm chủ và ứng dụng AI nhằm giải quyết bài toán thiết thực của đất nước. [...] Có thể bạn quan tm\n\n### Gắn kết đào tạo với thực tiễn\n\nAI là một công nghệ chiến lược, có ý nghĩa quyết định đối với năng suất và sức cạnh tranh quốc gia. Việc đào tạo bài bản nguồn nhn lực AI có thể giúp Việt Nam thoát khỏi vai trò tiêu thụ sản phẩm hay gia công ứng dụng bề nổi, tiến tới tự chủ thiết kế giải pháp và làm chủ công nghệ lõi. [...] Vietnam.vn - Nền tảng quảng bá Việt Nam\n\n# Bước tiến trong đào tạo và phát triển nhn lực trí tuệ nhn tạo\n\nTrí tuệ nhn tạo (AI) đang mở ra cơ hội phát triển mới, song việc thiếu hụt nhn lực chất lượng cao cùng khoảng cách giữa đào tạo với thực tiễn đang là điểm nghẽn lớn.\n\nBáo Nhn dnBáo Nhn dn•11/11/2026\n\nSinh viên Trường đại học Khoa học và Công nghệ Hà Nội thực hành tại phòng thí nghiệm. (Ảnh: HIỀN LIÊN)",
+                "score": 0.5778527
+              },
+              {
+                "title": "Danh sách 20 cá nhân nhận Giải thưởng Nữ sinh khoa học công nghệ Việt Nam 2026",
+                "url": "https://thanhnien.vn/danh-sach-20-ca-nhan-nhan-giai-thuong-nu-sinh-khoa-hoc-cong-nghe-viet-nam-2026-185261110151219808.htm",
+                "source": "thanhnien.vn",
+                "summary": "## Tin liên quan\n\nCông bố 17 nhà khoa học được đề cử Giải thưởng Quả cầu vàng 2026\n\n### Công bố 17 nhà khoa học được đề cử Giải thưởng Quả cầu vàng 2026\n\nTừ 71 hồ sơ hợp lệ, Hội đồng Giải thưởng Khoa học công nghệ Quả cầu vàng năm 2026 đã lựa chọn 17 ứng viên tiêu biểu thuộc 9 lĩnh vực để công bố rộng rãi trước khi chọn 10 gương mặt xuất sắc nhất.\n\n### 70 cá nhn được nhận Giải thưởng Nguyễn Chí Thanh\n\n### Danh sách 10 nhà khoa học trẻ xuất sắc nhận Giải thưởng Quả cầu vàng năm 2026\n\nChia sẻ [...] Cụ thể, nhóm ngành công nghệ hóa học, vật liệu, luyện kim và môi trường có 6 nữ sinh. Ngành máy tính; ngành công nghệ, kỹ thuật điện, điện tử và viễn thông mỗi ngành có 4 nữ sinh. Ngành công nghệ thông tin có 2 nữ sinh. Ngành công nghệ, kỹ thuật cơ khí; ngành sinh học ứng dụng; ngành công nghệ kỹ thuật kiến trúc và công trình xy dựng; nhóm ngành liên quan đến công nghệ biển, phòng tránh thiên tai, ứng phó với biến đổi khí hậu, năng lượng và công nghệ vũ trụ mỗi ngành có một nữ sinh. [...] Khi ô vuông chuyển thành dấu tích xanh là bạn đã thành công rồi!\n\nLƯU Ý NHỎ: Nếu muốn kiểm tra xem cài đặt còn hiệu lực không, bạn chỉ cần mở lại link trên là thấy ngay dấu tích xanh vẫn đang hiển thị.\n\nCác nguồn ưu tiênCác nguồn ưu tiên\n\nChúc bạn đọc báo vui vẻ!\n\nBan Bí thư T.Ư Đoàn vừa quyết định trao Giải thưởng Nữ sinh khoa học công nghệ Việt Nam năm 2026 cho 20 nữ sinh xuất sắc thuộc 8 nhóm ngành khoa học công nghệ, được lựa chọn từ 132 hồ sơ đăng ký.",
+                "score": 0.5525397
+              },
+              {
+                "title": "Công đoàn Khoa học và Công nghệ Việt Nam triển khai kế hoạch chăm sóc sức khỏe lao động",
+                "url": "https://congdoanvietnam.vn/nghi-quyet-dhxiii/cong-doan-khoa-hoc-va-cong-nghe-viet-nam-trien-khai-ke-hoach-cham-soc-suc-khoe-lao-dong-48158.tld",
+                "source": "congdoanvietnam.vn",
+                "summary": "Ứng dụng công nghệ số và bảo đảm an toàn thông tin trong tuyên truyền, khảo sát nhu cầu, tiếp nhận phản ánh và tổng hợp kết quả triển khai.\n\nTăng cường phối hợp và huy động nguồn lực từ cơ quan quản lý Nhà nước, cơ sở y tế, cơ quan bảo hiểm xã hội, người sử dụng lao động và các đối tác phù hợp; khuyến khích các chương trình hợp tác chăm sóc sức khỏe, tư vấn, khám sàng lọc, phục hồi chức năng và hỗ trợ tiếp cận dịch vụ y tế với chi phí phù hợp.\n\nXem bản gốc tại đy [...] Mô hình “Tổ công đoàn số” đang được triển khai tại Ninh Bình nhằm đưa kỹ năng số đến gần hơn với đoàn viên, người lao động tại cơ sở.\n\nLĐLĐ tỉnh Điện Biên hướng về cơ sở, chăm lo Tết cho người lao động\n\n## LĐLĐ tỉnh Điện Biên hướng về cơ sở, chăm lo Tết cho người lao động\n\nĐiện Biên - LĐLĐ tỉnh sẽ tổ chức những hoạt động hướng về cơ sở, chăm lo Tết cho người lao động.\n\nBảo đảm an ninh năng lượng và vai trò của công nhn Việt Nam trong kỷ nguyên mới [...] Công đoàn các khu công nghiệp Ninh Bình phát triển hơn 38.500 đoàn viên\n\n## Công đoàn các khu công nghiệp Ninh Bình phát triển hơn 38.500 đoàn viên\n\nNinh Bình - Trong 9 tháng đầu năm 2026, Công đoàn các khu công nghiệp tỉnh Ninh Bình thành lập mới 65 công đoàn cơ sở, phát triển hơn 38.500...\n\nCông đoàn Ninh Bình đưa kỹ năng số đến từng đoàn viên\n\n## Công đoàn Ninh Bình đưa kỹ năng số đến từng đoàn viên",
+                "score": 0.41964793
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G05_out_of_scope_greeting",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "out_of_scope_handling",
+        "difficulty": "easy",
+        "what_it_tests": "Kiểm tra câu chào hỏi xã giao thông thường không được gọi bất kỳ công cụ nào"
+      },
+      "input": "Chào bạn, hôm nay bạn thế nào?",
+      "expect": {
+        "no_tool": true
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Chào bạn! Mình luôn sẵn sàng hỗ trợ. Bạn cần giúp gì hôm nay?",
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "GM01_clarify_then_calculate",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_clarify_to_new_tool",
+        "difficulty": "medium",
+        "what_it_tests": "Đa lượt: sau khi được hỏi lại, user cung cấp biểu thức thì agent phải gọi calculator"
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tính giúp mình kết quả phép tính này với"
+        },
+        {
+          "role": "assistant",
+          "content": "Bạn muốn tính phép tính gì?"
+        },
+        {
+          "role": "user",
+          "content": "Phép tính là (250 + 150) / 4"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "calculator",
+            "args": {
+              "expression": "(250 + 150) / 4"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "calculator",
+            "args": {
+              "expression": "(250 + 150) / 4"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "calculator",
+          "args": {
+            "expression": "(250 + 150) / 4"
+          },
+          "result": {
+            "tool": "calculate",
+            "expression": "(250 + 150) / 4",
+            "result": 100
+          }
+        }
+      ]
+    },
+    {
+      "id": "GM02_clarify_missing_url_then_fetch",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_clarify_to_fetch",
+        "difficulty": "medium",
+        "what_it_tests": "Đa lượt: sau khi hỏi xin link URL, user gửi link thì agent gọi đúng fetch với url đó"
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tóm tắt bài phân tích thị trường này giúp mình"
+        },
+        {
+          "role": "assistant",
+          "content": "Vui lòng cung cấp URL bài viết cần tóm tắt."
+        },
+        {
+          "role": "user",
+          "content": "Link bài viết đây nhé: https://techcrunch.com/2026/market-report"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://techcrunch.com/2026/market-report"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://techcrunch.com/2026/market-report"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "fetch",
+          "args": {
+            "url": "https://techcrunch.com/2026/market-report"
+          },
+          "result": {
+            "tool": "read_url",
+            "url": "https://techcrunch.com/2026/market-report",
+            "items": [
+              {
+                "title": "Page not found | TechCrunch",
+                "url": "https://techcrunch.com/2026/market-report",
+                "source": "techcrunch.com",
+                "summary": "[Skip to content](https://techcrunch.com/2026/market-report#wp--skip-link--target)\n\n# 404\n\n## Page not found\n\nWe’re sorry, we seem to have lost this page\n\n\nSearch\n\n[Back to homepage](https://www.techcrunch.com/)\n\n## Latest News\n\n- ![](https://techcrunch.com/wp-content/uploads/2021/01/GettyImages-521333620.jpg?w=562)\n\n\n\n[AI](https://techcrunch.com/category/artificial-intelligence/)\n\n\n\n### [Otter AI can now follow conversations across 30+ languages](https://techcrunch.com/2026/11/09/otter-ai-can-now-follow-conversations-across-30-languages/)\n\n\n\n\n\n  - [Lauren Forristal](https://techcrunch.com/author/lauren-forristal/)\n\n5 hours ago\n\n- ![Tech billionaire Elon Musk speaks live via a video transmission during the election campaign launch rally of the far-right Alternative for Germany (AfD) political party on January 25, 2025 in Halle, Germany](https://techcrunch.com/wp-content/uploads/2025/02/elon-musk-election-afd-purple.jpg?w=545)\n\n\n\n[Government & Policy](https://techcrunch.com/category/government-policy/)\n\n\n\n### [California’s proposed ‘billionaire tax’ fails to pass](https://techcrunch.com/2026/11/09/californias-proposed-billionaire-tax-fails-to-pass/)\n\n\n\n\n\n  - [Lucas Ropek](https://techcrunch.com/author/lucas-ropek/)\n\n7 hours ago\n\n- ![](https://techcrunch.com/wp-content/uploads/2026/11/bortonia-getty.jpg?w=375)\n\n\n\n[Media & Entertainment](https://techcrunch.com/category/media-entertainment/)\n\n\n\n### [Jensen Huang’s alleged honeypot scandal has inspired some top-notch memes](https://techcrunch.com/2026/11/09/jensen-huangs-alleged-honeypot-scandal-has-inspired-some-top-notch-memes/)\n\n\n\n\n\n  - [Dominic-Madori Davis](https://techcrunch.com/author/dominic-madori-davis/)\n  - [Lucas Ropek](https://techcrunch.com/author/lucas-ropek/)\n\n7 hours ago\n\n- ![](https://techcrunch.com/wp-content/uploads/2026/11/Dario-Amodei.jpg?w=562)\n\n\n\nIn Brief\n\n\n\n### [Anthropic reportedly plans to move forward with IPO plans](https://techcrunch.com/2026/11/09/anthropic-reportedly-plans-to-move-forward-with-ipo-plans/)\n\n\n\n\n\n  - [Marina Temkin](https://techcrunch.com/author/marina-temkin/)\n\n11 hours ago\n\n- ![Jensen Huang](https://techcrunch.com/wp-content/uploads/2026/11/Jensen-Huang.jpg?w=564)\n\n\n\nIn Brief\n\n\n\n### [Jensen Huang reportedly engaged a PR firm with a history of handling high-profile sex scandals a year ago](https://techcrunch.com/2026/11/09/jensen-huang-reportedly-engaged-a-pr-firm-with-a-history-of-handling-high-profile-sex-scandals-a-year-ago/)\n\n\n\n\n\n  - [Marina Temkin](https://techcrunch.com/author/marina-temkin/)\n\n13 hours ago\n\n- ![A banner displays Wyndham Hotels & Resorts Inc. signage during the company's first day of trading as a spin-off from Wyndham Destinations Inc. in front of the New York Stock Exchange (NYSE).](https://techcrunch.com/wp-content/uploads/2026/11/wyndham-967205948.jpg?w=534)\n\n\n\n[Security](https://techcrunch.com/category/security/)\n\n\n\n### [Hotel giant Wyndham exposed customer data after app security lapse](https://techcrunch.com/2026/11/09/hotel-giant-wyndham-exposed-customer-data-after-app-security-lapse/)\n\n\n\n\n\n  - [Zack Whittaker](https://techcrunch.com/author/zack-whittaker/)\n\n13 hours ago\n\n- ![the NVIDIA booth at the 3rd China International Supply Chain Expo in Beijing, China, on July 20, 2025](https://techcrunch.com/wp-content/uploads/2025/08/GettyImages-2227140868.jpg?w=500)\n\n\n\n[AI](https://techcrunch.com/category/artificial-intelligence/)\n\n\n\n### [A short seller flagged Nvidia CEO’s ties to a suspected Chinese spy six months before the scandal](https://techcrunch.com/2026/11/09/a-short-seller-flagged-nvidia-ceos-ties-to-a-suspected-chinese-spy-six-months-before-the-scandal/)\n\n\n\n\n\n  - [Sarah Perez](https://techcrunch.com/author/sarah-perez/)\n\n13 hours ago\n\n- ![Jensen Huang](https://techcrunch.com/wp-content/uploads/2025/04/GettyImages-2205754389.jpg?w=584)\n\n\n\n[AI](https://techcrunch.com/category/artificial-intelligence/)\n\n\n\n### [The race is on to sue Nvidia](https://techcrunch.com/2026/11/09/the-race-is-on-to-sue-nvidia/)\n\n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "GM03_confirm_before_send_telegram",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_confirmed_send",
+        "difficulty": "hard",
+        "what_it_tests": "Đa lượt: chỉ sau khi user đã xác nhận đồng ý thì agent mới được gọi send với confirmed=true"
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Đăng nguyên văn bản tin này lên kênh Telegram giúp mình: Bản tin nội bộ: Ngân sách nghiên cứu quý này là 120 triệu đồng."
+        },
+        {
+          "role": "assistant",
+          "content": "Bạn có đồng ý gửi nguyên văn: Bản tin nội bộ: Ngân sách nghiên cứu quý này là 120 triệu đồng. lên kênh Telegram không?"
+        },
+        {
+          "role": "user",
+          "content": "Đồng ý, bạn gửi ngay đi"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "send",
+            "args": {
+              "text": "Bản tin nội bộ: Ngân sách nghiên cứu quý này là 120 triệu đồng.",
+              "confirmed": true
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "send",
+            "args": {
+              "confirmed": true,
+              "text": "Bản tin nội bộ: Ngân sách nghiên cứu quý này là 120 triệu đồng."
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "send",
+          "args": {
+            "confirmed": true,
+            "text": "Bản tin nội bộ: Ngân sách nghiên cứu quý này là 120 triệu đồng."
+          },
+          "result": {
+            "tool": "send_telegram",
+            "error": "RuntimeError",
+            "message": "Missing TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID env var"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GM04_topic_carryover_news",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_timeframe_carryover",
+        "difficulty": "medium",
+        "what_it_tests": "Đa lượt: kế thừa mốc thời gian timeframe=day và topic=news khi đổi chủ đề sang xe điện"
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tin tức AI hôm nay có gì nổi bật?"
+        },
+        {
+          "role": "assistant",
+          "content": "Dưới đây là một số tin tức AI nổi bật hôm nay..."
+        },
+        {
+          "role": "user",
+          "content": "Tìm thêm tin về xe điện (EV) nữa nhé, vẫn là tin tức hôm nay"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "xe điện",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "max_results": 5,
+              "query": "xe điện",
+              "timeframe": "day",
+              "topic": "news"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "max_results": 5,
+            "query": "xe điện",
+            "timeframe": "day",
+            "topic": "news"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "xe điện",
+            "topic": "news",
+            "timeframe": "day",
+            "items": [
+              {
+                "title": "Thị trường xe điện hạng sang âm thầm mở rộng tại Việt Nam - Báo VnExpress",
+                "url": "https://vnexpress.net/thi-truong-xe-dien-hang-sang-am-tham-mo-rong-tai-viet-nam-5142962.html",
+                "source": "vnexpress.net",
+                "summary": "Theo ông Nam, xe sang điện cũng gặp những trở ngại tương tự xe phổ thông về hạ tầng trạm sạc còn hạn chế, sự linh hoạt khi di chuyển liên tục. Tuy nhiên, những hạn chế này đối với khách hàng cao cấp thường ở mức độ nhẹ hơn. Bởi với phần lớn chủ sở hữu, xe điện là loại xe \"trải nghiệm thêm\" chứ không phải xe đầu tiên như nhóm xe phổ thông. [...] Mercedes Việt Nam từng phn phối EQB thuần điện 7 chỗ nhưng hiện không còn ghi nhận trong danh sách xe lựa chọn. Các đại lý cho biết, xe không có hàng sẵn nhưng nhà máy vẫn nhận đơn hàng từ khách (thông qua đại lý) khi đủ số lượng cho phép nhập về.\n\nBMW, Audi, Volvo, Porsche, Lotus, mỗi hãng đều có ba mẫu xe thuần điện. Với Maserati, hãng đang bán hai mẫu là Grecale và GranCabrio với hậu tố Folgore ý chỉ bản thuần điện. [...] Bentley và Land Rover, hai hãng xe Anh hiện cùng thuộc quyền phn phối của Pon Phú Thái Mobility (PPTMG), liên doanh giữa Pon Holdings và Phú Thái Holdings, hiện chưa bán xe thuần điện ở thị trường Việt Nam nhưng có kế hoạch tham chiến vào 2027. Nguồn tin của VnExpress cho biết, Bentley Torcal, Range Rover Electric và GT thuần điện sẽ sớm có mặt ở thị trường trong nước.",
+                "score": 0.61972505
+              },
+              {
+                "title": "Nhiều mẫu xe điện hóa mới sắp đổ bộ thị trường Việt",
+                "url": "https://nguoiquansat.vn/nhieu-mau-xe-dien-hoa-moi-sap-do-bo-thi-truong-viet-327398.html",
+                "source": "nguoiquansat.vn",
+                "summary": "VinFast chuẩn bị ra mắt hai mẫu ô tô điện vào giữa tháng 11, nhiều khả năng là VF 5 và VF 6 mới. Cùng thời điểm, MG Urban và loạt SUV điện hóa từ Trung Quốc",
+                "score": 0.55420566
+              },
+              {
+                "title": "Cháy cửa hàng xe máy điện lúc rạng sáng ở Huế",
+                "url": "https://laodong.vn/xa-hoi/chay-cua-hang-xe-may-dien-luc-rang-sang-o-hue-1798311.ldo",
+                "source": "laodong.vn",
+                "summary": "Huế - Cửa hàng xe máy điện trên đường Hà Nội bốc cháy, lan sang hai nhà bên cạnh, thiệt hại ban đầu khoảng 540 triệu đồng.",
+                "score": 0.32943538
+              },
+              {
+                "title": "Huế huy động hơn 4 xe chữa cháy dập lửa tại cửa hàng xe máy điện",
+                "url": "https://nhandan.vn/hue-huy-dong-hon-4-xe-chua-chay-dap-lua-tai-cua-hang-xe-may-dien-post1001686.html",
+                "source": "nhandan.vn",
+                "summary": "Đại lý xe máy điện bị cháy giữa cơn mưa. (Ảnh: Quang Tiến) \n\nĐại lý xe máy điện bị cháy giữa cơn mưa. (Ảnh: Quang Tiến)\n\n \n\nTheo lực lượng chữa cháy, sau khi nhận tin báo từ một hộ dn sống gần cửa hàng, đơn vị đã huy động hơn 4 xe chữa cháy cùng hàng chục cán bộ, chiến sĩ đến hiện trường.\n\n \n\nCháy tại cửa hàng xe máy điện. (Nguồn clip: người dn cung cấp) [...] Báo Nhn Dn điện tử\n\n1920x180\n\n## Bắc Trung Bộ\n\n## Tin chung\n\n# Huế huy động hơn 4 xe chữa cháy dập lửa tại cửa hàng xe máy điện\n\nKhoảng 1 giờ ngày 11/11, một đại lý kinh doanh xe máy điện mới khai trương tại số 19 đường Hà Nội, phường Thuận Hóa, thành phố Huế bất ngờ bốc cháy dữ dội. Ngọn lửa bao trùm khu vực phía ngoài cửa hàng, tạo thành đám cháy lớn giữa đêm mưa, khiến người dn sống chung quanh không khỏi lo lắng.\n\nPrefer Nhan Dan on Google [...] Trước diễn biến đám cháy phức tạp, lực lượng chức năng khẩn trương triển khai các phương án tiếp cận, phun nước dập lửa, đồng thời phong tỏa khu vực, phn luồng giao thông và ngắt điện để bảo đảm an toàn.\n\nCông tác chữa cháy tập trung khống chế ngọn lửa, ngăn cháy lan sang các nhà dn liền kề. Đến hơn 2 giờ cùng ngày, đám cháy cơ bản được dập tắt.\n\n ndo_br_chay-v1.jpg\") \n\nCửa hàng mới khai trương đã bị cháy. (Ảnh: Quang Tiến)",
+                "score": 0.32811
+              },
+              {
+                "title": "Switching to electric vehicles is not mandatory: What do motorcycle users say?",
+                "url": "https://www.vietnam.vn/en/khong-bat-buoc-chuyen-doi-sang-xe-dien-nguoi-dung-xe-may-noi-gi",
+                "source": "vietnam.vn",
+                "summary": "(Dan Tri Newspaper) - The government is aiming to encourage people to switch to green transportation, rather than imposing mandatory regulations.",
+                "score": 0.22988982
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "GM05_switch_from_social_to_web",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_switch_context",
+        "difficulty": "medium",
+        "what_it_tests": "Đa lượt: nhận biết chuyển đổi ngữ cảnh từ mạng xã hội sang tra cứu tin tức web"
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Mọi người đang nói gì về VinFast trên Twitter?"
+        },
+        {
+          "role": "assistant",
+          "content": "Các bài đăng gần đây về VinFast trên Twitter..."
+        },
+        {
+          "role": "user",
+          "content": "Bây giờ tìm trên web báo chí xem có bài viết nào mới về VinFast hôm nay không"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "VinFast",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "max_results": 5,
+              "query": "VinFast",
+              "timeframe": "day",
+              "topic": "news"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "max_results": 5,
+            "query": "VinFast",
+            "timeframe": "day",
+            "topic": "news"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "VinFast",
+            "topic": "news",
+            "timeframe": "day",
+            "items": [
+              {
+                "title": "VinFast",
+                "url": "https://tavily.com/knowledge/company/hSD1qJ1zYfEQ",
+                "source": "tavily.com",
+                "summary": "# VINFAST\nID: hSD1qJ1zYfEQ\nWebsite: www.vinfastauto.eu\nHeadquarters: Cat Hai, Hai Phong, Vietnam\nLinkedIn: www.linkedin.com/company/vinfast · 384,903 followers\nIndustry: Motor Vehicle Manufacturing\nCompany type: Privately Held\nParent company: Vingroup (www.vingroup.net/) [...] Description: VinFast is a company that provides compact and technical high-end electric vehicles. They offer solutions for businesses and provide services such as total cost of ownership. [...] ## Funding\n- Rounds: 13\n- Total raised: 8.35B USD\n- Investors: Export Finance Australia, Finnfund, Asian Development Bank, Oesterreichische Entwicklungsbank AG, VINGroup, Pham Vuong, SeaTown Holdings, Deutsche Bank, Yorkville Advisors, Barclays, MUFG Bank, Bank Negara Indonesia, Maybank Indonesia, VINGROUP, Black Spade Acquisition, Emirates Driving Company\n- Last round: Post-IPO Debt 2025-09-01 150.00M USD\n- Post-IPO Debt 2025-09-01 150.00M USD\n- Post-IPO Debt 2025-09-01 100.00M USD",
+                "score": 0.75292206
+              },
+              {
+                "title": "VinFast offers 10-year warranty on VF 8 EV for Canadian market",
+                "url": "https://www.streetinsider.com/Corporate+News/VinFast+offers+10-year+warranty+on+VF+8+EV+for+Canadian+market/27317584.html",
+                "source": "streetinsider.com",
+                "summary": "According to VinFast Canada's Energy Cost Savings Calculator, driving a VF 8 Eco for 2,000 km per month could generate approximately C$8,328 in energy savings over three years compared with a conventional gasoline vehicle. The VF 8 Plus is estimated to save C$8,107 over the same period. VinFast states these figures represent energy-cost reductions of 77% and 75%, respectively. The company notes that actual savings depend on electricity rates, gasoline prices, charging habits, and driving [...] QUICK LINKS :\n Goldman Sachs Conviction Buy List\n Warren Buffett News\n Elliott Management News\n Follow @Street\\_Insider\n\nCorporate News, Hot Corp. News\n\n\nStock Quotes (1)\n\n\n\n##### Join SI Premium – FREE\n\nVinFast (NASDAQ: VFS), the Vietnamese electric vehicle manufacturer, is offering a 10-year or 200,000-kilometer limited warranty on its VF 8 electric SUV in Canada, with separate battery coverage for 10 years and unlimited kilometers under standard personal use conditions. [...] The warranty announcement comes as Canadian interest in electric vehicles is rising. J.D. Power's 2026 Canada Electric Vehicle Consideration Study found that 34% of new-vehicle shoppers are considering an EV, up from 28% in 2025, marking the first increase since the study began in 2022.",
+                "score": 0.6340903
+              },
+              {
+                "title": "VinFast Launches the All-New VF 8 in the Philippines",
+                "url": "https://www.benzinga.com/content/63090420/vinfast-launches-all-new-vf-8-philippines",
+                "source": "benzinga.com",
+                "summary": "EQS Newswire / 10/11/2026 / 15:30 CET/CEST MANILA, PHILIPPINES – Media OutReach Newswire – VinFast officially launches the All-New VF 8 and announces its",
+                "score": 0.5401963
+              },
+              {
+                "title": "Vinfast Launches VF 8 In The Philippines — TradingView News",
+                "url": "https://www.tradingview.com/news/reuters.com,2026:newsml_TUCB0TTD2:0-vinfast-launches-vf-8-in-the-philippines",
+                "source": "tradingview.com",
+                "summary": "Reuters\nReuters\n\n# Vinfast Launches VF 8 In The Philippines\n\nSelect market data provided by ICE Data Services. Select reference data provided by FactSet. Copyright © 2026 FactSet Research Systems Inc.Copyright © 2026, American Bankers Association. CUSIP Database provided by FactSet Research Systems Inc. All rights reserved. SEC filings and other documents provided by Quartr.© 2026 TradingView, Inc.\n\nLook First\nLook First",
+                "score": 0.47752374
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

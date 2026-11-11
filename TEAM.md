@@ -11,8 +11,8 @@
 
 | STT | Họ tên | MSSV | Email | GitHub | Vai trò |
 | --: | ------ | ---- | ----- | ------ | ------- |
-|   1 | Nguyễn Đức Hiếu | 2A202603772 |  |  | CP1 & CP2 (Setup, Groq Provider, Baseline v0 & Tối ưu v1–v3) |
-|   2 | Nguyễn Mạnh Quân | 2A202603776 |  | — | CP3 & CP4 (Tool mới `calculator`, Unit tests, 10 case eval nhóm) |
+|   1 | Nguyễn Đức Hiếu | 2A202603772 | 26ai.hieund6@vinuni.edu.vn | [Hie24](https://github.com/Hie24) | CP1 & CP2 (Setup, Groq Provider, Baseline v0 & Tối ưu v1–v3) |
+|   2 | Nguyễn Mạnh Quân | 2A202603776 | 26ai.quannm9@vinuni.edu.vn | — | CP3 & CP4 (Tool mới `calculator`, Unit tests, 10 case eval nhóm) |
 |   3 | Lê Danh Giang | 2A202603912 | 26ai.giangld@vinuni.edu.vn | `giangj` | CP5 (Streamlit Demo UI, Live Chat Transcript, Tổng hợp Báo cáo) |
 
 ## Cá nhân
@@ -39,7 +39,7 @@ Sao chép mục dưới đây cho từng thành viên.
 
 - Tích hợp Groq khi Gemini gặp giới hạn quota; dùng thống nhất model `openai/gpt-oss-120b` cho chuỗi eval.
 - Bổ sung script giãn cách yêu cầu và retry có giới hạn, lưu snapshot cùng hash để đối chiếu từng version (đạt accuracy từ 65% lên 85%).
-- Review code, case eval nhóm và xử lý xung đột tích hợp.
+- Review code, case eval nhóm và xử lý xung đột tích hợp CP1–CP5.
 
 ### Bằng chứng
 
@@ -57,7 +57,7 @@ Sao chép mục dưới đây cho từng thành viên.
 ### Đóng góp cụ thể
 
 - Thiết kế tool `calculator` sử dụng `ast` node visitor để đảm bảo an toàn (không dùng `eval()`) và chuẩn hóa việc trả dictionary lỗi khi có ngoại lệ.
-- Viết 3 unit test chuyên sâu cho tool mới và giữ suite `pytest` xanh (63 passed, 0 failed).
+- Viết 3 unit test chuyên sâu cho tool mới và giữ suite `pytest` xanh (xem output kiểm thử tích hợp trong `starter_v0/analysis/pytest.txt`).
 - Xây dựng 10 eval cases độc lập (5 single-turn + 5 multi-turn) và thực thi chạy đo lường thực tế trên Groq lẫn Ollama local (`qwen2.5:7b`).
 
 ### Bằng chứng
@@ -74,10 +74,10 @@ Sao chép mục dưới đây cho từng thành viên.
 ### Đóng góp cụ thể
 
 - Thiết kế và triển khai giao diện tương tác `starter_v0/app.py` tích hợp vòng lặp agent, hiển thị trực quan tool calls, hash phiên bản và hỗ trợ Cloudflare Tunnel.
-- Thực hiện phiên live chat đa lượt (`v3`) kiểm chứng các kịch bản `lookup`, `clarify`, `timeline` và rào chắn xác nhận `send`, lưu log tại `starter_v0/transcripts/`.
+- Chuẩn bị bản tóm tắt kịch bản chat v3; khi tích hợp đã chạy lại phiên Groq thật v4 bằng `scripts/verify_live_chat.py`, lưu đầy đủ model/hash/kết quả tool tại `starter_v0/transcripts/`.
 - Tổng hợp và hoàn thiện nội dung Phần A và Phần B của báo cáo nhóm `report/team/group_report.md`.
 
 ### Bằng chứng
 
-- UI & Transcript: `starter_v0/app.py`, `starter_v0/requirements.txt`, `starter_v0/transcripts/openrouter_v3_cp5_demo.transcript.json`
+- UI & Transcript: `starter_v0/app.py`, `starter_v0/ui_runtime.py`, `starter_v0/requirements.txt`, [transcript Groq bản tích hợp](starter_v0/transcripts/v4-integration_groq_20261111T111623117923.transcript.json). Bản OpenRouter cũ được đánh dấu chưa xác minh.
 - Báo cáo: `report/team/group_report.md`, `report/team/2A202603912_LeDanhGiang.md`

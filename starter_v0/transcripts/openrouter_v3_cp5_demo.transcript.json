@@ -81,5 +81,7 @@
       ],
       "assistant": "Đã gửi bản tin tóm tắt lên kênh Telegram thành công!"
     }
-  ]
+  ],
+  "evidence_status": "unverified_legacy_summary",
+  "evidence_note": "Historical summary supplied on the UI branch; no model/hash/raw tool responses. Not used as measured live evidence or proof of Telegram delivery."
 }

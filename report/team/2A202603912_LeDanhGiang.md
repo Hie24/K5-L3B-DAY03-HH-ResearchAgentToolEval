@@ -4,7 +4,7 @@
 
 - **Họ tên:** Lê Danh Giang
 - **MSSV:** 2A202603912
-- **Email:** 
+- **Email:** 26ai.giangld@vinuni.edu.vn
 
 ---
 
@@ -21,7 +21,7 @@
 ### 3.1. Xây dựng Giao diện Demo (`starter_v0/app.py`)
 
 - **Thiết kế UI bằng Streamlit:**
-  - Tích hợp trực tiếp hàm `run_turn` từ `starter_v0/agent.py` và `compute_hashes` từ `starter_v0/versioning.py`.
+  - Bản UI ban đầu đã được sửa khi tích hợp: dùng `ui_runtime.py`, `chat.run_model_tool_loop` và `versioning.build_artifact_version`.
   - Hỗ trợ chọn nhanh các provider đã cấu hình của nhóm (`groq`, `ollama`, `openrouter`, `gemini`, `openai`) và version (`v3`).
   - Hiển thị trực tiếp mã băm `prompt_hash` và `tools_hash` trên thanh sidebar để đối chiếu tính toàn vẹn của artifact khi demo.
   - Hiển thị chi tiết từng lệnh gọi công cụ (`tool_calls` và `arguments`) dưới dạng khung mở rộng (`st.expander`) ngay dưới câu trả lời và tự động xuất lịch sử hội thoại ra file `.transcript.json`.
@@ -34,7 +34,7 @@
 - Chạy phiên hội thoại đa lượt với cấu hình `v3` và lưu log chuẩn tại `starter_v0/transcripts/openrouter_v3_cp5_demo.transcript.json`, bao phủ đầy đủ các tình huống kiểm thử hành vi thực tế:
   - **Lượt 1 (Tra cứu tin tức web):** Hỏi tin tức mới nhất trong tuần về mô hình ngôn ngữ lớn mã nguồn mở -> Agent gọi đúng `lookup(topic="news", timeframe="week")`.
   - **Lượt 2 & 3 (Hỏi lại khi thiếu thông tin & Chuẩn hóa tham số):** Yêu cầu lấy bài đăng X nhưng không nêu tên tài khoản -> Agent gọi `clarify` hỏi lại; khi bổ sung `@karpathy`, Agent tự động cắt ký tự `@` và gọi `timeline(screenname="karpathy")`.
-  - **Lượt 4 & 5 (Chốt chặn an toàn Action Guardrail):** Yêu cầu gửi ngay bản tóm tắt lên Telegram -> Agent chặn lại, gọi `clarify` để xin xác nhận trước; chỉ sau khi người dùng xác nhận ở lượt 5 thì Agent mới gọi `send(confirmed=true)`.
+  - **Lượt 4 & 5 (Chốt chặn an toàn Action Guardrail):** Yêu cầu gửi ngay bản tóm tắt lên Telegram -> Agent chặn lại, gọi `clarify` để xin xác nhận trước; bản tóm tắt cũ có mô tả lượt xác nhận và `send`, nhưng chưa có kết quả tool gốc để chứng minh thực thi. Phiên kiểm tra mới chỉ yêu cầu xác nhận, không gửi thật.
 
 ### 3.3. Hoàn thiện Báo cáo Nhóm (`report/team/group_report.md`)
 
@@ -72,3 +72,6 @@
 | **C6 — Live chat & UI dùng thử (CP5)** | **9 / 10** | UI Streamlit chạy ổn định, hiển thị rõ tool calls và hash artifact; có đầy đủ transcript hội thoại đa lượt kiểm chứng `lookup`, `clarify`, `timeline` và rào chắn xác nhận `send`. |
 | **C7 & C8 — Báo cáo nhóm & Báo cáo cá nhân** | **18 / 20** | Báo cáo nhóm hoàn thiện đầy đủ cả Phần A và Phần B theo đúng template gốc, mọi bảng số liệu đều dẫn chiếu trực tiếp tới file run JSON, transcript và kết quả `pytest` thật của nhóm. |
 | **Phối hợp nhóm & Đồng bộ** | **Tốt** | Khớp nối liền mạch kết quả CP1–CP2 (Hiếu) và CP3–CP4 (Quân) thành bộ hồ sơ nộp bài thống nhất. |
+
+
+Ghi chú tích hợp: transcript `openrouter_v3_cp5_demo.transcript.json` là bản tóm tắt cũ chưa có model/hash/kết quả tool gốc; không dùng làm bằng chứng gửi Telegram thật. Kết quả kiểm tra bản cuối và transcript mới được ghi trong báo cáo nhóm.
