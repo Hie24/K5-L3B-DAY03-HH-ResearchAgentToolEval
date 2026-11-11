@@ -111,12 +111,27 @@ def test_policy_instruction_like_lines_go_to_untrusted_text() -> None:
 #   3. failure path (missing key, HTTP error, timeout) -> returns error dict, does not raise
 
 def test_my_new_tool_happy_path() -> None:
-    pytest.skip(TODO)
+    calc = TOOL_FUNCTIONS["calculator"]
+    res = calc(expression="(100 + 50) * 2")
+    assert res["tool"] == "calculate"
+    assert res["result"] == 300
+    assert res["expression"] == "(100 + 50) * 2"
+    assert "error" not in res
 
 
 def test_my_new_tool_bad_input_from_model() -> None:
-    pytest.skip(TODO)
+    calc = TOOL_FUNCTIONS["calculator"]
+    res_empty = calc(expression="")
+    assert res_empty["error"] == "ValueError"
+    assert "cannot be empty" in res_empty["message"]
+
+    res_invalid = calc(expression="invalid_syntax_!@#")
+    assert "error" in res_invalid
 
 
 def test_my_new_tool_failure_returns_error_dict() -> None:
-    pytest.skip(TODO)
+    calc = TOOL_FUNCTIONS["calculator"]
+    res = calc(expression="100 / 0")
+    assert res["tool"] == "calculate"
+    assert res["error"] == "ZeroDivisionError"
+    assert "division by zero" in res["message"].lower()

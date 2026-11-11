@@ -123,3 +123,13 @@ tools:
         max_pages: {type: integer, default: 5, description: "Số trang PDF tối đa cần đọc."}
         max_chars: {type: integer, default: 8000, description: "Số ký tự text tối đa cần trả về."}
       required: [arxiv_url]
+
+
+  # ---------------- Custom team tools (CP3) ----------------
+  - name: calculator
+    description: "Thực hiện tính toán biểu thức số học an toàn (cộng, trừ, nhân, chia, phần trăm, lũy thừa). DÙNG KHI: người dùng yêu cầu tính toán con số hoặc biểu thức số học cụ thể (ví dụ: '150 * 1.25', '1000 / 4')."
+    parameters:
+      type: object
+      properties:
+        expression: {type: string, default: "", description: "Biểu thức toán học số học cần tính (ví dụ: '120 * 1.15', '1000 / 4')"}
+      required: [expression]

@@ -1,0 +1,837 @@
+{
+  "run_id": "v3_B_group_groq_20261110T193553495897",
+  "version": "v3",
+  "artifact_version": "v3+pf89c2adbf6af+tfde186c06a77",
+  "prompt_hash": "f89c2adbf6af0cfff1d19211982c516a9cc18dd800f52cfd87b9d9201f86ddd0",
+  "tools_hash": "fde186c06a774605a4881ce1e1c66cf462fb2c52b3f3328e131b0667595f8fc8",
+  "phase": "B",
+  "suite": "group",
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b",
+  "system_prompt": "D:\\VIN\\K5-L3B-DAY03-HH-ResearchAgentToolEval\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "D:\\VIN\\K5-L3B-DAY03-HH-ResearchAgentToolEval\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_group.json",
+  "dataset_id": "day03_v2_research_group",
+  "dataset_role": "group",
+  "description": "Bộ 10 eval cases do nhóm thiết kế (5 single turn + 5 multi turn), bao gồm kiểm tra tool mới calculator, kiểm tra rào chắn an toàn, xử lý thiếu thông tin, và kế thừa ngữ cảnh đa lượt.",
+  "generated_at": "2026-11-10T19:35:53",
+  "summary": {
+    "total_cases": 10,
+    "measured_cases": 10,
+    "provider_error_cases": 0,
+    "passed_cases": 8,
+    "case_accuracy": 0.8,
+    "tool_routing_accuracy": 0.9,
+    "argument_accuracy": 0.8,
+    "multiturn_accuracy": 0.8,
+    "failure_counts": {
+      "wrong_arg_value": 1,
+      "wrong_boundary": 1
+    },
+    "observed_mismatch_counts": {
+      "wrong_arg_value": 1,
+      "missing_tool_call": 1
+    }
+  },
+  "results": [
+    {
+      "id": "G01_calculator_growth",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "new_tool_routing",
+        "difficulty": "easy",
+        "what_it_tests": "Kiểm tra model nhận diện phép tính tăng trưởng số học và định tuyến chính xác tới tool mới calculator"
+      },
+      "input": "Tính giúp mình doanh thu dự kiến nếu tăng trưởng 15% từ 120 tỷ: 120 * 1.15",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "calculator",
+            "args": {
+              "expression": "120 * 1.15"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "calculator",
+            "args": {
+              "expression": "120 * 1.15"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "calculator",
+          "args": {
+            "expression": "120 * 1.15"
+          },
+          "result": {
+            "tool": "calculate",
+            "expression": "120 * 1.15",
+            "result": 138
+          }
+        }
+      ]
+    },
+    {
+      "id": "G02_calculator_budget_division",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "new_tool_routing",
+        "difficulty": "easy",
+        "what_it_tests": "Kiểm tra model định tuyến phép tính chia ngân sách vào tool mới calculator"
+      },
+      "input": "Chia đều ngân sách 1000 triệu cho 4 quý trong năm: 1000 / 4",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "calculator",
+            "args": {
+              "expression": "1000 / 4"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "calculator",
+            "args": {
+              "expression": "1000 / 4"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "calculator",
+          "args": {
+            "expression": "1000 / 4"
+          },
+          "result": {
+            "tool": "calculate",
+            "expression": "1000 / 4",
+            "result": 250
+          }
+        }
+      ]
+    },
+    {
+      "id": "G03_social_search_ai_agents",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "social_search_routing",
+        "difficulty": "medium",
+        "what_it_tests": "Kiểm tra tìm kiếm từ khóa thảo luận mạng xã hội gọi social_search thay vì timeline"
+      },
+      "input": "Mọi người đang bàn gì về AI Agent trên mạng xã hội Twitter?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI Agent"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "limit": 5,
+              "query": "AI Agent",
+              "search_type": "Latest"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "limit": 5,
+            "query": "AI Agent",
+            "search_type": "Latest"
+          },
+          "result": {
+            "tool": "search_tweets",
+            "query": "AI Agent",
+            "search_type": "Latest",
+            "items": [
+              {
+                "title": "⛏️ Agent Mining ($AMNT) – Free Mining",
+                "summary": "⛏️ Agent Mining ($AMNT) – Free Mining\n\nToken Proof-of-Work trên BNB Chain, dành riêng cho ví có Binance Agent ID (.ai).\n\nTổng supply: 10 tỷ AMNT, trong đó 9 tỷ được mining trong 45 ngày. Contract đã renounce owner, không thể thay đổi các thông số.\n\n📌 Thông tin mining:\n\n> Mining mỗi ngày từ 13:00–15:00 UTC (20:00–22:00 giờ VN).\n\n> CPU: Proof 28-bit, nhận 2.500 AMNT/proof, tối đa 20 proof/ngày/ví.\n\n> GPU: Proof 35–38 bit, nhận 1.500 AMNT/proof, không giới hạn mỗi ví.\n\n> Chọn một lane miễn phí (chỉ tốn gas), chỉ được chọn trong thời gian mining mở.\n\n👉 Link: https://t.co/BRaNJqnn7W\n\n🔗 Contract: 0x2d07B9CcDF5FCdbE26167358B94eeb4c9E995e4E\n\n⚠️ Lưu ý: Đổi lane sau này tốn 0.01 BNB. AMNT hiện chưa có pool giao dịch, chưa có giá trị thị trường. Chỉ nên tham gia suất miễn phí.",
+                "url": "https://x.com/nhutqui2309/status/2120133006975471795",
+                "source": "@nhutqui2309",
+                "date": "Tue Nov 10 12:34:33 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": null
+                }
+              },
+              {
+                "title": "テックヒョンのAIラジオ 2026年11月10日（火） · 夕方 — インスタの年齢AIからケンタッキーのAI画像まで",
+                "summary": "テックヒョンのAIラジオ 2026年11月10日（火） · 夕方 — インスタの年齢AIからケンタッキーのAI画像まで\n\n01. インスタ、AIで10代を見分け\nImpress Watch · インスタグラム、年齢推定AIを日本でも開始　年齢を偽っても保護機能を適用\nhttps://t.co/srNq28vZD9\n\n02. LINEヤフーのAI、専用アプリに\nImpress Watch · LINEヤフーのAIエージェント「Agent i」アプリ版登場　ウィジェット対応\nhttps://t.co/2f9Hpc9Djh\n\n03. ケンタッキー、メニュー画像に生成AI\nITmedia NEWS · ケンタッキー、一部メニュー画像に生成AI　実験販売の商品など　SNSは「違和感」の声も\nhttps://t.co/1bfhmp62X1\n\n04. PFN、金融向けの小さなAI\nImpress Watch · PFN、金融特化の小規模AI「PLaMo 3.0 Fin」　GPU1枚から動作\nhttps://t.co/CX95aBcPLE",
+                "url": "https://x.com/TechHyung/status/2120132942970417189",
+                "source": "@TechHyung",
+                "date": "Tue Nov 10 12:34:18 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "1"
+                }
+              },
+              {
+                "title": "Most small businesses think using AI agents is only meant for the big boys, but I'd say that in this era, even a sole pr",
+                "summary": "Most small businesses think using AI agents is only meant for the big boys, but I'd say that in this era, even a sole proprietor needs an AI agent to scale fast and effectively.\n\n#abdulautomates",
+                "url": "https://x.com/Abdul_rrauf/status/2120132901748527214",
+                "source": "@Abdul_rrauf",
+                "date": "Tue Nov 10 12:34:08 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "1"
+                }
+              },
+              {
+                "title": "テックヒョンのAIラジオ 2026年11月10日（火） · 夕方 — インスタの年齢AIからケンタッキーのAI画像まで",
+                "summary": "テックヒョンのAIラジオ 2026年11月10日（火） · 夕方 — インスタの年齢AIからケンタッキーのAI画像まで\n\nこんばんは、テックヒョンのAIラジオです。\n11月10日、火曜日の夜です。\n今夜は4つのニュースをお届けします。\nスマホやお店で出会うAIの話題です。\n\n■ インスタ、AIで10代を見分け\nInstagramが、AIで年齢を見分ける仕組みを日本でも始めました。\n大人と偽った10代にも、連絡相手や表示を絞る保護がかかります。\nFacebookにも広げるそうです。\n\n■ LINEヤフーのAI、専用アプリに\nLINEヤフーの相談AI「Agent i」が、専用アプリになりました。\nホーム画面からすぐ呼び出せて、値下がりのお知らせも届きます。\nLINEかYahoo! JAPAN IDで使えます。\n\n■ ケンタッキー、メニュー画像に生成AI\nケンタッキーが、一部のメニュー画像を生成AIで作っていると答えました。\n氷まで緑のフロート画像に、実物と違うのではという声も出ています。\n使うのは、店舗限定で試験販売している商品などです。\n\n■ PFN、金融向けの小さなAI\n日本のAI企業PFNが、金融向けの小さなAIを公開しました。\n計算用の部品1枚で動き、問い合わせの仕分けなどに使えます。\n誰でもダウンロードでき、決まった範囲で仕事にも使えます。\n\n身近なところで、AIの出番が増えていますね。\n気になる方は、LINEヤフーの「Agent i」アプリをどうぞ。\nそれでは、よい夜を。テックヒョンのAIラジオでした。",
+                "url": "https://x.com/TechHyung/status/2120132865006649766",
+                "source": "@TechHyung",
+                "date": "Tue Nov 10 12:33:59 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 0,
+                  "views": "3"
+                }
+              },
+              {
+                "title": "Same model, same prompt, and their agents ship while yours say \"done\" on broken work",
+                "summary": "Same model, same prompt, and their agents ship while yours say \"done\" on broken work\n\nThe difference is the harness: what it reads, what it can touch, who checks it, when it stops\n\n6 parts + a 3-agent setup you can copy tonight ↓ https://t.co/vQYjiFqn6O",
+                "url": "https://x.com/distortgeekin/status/2120132854424199320",
+                "source": "@distortgeekin",
+                "date": "Tue Nov 10 12:33:57 +0000 2026",
+                "metrics": {
+                  "favorites": 3,
+                  "retweets": 0,
+                  "views": "12"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G04_web_news_vietnam_tech",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "news_args_convention",
+        "difficulty": "medium",
+        "what_it_tests": "Kiểm tra tìm tin tức web đặt đúng topic=news và timeframe=day"
+      },
+      "input": "Tin tức công nghệ Việt Nam hôm nay có gì mới?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "công nghệ Việt Nam",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "max_results": 5,
+              "query": "tin tức công nghệ Việt Nam",
+              "timeframe": "day",
+              "topic": "news"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_arg_value",
+        "failures": [
+          "query: expected 'công nghệ Việt Nam', got 'tin tức công nghệ Việt Nam'"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "max_results": 5,
+            "query": "tin tức công nghệ Việt Nam",
+            "timeframe": "day",
+            "topic": "news"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "tin tức công nghệ Việt Nam",
+            "topic": "news",
+            "timeframe": "day",
+            "items": [
+              {
+                "title": "Tin tức đặc biệt trên Báo Hànộimới ngày 10-11-2026",
+                "url": "https://www.vietnam.vn/tin-tuc-dac-biet-tren-bao-hanoimoi-ngay-10-11-2026",
+                "source": "vietnam.vn",
+                "summary": "Hiệp định Thương mại tự do Việt Nam - Israel (VIFTA) mở ra cơ hội xuất khẩu và tiếp cận công nghệ cho các doanh nghiệp. Song, để nng cao giá trị sản xuất, doanh nghiệp Việt Nam không nên chỉ coi đy là cơ hội để mua thiết bị, mà cần đẩy mạnh hợp tác với đối tác Israel trong nghiên cứu, phát triển, làm chủ công nghệ và nội địa hóa sản phẩm.\n\n nghien-cuu-san-pham-thuc-pham-che-bien-bang-thiet-bi-cong-nghe-hien-dai-tai-cong-ty-co-phan-tap-doan-masan.-anh-lam-giang.jpg [...] Vietnam.vn - Nền tảng quảng bá Việt Nam\n\n# Tin tức đặc biệt trên Báo Hànộimới ngày 10-11-2026\n\nNghiên cứu kết nối sn bay Gia Bình với Hà Nội bằng tuyến đường sắt ngắn nhất; Động lực mới thúc đẩy kinh tế số và hỗ trợ doanh nghiệp; Hà Nội tăng tốc \"xanh hóa\" xe buýt; Doanh nghiệp trước cơ hội làm chủ công nghệ; Giao lưu Hoa hậu Việt Nam 2026: Lan tỏa vẻ đẹp tri thức, bản lĩnh và khát vọng cống hiến… là những thông tin đáng chú ý trên Báo Hànộimới số ra ngày 10-11-2026. [...] Nghiên cứu sản phẩm thực phẩm chế biến bằng thiết bị công nghệ hiện đại tại Công ty cổ phần Tập đoàn Masan. Ảnh: Lam Giang\n\nCó thể bạn quan tm\n\nGiao lưu Hoa hậu Việt Nam 2026: Lan tỏa vẻ đẹp tri thức, bản lĩnh và khát vọng cống hiến",
+                "score": 0.67706895
+              },
+              {
+                "title": "Việt Nam - Nhật Bản ra Tuyên bố tầm nhìn chung",
+                "url": "https://www.24h.com.vn/tin-tuc-trong-ngay/viet-nam-nhat-ban-ra-tuyen-bo-tam-nhin-chung-c46a1809748.html",
+                "source": "24h.com.vn",
+                "summary": "Nhất trí thúc đẩy triển khai các nội dung hợp tác thực chất trong trụ cột khoa học công nghệ, đổi mới sáng tạo và đào tạo nhn lực chất lượng cao. Theo đó, hai bên sẽ thúc đẩy hợp tác về công nghệ vũ trụ, khoa học biển và đại dương, AI, kỹ thuật số, chất bán dẫn, công nghệ y học, nông nghiệp công nghệ cao, an ninh mạng. [...] Tổng Bí thư, Chủ tịch nước Tô Lm cho biết, Việt Nam cam kết tạo điều kiện thuận lợi cho các dự án đầu tư chất lượng cao gắn với chuyển giao công nghệ từ các doanh nghiệp Nhật Bản. Hai bên nhất trí tiếp tục cải thiện môi trường đầu tư cho doanh nghiệp của nước này tại nước kia. [...] Tin liên quan\n\nTin tức trong ngày - Việt Nam - Nhật Bản đủ điều kiện để trở thành đối tác đồng sáng tạo  \n Việt Nam - Nhật Bản đủ điều kiện để trở thành đối tác đồng sáng tạo\n\nTin tức trong ngày - Tổng Bí thư, Chủ tịch nước Tô Lm trả lời phỏng vấn đài NHK Nhật Bản  \n Tổng Bí thư, Chủ tịch nước Tô Lm trả lời phỏng vấn đài NHK Nhật Bản",
+                "score": 0.33430737
+              },
+              {
+                "title": "Website và công nghệ số: Đòn bẩy nâng tầm du lịch Việt Nam",
+                "url": "https://dangcongsan.vn/bovhttdl/tin-tuc-hoat-dong/website-va-cong-nghe-so-don-bay-nang-tam-du-lich-viet-nam.html",
+                "source": "dangcongsan.vn",
+                "summary": "Trong bối cảnh cạnh tranh điểm đến ngày càng gay gắt, sức hấp dẫn của một quốc gia không những được quyết định bởi tài nguyên thiên nhiên, di sản văn hóa",
+                "score": 0.27785784
+              },
+              {
+                "title": "Vi phạm hành chính trong lĩnh vực công nghiệp công nghệ số bị phạt tới 200 triệu đồng",
+                "url": "https://angiang.gov.vn/vi/vi-pham-hanh-chinh-trong-linh-vuc-cong-nghiep-cong-nghe-so-bi-phat-toi-200-trieu-dong",
+                "source": "angiang.gov.vn",
+                "summary": "(Chinhphu.vn) - Nghị định số 401/2026/NĐ-CP của Chính phủ quy định mức phạt tiền tối đa là 100 triệu đồng đối với cá nhân và 200 triệu đồng đối với tổ chức",
+                "score": 0.21953027
+              },
+              {
+                "title": "'Lối mòn' của dòng game SLG tại Việt Nam và lời giải mới từ VNGGames",
+                "url": "https://thanhnien.vn/loi-mon-cua-dong-game-slg-tai-viet-nam-va-loi-giai-moi-tu-vnggames-185261110164832699.htm",
+                "source": "thanhnien.vn",
+                "summary": "Năm 2008 là năm đánh dấu một trong những bước khởi đầu đáng chú ý của dòng game chiến thuật SLG tại Việt Nam, trong bối cảnh thị trường khi ấy vẫn đang được",
+                "score": 0.054364275
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G05_out_of_scope_greeting",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "out_of_scope_handling",
+        "difficulty": "easy",
+        "what_it_tests": "Kiểm tra câu chào hỏi xã giao thông thường không được gọi bất kỳ công cụ nào"
+      },
+      "input": "Chào bạn, hôm nay bạn thế nào?",
+      "expect": {
+        "no_tool": true
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Chào bạn! Mình hoạt động tốt và sẵn sàng hỗ trợ bạn. Bạn cần giúp gì hôm nay?",
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "GM01_clarify_then_calculate",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_clarify_to_new_tool",
+        "difficulty": "medium",
+        "what_it_tests": "Đa lượt: sau khi được hỏi lại, user cung cấp biểu thức thì agent phải gọi calculator"
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tính giúp mình kết quả phép tính này với"
+        },
+        {
+          "role": "assistant",
+          "content": "Bạn muốn tính phép tính gì?"
+        },
+        {
+          "role": "user",
+          "content": "Phép tính là (250 + 150) / 4"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "calculator",
+            "args": {
+              "expression": "(250 + 150) / 4"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "calculator",
+            "args": {
+              "expression": "(250 + 150) / 4"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "calculator",
+          "args": {
+            "expression": "(250 + 150) / 4"
+          },
+          "result": {
+            "tool": "calculate",
+            "expression": "(250 + 150) / 4",
+            "result": 100
+          }
+        }
+      ]
+    },
+    {
+      "id": "GM02_clarify_missing_url_then_fetch",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_clarify_to_fetch",
+        "difficulty": "medium",
+        "what_it_tests": "Đa lượt: sau khi hỏi xin link URL, user gửi link thì agent gọi đúng fetch với url đó"
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tóm tắt bài phân tích thị trường này giúp mình"
+        },
+        {
+          "role": "assistant",
+          "content": "Vui lòng cung cấp URL bài viết cần tóm tắt."
+        },
+        {
+          "role": "user",
+          "content": "Link bài viết đây nhé: https://techcrunch.com/2026/market-report"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://techcrunch.com/2026/market-report"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://techcrunch.com/2026/market-report"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "fetch",
+          "args": {
+            "url": "https://techcrunch.com/2026/market-report"
+          },
+          "result": {
+            "tool": "read_url",
+            "url": "https://techcrunch.com/2026/market-report",
+            "items": [
+              {
+                "title": "Page not found | TechCrunch",
+                "url": "https://techcrunch.com/2026/market-report",
+                "source": "techcrunch.com",
+                "summary": "[Skip to content](https://techcrunch.com/2026/market-report#wp--skip-link--target)\n\n# 404\n\n## Page not found\n\nWe’re sorry, we seem to have lost this page\n\n\nSearch\n\n[Back to homepage](https://www.techcrunch.com/)\n\n## Latest News\n\n- ![](https://techcrunch.com/wp-content/uploads/2021/01/GettyImages-521333620.jpg?w=562)\n\n\n\n[AI](https://techcrunch.com/category/artificial-intelligence/)\n\n\n\n### [Otter AI can now follow conversations across 30+ languages](https://techcrunch.com/2026/11/09/otter-ai-can-now-follow-conversations-across-30-languages/)\n\n\n\n\n\n  - [Lauren Forristal](https://techcrunch.com/author/lauren-forristal/)\n\n5 hours ago\n\n- ![Tech billionaire Elon Musk speaks live via a video transmission during the election campaign launch rally of the far-right Alternative for Germany (AfD) political party on January 25, 2025 in Halle, Germany](https://techcrunch.com/wp-content/uploads/2025/02/elon-musk-election-afd-purple.jpg?w=545)\n\n\n\n[Government & Policy](https://techcrunch.com/category/government-policy/)\n\n\n\n### [California’s proposed ‘billionaire tax’ fails to pass](https://techcrunch.com/2026/11/09/californias-proposed-billionaire-tax-fails-to-pass/)\n\n\n\n\n\n  - [Lucas Ropek](https://techcrunch.com/author/lucas-ropek/)\n\n7 hours ago\n\n- ![](https://techcrunch.com/wp-content/uploads/2026/11/bortonia-getty.jpg?w=375)\n\n\n\n[Media & Entertainment](https://techcrunch.com/category/media-entertainment/)\n\n\n\n### [Jensen Huang’s alleged honeypot scandal has inspired some top-notch memes](https://techcrunch.com/2026/11/09/jensen-huangs-alleged-honeypot-scandal-has-inspired-some-top-notch-memes/)\n\n\n\n\n\n  - [Dominic-Madori Davis](https://techcrunch.com/author/dominic-madori-davis/)\n  - [Lucas Ropek](https://techcrunch.com/author/lucas-ropek/)\n\n7 hours ago\n\n- ![](https://techcrunch.com/wp-content/uploads/2026/11/Dario-Amodei.jpg?w=562)\n\n\n\nIn Brief\n\n\n\n### [Anthropic reportedly plans to move forward with IPO plans](https://techcrunch.com/2026/11/09/anthropic-reportedly-plans-to-move-forward-with-ipo-plans/)\n\n\n\n\n\n  - [Marina Temkin](https://techcrunch.com/author/marina-temkin/)\n\n11 hours ago\n\n- ![Jensen Huang](https://techcrunch.com/wp-content/uploads/2026/11/Jensen-Huang.jpg?w=564)\n\n\n\nIn Brief\n\n\n\n### [Jensen Huang reportedly engaged a PR firm with a history of handling high-profile sex scandals a year ago](https://techcrunch.com/2026/11/09/jensen-huang-reportedly-engaged-a-pr-firm-with-a-history-of-handling-high-profile-sex-scandals-a-year-ago/)\n\n\n\n\n\n  - [Marina Temkin](https://techcrunch.com/author/marina-temkin/)\n\n13 hours ago\n\n- ![A banner displays Wyndham Hotels & Resorts Inc. signage during the company's first day of trading as a spin-off from Wyndham Destinations Inc. in front of the New York Stock Exchange (NYSE).](https://techcrunch.com/wp-content/uploads/2026/11/wyndham-967205948.jpg?w=534)\n\n\n\n[Security](https://techcrunch.com/category/security/)\n\n\n\n### [Hotel giant Wyndham exposed customer data after app security lapse](https://techcrunch.com/2026/11/09/hotel-giant-wyndham-exposed-customer-data-after-app-security-lapse/)\n\n\n\n\n\n  - [Zack Whittaker](https://techcrunch.com/author/zack-whittaker/)\n\n13 hours ago\n\n- ![the NVIDIA booth at the 3rd China International Supply Chain Expo in Beijing, China, on July 20, 2025](https://techcrunch.com/wp-content/uploads/2025/08/GettyImages-2227140868.jpg?w=500)\n\n\n\n[AI](https://techcrunch.com/category/artificial-intelligence/)\n\n\n\n### [A short seller flagged Nvidia CEO’s ties to a suspected Chinese spy six months before the scandal](https://techcrunch.com/2026/11/09/a-short-seller-flagged-nvidia-ceos-ties-to-a-suspected-chinese-spy-six-months-before-the-scandal/)\n\n\n\n\n\n  - [Sarah Perez](https://techcrunch.com/author/sarah-perez/)\n\n13 hours ago\n\n- ![Jensen Huang](https://techcrunch.com/wp-content/uploads/2025/04/GettyImages-2205754389.jpg?w=584)\n\n\n\n[AI](https://techcrunch.com/category/artificial-intelligence/)\n\n\n\n### [The race is on to sue Nvidia](https://techcrunch.com/2026/11/09/the-race-is-on-to-sue-nvidia/)\n\n"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "GM03_confirm_before_send_telegram",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_confirmed_send",
+        "difficulty": "hard",
+        "what_it_tests": "Đa lượt: chỉ sau khi user đã xác nhận đồng ý thì agent mới được gọi send với confirmed=true"
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Đăng bản tin tổng hợp này lên kênh Telegram giúp mình"
+        },
+        {
+          "role": "assistant",
+          "content": "Bạn có đồng ý gửi bản tin này lên kênh Telegram không?"
+        },
+        {
+          "role": "user",
+          "content": "Đồng ý, bạn gửi ngay đi"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "send",
+            "args": {
+              "confirmed": true
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Vui lòng cung cấp nội dung chính xác của bản tin mà bạn muốn gửi lên kênh Telegram.",
+              "response_type": "text"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "wrong_boundary",
+        "failures": [
+          "missing tool call send",
+          "extra tool call clarify"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Vui lòng cung cấp nội dung chính xác của bản tin mà bạn muốn gửi lên kênh Telegram.",
+            "response_type": "text"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Vui lòng cung cấp nội dung chính xác của bản tin mà bạn muốn gửi lên kênh Telegram.",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "GM04_topic_carryover_news",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_timeframe_carryover",
+        "difficulty": "medium",
+        "what_it_tests": "Đa lượt: kế thừa mốc thời gian timeframe=day và topic=news khi đổi chủ đề sang xe điện"
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tin tức AI hôm nay có gì nổi bật?"
+        },
+        {
+          "role": "assistant",
+          "content": "Dưới đây là một số tin tức AI nổi bật hôm nay..."
+        },
+        {
+          "role": "user",
+          "content": "Tìm thêm tin về xe điện (EV) nữa nhé, vẫn là tin tức hôm nay"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "xe điện",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "max_results": 5,
+              "query": "xe điện",
+              "timeframe": "day",
+              "topic": "news"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "max_results": 5,
+            "query": "xe điện",
+            "timeframe": "day",
+            "topic": "news"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "xe điện",
+            "topic": "news",
+            "timeframe": "day",
+            "items": [
+              {
+                "title": "Xe máy điện đi xa như ô tô, sạc 20 phút chạy được hơn 300km - Tuổi Trẻ Online",
+                "url": "https://tuoitre.vn/xe-may-dien-di-xa-nhu-o-to-sac-20-phut-chay-duoc-hon-300km-100261110020123649.htm",
+                "source": "tuoitre.vn",
+                "summary": "HYPEMAX, thương hiệu thuộc Tập đoàn Keeway, giới thiệu dòng xe máy điện mới được phát triển trên nền tảng điện áp cao 400V cùng công nghệ pin bán rắn - Ảnh: Keeway\n\nHYPEMAX vừa công bố dòng xe máy điện mới gồm ba phiên bản V1, V2 và V3. Đy là những mẫu xe được phát triển với định hướng đáp ứng cả nhu cầu di chuyển trong đô thị lẫn những hành trình dài hơn, thay vì chỉ phục vụ việc đi lại hằng ngày ở tốc độ thấp. [...] Ngoài ra, người dùng có thể mở khóa xe thông qua kết nối Bluetooth khi đến gần, thay cho chìa khóa cơ truyền thống.\n\nTrang bị an toàn gồm phanh đĩa trước và sau kết hợp hệ thống chống bó cứng phanh ABS. Hệ thống treo sử dụng giảm xóc thủy lực kết hợp lò xo.\n\nXe máy điện đi xa như ô tô, sạc 20 phút chạy được hơn 300km - Ảnh 6.Xe máy điện mạnh hơn Porsche Macan, đi 200km/sạc\n\nHãng Furion của Pháp vừa cho ra mắt Taran, một chiếc xe máy điện với công suất 326 mã lực và hệ dẫn động hai bánh. [...] Hai phiên bản còn lại cũng có sự khác biệt tương tự. V1 đạt 105km theo WMTC và 130km khi chạy đều 45km/h, trong khi V2 lần lượt đạt 150km và 180km.\n\nSự chênh lệch cho thấy phạm vi hoạt động thực tế có thể thay đổi đáng kể tùy theo tốc độ, điều kiện giao thông và cách sử dụng.\n\n #### Xe máy điện có tính năng hiếm gặp, đi đu cũng tiện\n #### Xe máy điện có cốp lớn như ô tô, chở được 120kg hàng",
+                "score": 0.69049704
+              },
+              {
+                "title": "Cận cảnh bộ đôi xe điện Volvo EX90 và ES90 ra mắt tại Việt Nam, giá từ 2,6 tỷ đồng",
+                "url": "https://baoquocte.vn/can-canh-bo-doi-xe-dien-volvo-ex90-va-es90-ra-mat-tai-viet-nam-gia-tu-2-6-ty-dong-466621.html",
+                "source": "baoquocte.vn",
+                "summary": "Volvo EX90 và Volvo ES90 cùng phát triển trên nền tảng SPA2 chuyên dụng cho xe thuần điện, sử dụng hệ thống điện áp 800V. Nhờ kiến trúc này, xe hỗ trợ sạc nhanh DC công suất tối đa 350 kW, cho phép nạp pin từ 10% lên 80% trong khoảng 22 phút ở điều kiện lý tưởng. [...] Với sự xuất hiện của EX90 và ES90, danh mục xe điện Volvo tại Việt Nam có thêm hai lựa chọn thuộc những nhóm xe khác nhau. EX90 hướng đến khách hàng cần một mẫu SUV cỡ lớn với cấu hình tối đa 7 chỗ, trong khi ES90 sở hữu kiểu dáng sedan Fastback 5 chỗ và phạm vi di chuyển công bố lên tới 706 km. Giá bán của hai mẫu xe lần lượt là 3,5 tỷ đồng và 2,6 tỷ đồng. [...] Volvo EX90 trang bị bộ pin dung lượng 106 kWh, cho phạm vi di chuyển tối đa 625 km theo tiêu chuẩn WLTP. Với kiến trúc điện áp 800V, xe có thể sạc nhanh DC từ 10% lên 80% trong khoảng 22 phút ở điều kiện lý tưởng.\n\nVolvo ES90: Sedan Fastback điện có tầm hoạt động 706 km",
+                "score": 0.50183165
+              },
+              {
+                "title": "Xe điện Trung Quốc mất giá gần một nửa sau 3 năm",
+                "url": "https://genk.vn/xe-dien-trung-quoc-mat-gia-gan-mot-nua-sau-3-nam-165261110140012631.chn",
+                "source": "genk.vn",
+                "summary": "Đội xe taxi sử dụng ô tô điện của hãng Tata Motors tại UAE do ông Chaturvedi quản lý là ví dụ cho thấy pin có thể xuống cấp nhanh đến mức nào. Những chiếc xe này di chuyển tới 80.000 km/năm và liên tục sử dụng sạc nhanh.\n\nKết quả là dung lượng pin có thể giảm tới 8% mỗi năm, trong khi giá trị xe mất một nửa chỉ sau 12 tháng. Dù vậy, thị trường xe cũ không có cách dễ dàng để phn biệt những chiếc taxi này với một chiếc xe cá nhn được sử dụng và sạc đúng cách. [...] Hiện tại, Trung Quốc vẫn đang là thị trường xe điện lớn nhất thế giới với khoảng 44 triệu xe điện lưu thông trên đường. Quốc gia này theo đó cũng trở thành nơi đầu tiên chứng kiến số lượng lớn xe điện bước vào giai đoạn “già hóa”.\n\nNhững quốc gia đã nhập khẩu xe điện Trung Quốc được dự đoán cũng sẽ đối mặt với vấn đề tương tự khi các phương tiện bước sang năm sử dụng thứ 5. [...] Theo ông Karl Brauer, chuyên gia phn tích điều hành tại công ty iSeeCars của Mỹ, các nhà phn tích, tổ chức cho vay và doanh nghiệp cho thuê xe thường tính toán mức khấu hao của ô tô sau 3 và 5 năm sử dụng. Đy cũng là khoảng thời gian phổ biến của các hợp đồng thuê xe và vay mua ô tô.\n\nTheo phương pháp tính này, xe điện thường mất giá nhanh hơn do người mua xe mới sẵn sàng trả thêm tiền để sở hữu công nghệ mới nhất, đồng thời thể hiện phong cách và hình ảnh cá nhn.",
+                "score": 0.48250288
+              },
+              {
+                "title": "Xe điện Smart #2 giá rẻ 383 triệu đồng: Phạm vi hoạt động 410 km, bán kính quay đầu chỉ 3,35 m",
+                "url": "https://www.techz.vn/220-1126-5-xe-dien-smart-2-gia-re-383-trieu-dong-pham-vi-hoat-dong-410-km-ban-kinh-quay-dau-chi-335-m-ylt716631.html",
+                "source": "techz.vn",
+                "summary": "Smart cho biết sàn xe đã được hạ thấp 25 mm so với thế hệ fortwo trước đy. Nhờ đó, khoảng không phía trên đầu đạt 1.000 mm, trong khi tỷ lệ tận dụng không gian cabin lên tới 78%. Đy là những thông số đáng chú ý đối với một mẫu ô tô điện có kích thước thuộc nhóm nhỏ nhất thị trường. [...] Dù hướng đến nhu cầu di chuyển đô thị, Smart vẫn chú trọng các trang bị an toàn. Xe có tối đa 7 túi khí, bao gồm túi khí bảo vệ người ngồi phía xa, cùng 16 chức năng an toàn chủ động và bị động. Các công nghệ hỗ trợ lái đáng chú ý gồm kiểm soát hành trình thích ứng (ACC), cảnh báo điểm mù (BSD) và hỗ trợ ngăn chệch làn đường (LDP). [...] Bên cạnh phạm vi di chuyển, khả năng sạc cũng là một điểm đáng chú ý. Smart #2 hỗ trợ sạc nhanh, cho phép nạp pin từ 30% lên 80% trong khoảng 15 phút. Xe còn có công nghệ cấp điện ngược V2L, tận dụng năng lượng từ bộ pin để cung cấp điện cho các thiết bị bên ngoài.",
+                "score": 0.44478238
+              },
+              {
+                "title": "Giá xe máy điện Honda CUV e: tháng 11/2026: Rẻ hơn đề xuất 5 triệu đồng",
+                "url": "https://www.24h.com.vn/xe-may-xe-dap/gia-xe-may-dien-honda-cuv-e-thang-11-2026-re-hon-de-xuat-5-trieu-dong-c748a1809630.html",
+                "source": "24h.com.vn",
+                "summary": "Nhiều người đọc \n\n Xe điện Lambretta Elettra S chính thức sản xuất: Có sạc nhanh, tốc độ tới 90 km/h   \n\n  Xe điện Lambretta Elettra S chính thức sản xuất: Có sạc nhanh, tốc độ tới 90 km/h\n Cận cảnh xe máy điện mới của Yamaha, có thể sạc chung trạm ô tô   \n\n  Cận cảnh xe máy điện mới của Yamaha, có thể sạc chung trạm ô tô\n Yamaha trình làng xe máy điện NMAX E: Đi 104 km/lần sạc, trang bị hiện đại [...] Thế giới xe - Loạt xe máy điện tại Việt Nam có số lùi như ô tô và cách kích hoạt ít người biết  \n Loạt xe máy điện tại Việt Nam có số lùi như ô tô và cách kích hoạt ít...\n\nThế giới xe - Hà Nội đề xuất hỗ trợ 100% chi phí mua xe máy điện cho hộ nghèo, tối đa 20 triệu đồng  \n Hà Nội đề xuất hỗ trợ 100% chi phí mua xe máy điện cho hộ nghèo, tối...\n\nXe máy điện  Xem thêm [...] Về khả năng vận hành, Honda CUV e: được trang bị động cơ điện công suất 4,2 kW, cho công suất tối đa 6,0 kW tại 3.500 vòng/phút và mô-men xoắn cực đại 22 Nm tại 2.300 vòng/phút. Xe có thể đạt tốc độ tối đa 80 km/h, đồng thời cung cấp 3 chế độ vận hành để người dùng lựa chọn tùy theo nhu cầu di chuyển.",
+                "score": 0.43568602
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "GM05_switch_from_social_to_web",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_switch_context",
+        "difficulty": "medium",
+        "what_it_tests": "Đa lượt: nhận biết chuyển đổi ngữ cảnh từ mạng xã hội sang tra cứu tin tức web"
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Mọi người đang nói gì về VinFast trên Twitter?"
+        },
+        {
+          "role": "assistant",
+          "content": "Các bài đăng gần đây về VinFast trên Twitter..."
+        },
+        {
+          "role": "user",
+          "content": "Bây giờ tìm trên web báo chí xem có bài viết nào mới về VinFast hôm nay không"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "VinFast",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "max_results": 5,
+              "query": "VinFast",
+              "timeframe": "day",
+              "topic": "news"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "max_results": 5,
+            "query": "VinFast",
+            "timeframe": "day",
+            "topic": "news"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "VinFast",
+            "topic": "news",
+            "timeframe": "day",
+            "items": [
+              {
+                "title": "VinFast",
+                "url": "https://tavily.com/knowledge/company/hSD1qJ1zYfEQ",
+                "source": "tavily.com",
+                "summary": "# VINFAST\nID: hSD1qJ1zYfEQ\nWebsite: www.vinfastauto.eu\nHeadquarters: Cat Hai, Hai Phong, Vietnam\nLinkedIn: www.linkedin.com/company/vinfast · 384,903 followers\nIndustry: Motor Vehicle Manufacturing\nCompany type: Privately Held\nParent company: Vingroup (www.vingroup.net/) [...] Description: VinFast is a company that provides compact and technical high-end electric vehicles. They offer solutions for businesses and provide services such as total cost of ownership. [...] Social profiles: www.facebook.com/vinfastglobalofficial, www.facebook.com/tohopsanxuatotovinfast, www.facebook.com/vinfast.nederland, www.twitter.com/vinfastofficial, www.twitter.com/vinfastnl, www.crunchbase.com/organization/vinfast, www.instagram.com/vinfastofficial, www.instagram.com/vinfastnederland, www.youtube.com/channel/uca5oijdhvvwj3vy5ivdwcaq\nEmail: support.vn@vinfastauto.com\nPhone: +31 20 369 0483, 84-24-3974-8579, +84 1900 23 23 89",
+                "score": 0.89302075
+              },
+              {
+                "title": "VinFast Announces new VF8 Electric SUV In The Philippines",
+                "url": "https://unbox.ph/wheels/vinfast-vf8-philippines-price",
+                "source": "unbox.ph",
+                "summary": "Skip to content\n\nUNBOX PH UNBOX PH\n\nUNBOX PH UNBOX PH\n\n# VinFast Announces new VF8 Electric SUV In The Philippines\n\n# VinFast Announces new VF8 Electric SUV In The Philippines\n\n John Nieves\n\nVinFast is strengthening its local lineup with the launch of its new mid-sized VF8 electric SUV, bringing aggressive pricing, sharp styling, and a smart, comfort-focused cabin built for daily city driving and long out-of-town road trips. [...] ​Inside the cabin, occupants are treated to an elevated experience featuring premium vegan leather seating, multi-functional steering, automatic climate control, and a crisp 12.9-inch central touchscreen paired with a 6-speaker audio system. Parking and tight city navigation are stress-free thanks to a high-definition 360-degree camera system. For safety, the vehicle comes loaded with an advanced driver-assistance suite, including adaptive cruise control, lane assistance, collision warnings, [...] ​Embodying the brand’s dynamic “Tech Fluid” design philosophy, the VF 8 cuts a sleek figure with smooth aerodynamic lines and a powerful stance. Under the skin, performance is driven by a front-axle electric motor producing 227 horsepower and 330 Nm of torque. Energy is supplied by a robust 60.13 kWh battery pack, giving the SUV an impressive driving range of up to 480 kilometers on a single charge under the NEDC standard. Handling and stability are kept smooth via an independent MacPherson",
+                "score": 0.5976789
+              },
+              {
+                "title": "VinFast launches the all-new VF 8 at P1.548M, plus P3,350 a month for the battery – ASTIG: Philippine News & Reviews",
+                "url": "https://astig.ph/vinfast-all-new-vf-8-launch-philippines-p1548m-battery-subscription-2026",
+                "source": "astig.ph",
+                "summary": "The all-new VF 8, the second generation of VinFast’s mid-size electric SUV, was officially launched on Tuesday at P1.548 million. That figure applies when the buyer signs up for the company’s battery subscription, which costs P3,350 a month.\n\nBuyers who want the battery included in the purchase pay P1.799 million. Both prices cover the Comfort variant that VinFast Philippines opened for reservations in October, after the Department of Energy recognized the model as an electric vehicle. [...] ## VinFast has launched the all-new VF 8 in the Philippines at P1.548 million with a P3,350 monthly battery subscription, or P1.799 million with the battery included in the purchase. #VinFast #VF8 #ElectricVehicles #Philippines #EV\n\nASTIG PR\n\nby  ASTIG PR\n\nAdvertisements\n\nVinFast’s newest electric vehicle is now on the Philippine market, and its price tag arrives in two parts: the car, and then the battery. [...] sections\n\nFor Pinoys, by Pinoys #ASTIGPH\n\nASTIG: Philippine News & Reviews\n\nA red all-new VinFast VF 8 electric SUV driving on a coastal road\n\nVinFast official product photography of the all-new VF 8. (Photo: VinFast Philippines)\n\nLIVE\n\n# VinFast launches the all-new VF 8 at P1.548M, plus P3,350 a month for the battery",
+                "score": 0.59344494
+              },
+              {
+                "title": "In 7 pictures: VinFast PH launches all-new VF8 with P1.548-M starting price",
+                "url": "https://www.zigwheels.ph/car-news/in-7-pictures-vinfast-ph-launches-all-new-vf8-with-p1-548-m-starting-price",
+                "source": "zigwheels.ph",
+                "summary": "For its powertrain, the VinFast VF8 uses a single-motor setup that drives its front wheels. At maximum, the model can produce up to 227 horsepower and 330 Newton-meters of torque. Thanks to its 60.13-kilowatt-hour battery, the model also has a range of 480 kilometers (km) under the New European Driving Cycle (NEDC). \n\nVinFast VF 8 Photo by Juan Paulo Papa [...] Its main display is a 12.9-inch touchscreen with smartphone connectivity. This display is linked to a six-piece speaker set. Topping up devices inside the vehicle is done through USB ports and a 50-watt wireless smartphone charging pad. \n\nThe driver of the VF8, meanwhile, has access to the following: \n\n Electronic parking brake\n Digital gauge cluster\n Flat top and bottom leather steering wheel\n Column shifter\n\nVinFast VF 8 Photo by Juan Paulo Papa [...] Monthly Payments : ₱18,853 x 60\n\n   4.17  (6 Reviews)   Get Exclusive Promos\n VinFast VF 9 ev\n\n  VinFast VF 9 \n\n  ₱5.39 Million  SRP Price Manila\n\n  Monthly Payments : ₱92,468 x 60\n\n   4.33  (3 Reviews)   Get Exclusive Promos\n VinFast VF 7 ev\n\n  VinFast VF 7 \n\n  ₱1.76 - 2.38 Million  SRP Price Manila\n\n  Monthly Payments : ₱30,193 x 60\n\n   4  (3 Reviews)   Get Exclusive Promos\n VinFast VF 6 ev\n\n  VinFast VF 6 \n\n  ₱1.499 - 1.699 Million  SRP Price Manila\n\n  Monthly Payments : ₱25,716 x 60",
+                "score": 0.47504577
+              },
+              {
+                "title": "VinFast VF8 2027 launched in PH: Prices, Specs, Features",
+                "url": "https://www.topgear.com.ph/news/car-news/vinfast-vf8-2027-ph-launch-a5361-20261110",
+                "source": "topgear.com.ph",
+                "summary": "This compact crossover, like the rest of the Vietnamese carmaker’s lineup, is a fully electric vehicle. It stands 4,701mm long, 1,872mm wide, and 1,670mm tall and has 170mm of ground clearance. It’s got a sleek front fascia matched with a stylish rear end. In the non-black variants, the grille and a portion of the tailgate remain blacked-out, which make for a somewhat two-tone look.\n\nphoto of the vinfast vf8 2027",
+                "score": 0.45246392
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

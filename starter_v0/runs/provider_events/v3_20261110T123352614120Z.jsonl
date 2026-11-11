@@ -1,0 +1,22 @@
+{"at": "2026-11-10T12:33:52.614244+00:00", "event": "settings", "version": "v3", "min_interval": 5.0, "max_attempts": 3}
+{"at": "2026-11-10T12:33:52.624982+00:00", "event": "request", "version": "v3", "number": 1, "attempt": 1, "model": "openai/gpt-oss-120b"}
+{"at": "2026-11-10T12:34:09.773437+00:00", "event": "response", "version": "v3", "number": 1, "attempt": 1, "seconds": 17.148}
+{"at": "2026-11-10T12:34:09.773920+00:00", "event": "request", "version": "v3", "number": 2, "attempt": 1, "model": "openai/gpt-oss-120b"}
+{"at": "2026-11-10T12:34:34.575058+00:00", "event": "response", "version": "v3", "number": 2, "attempt": 1, "seconds": 24.801}
+{"at": "2026-11-10T12:34:34.575524+00:00", "event": "request", "version": "v3", "number": 3, "attempt": 1, "model": "openai/gpt-oss-120b"}
+{"at": "2026-11-10T12:34:36.368344+00:00", "event": "response", "version": "v3", "number": 3, "attempt": 1, "seconds": 1.793}
+{"at": "2026-11-10T12:34:39.576065+00:00", "event": "request", "version": "v3", "number": 4, "attempt": 1, "model": "openai/gpt-oss-120b"}
+{"at": "2026-11-10T12:34:41.574384+00:00", "event": "response", "version": "v3", "number": 4, "attempt": 1, "seconds": 1.998}
+{"at": "2026-11-10T12:34:44.576379+00:00", "event": "request", "version": "v3", "number": 5, "attempt": 1, "model": "openai/gpt-oss-120b"}
+{"at": "2026-11-10T12:34:49.948120+00:00", "event": "response", "version": "v3", "number": 5, "attempt": 1, "seconds": 5.372}
+{"at": "2026-11-10T12:34:49.948509+00:00", "event": "request", "version": "v3", "number": 6, "attempt": 1, "model": "openai/gpt-oss-120b"}
+{"at": "2026-11-10T12:35:09.326664+00:00", "event": "response", "version": "v3", "number": 6, "attempt": 1, "seconds": 19.378}
+{"at": "2026-11-10T12:35:09.326975+00:00", "event": "request", "version": "v3", "number": 7, "attempt": 1, "model": "openai/gpt-oss-120b"}
+{"at": "2026-11-10T12:35:19.320393+00:00", "event": "response", "version": "v3", "number": 7, "attempt": 1, "seconds": 9.993}
+{"at": "2026-11-10T12:35:20.638267+00:00", "event": "request", "version": "v3", "number": 8, "attempt": 1, "model": "openai/gpt-oss-120b"}
+{"at": "2026-11-10T12:35:28.908581+00:00", "event": "response", "version": "v3", "number": 8, "attempt": 1, "seconds": 8.27}
+{"at": "2026-11-10T12:35:28.909010+00:00", "event": "request", "version": "v3", "number": 9, "attempt": 1, "model": "openai/gpt-oss-120b"}
+{"at": "2026-11-10T12:35:32.058970+00:00", "event": "response", "version": "v3", "number": 9, "attempt": 1, "seconds": 3.15}
+{"at": "2026-11-10T12:35:34.311615+00:00", "event": "request", "version": "v3", "number": 10, "attempt": 1, "model": "openai/gpt-oss-120b"}
+{"at": "2026-11-10T12:35:51.188790+00:00", "event": "response", "version": "v3", "number": 10, "attempt": 1, "seconds": 16.877}
+{"at": "2026-11-10T12:35:53.497360+00:00", "event": "finished", "version": "v3"}

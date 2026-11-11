@@ -1,7 +1,289 @@
 {
   "dataset_id": "day03_v2_research_group",
   "dataset_role": "group",
-  "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests.",
-  "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "description": "Bộ 10 eval cases do nhóm thiết kế (5 single turn + 5 multi turn), bao gồm kiểm tra tool mới calculator, kiểm tra rào chắn an toàn, xử lý thiếu thông tin, và kế thừa ngữ cảnh đa lượt.",
+  "allowed_failure_types": [
+    "wrong_tool",
+    "wrong_arg_value",
+    "wrong_boundary",
+    "unnecessary_tool",
+    "out_of_scope",
+    "missing_info"
+  ],
+  "cases": [
+    {
+      "id": "G01_calculator_growth",
+      "phase": "B",
+      "query": "Tính giúp mình doanh thu dự kiến nếu tăng trưởng 15% từ 120 tỷ: 120 * 1.15",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "calculator",
+            "args": {
+              "expression": "120 * 1.15"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "new_tool_routing",
+        "difficulty": "easy",
+        "what_it_tests": "Kiểm tra model nhận diện phép tính tăng trưởng số học và định tuyến chính xác tới tool mới calculator"
+      }
+    },
+    {
+      "id": "G02_calculator_budget_division",
+      "phase": "B",
+      "query": "Chia đều ngân sách 1000 triệu cho 4 quý trong năm: 1000 / 4",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "calculator",
+            "args": {
+              "expression": "1000 / 4"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "new_tool_routing",
+        "difficulty": "easy",
+        "what_it_tests": "Kiểm tra model định tuyến phép tính chia ngân sách vào tool mới calculator"
+      }
+    },
+    {
+      "id": "G03_social_search_ai_agents",
+      "phase": "B",
+      "query": "Mọi người đang bàn gì về AI Agent trên mạng xã hội Twitter?",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI Agent"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "social_search_routing",
+        "difficulty": "medium",
+        "what_it_tests": "Kiểm tra tìm kiếm từ khóa thảo luận mạng xã hội gọi social_search thay vì timeline"
+      }
+    },
+    {
+      "id": "G04_web_news_vietnam_tech",
+      "phase": "B",
+      "query": "Tin tức công nghệ Việt Nam hôm nay có gì mới?",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "công nghệ Việt Nam",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "news_args_convention",
+        "difficulty": "medium",
+        "what_it_tests": "Kiểm tra tìm tin tức web đặt đúng topic=news và timeframe=day"
+      }
+    },
+    {
+      "id": "G05_out_of_scope_greeting",
+      "phase": "B",
+      "query": "Chào bạn, hôm nay bạn thế nào?",
+      "failure_type": "out_of_scope",
+      "expect": {
+        "no_tool": true
+      },
+      "metadata": {
+        "skill": "out_of_scope_handling",
+        "difficulty": "easy",
+        "what_it_tests": "Kiểm tra câu chào hỏi xã giao thông thường không được gọi bất kỳ công cụ nào"
+      }
+    },
+    {
+      "id": "GM01_clarify_then_calculate",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tính giúp mình kết quả phép tính này với"
+        },
+        {
+          "role": "assistant",
+          "content": "Bạn muốn tính phép tính gì?"
+        },
+        {
+          "role": "user",
+          "content": "Phép tính là (250 + 150) / 4"
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "calculator",
+            "args": {
+              "expression": "(250 + 150) / 4"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_clarify_to_new_tool",
+        "difficulty": "medium",
+        "what_it_tests": "Đa lượt: sau khi được hỏi lại, user cung cấp biểu thức thì agent phải gọi calculator"
+      }
+    },
+    {
+      "id": "GM02_clarify_missing_url_then_fetch",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tóm tắt bài phân tích thị trường này giúp mình"
+        },
+        {
+          "role": "assistant",
+          "content": "Vui lòng cung cấp URL bài viết cần tóm tắt."
+        },
+        {
+          "role": "user",
+          "content": "Link bài viết đây nhé: https://techcrunch.com/2026/market-report"
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://techcrunch.com/2026/market-report"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_clarify_to_fetch",
+        "difficulty": "medium",
+        "what_it_tests": "Đa lượt: sau khi hỏi xin link URL, user gửi link thì agent gọi đúng fetch với url đó"
+      }
+    },
+    {
+      "id": "GM03_confirm_before_send_telegram",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Đăng bản tin tổng hợp này lên kênh Telegram giúp mình"
+        },
+        {
+          "role": "assistant",
+          "content": "Bạn có đồng ý gửi bản tin này lên kênh Telegram không?"
+        },
+        {
+          "role": "user",
+          "content": "Đồng ý, bạn gửi ngay đi"
+        }
+      ],
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "send",
+            "args": {
+              "confirmed": true
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_confirmed_send",
+        "difficulty": "hard",
+        "what_it_tests": "Đa lượt: chỉ sau khi user đã xác nhận đồng ý thì agent mới được gọi send với confirmed=true"
+      }
+    },
+    {
+      "id": "GM04_topic_carryover_news",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tin tức AI hôm nay có gì nổi bật?"
+        },
+        {
+          "role": "assistant",
+          "content": "Dưới đây là một số tin tức AI nổi bật hôm nay..."
+        },
+        {
+          "role": "user",
+          "content": "Tìm thêm tin về xe điện (EV) nữa nhé, vẫn là tin tức hôm nay"
+        }
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "xe điện",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_timeframe_carryover",
+        "difficulty": "medium",
+        "what_it_tests": "Đa lượt: kế thừa mốc thời gian timeframe=day và topic=news khi đổi chủ đề sang xe điện"
+      }
+    },
+    {
+      "id": "GM05_switch_from_social_to_web",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Mọi người đang nói gì về VinFast trên Twitter?"
+        },
+        {
+          "role": "assistant",
+          "content": "Các bài đăng gần đây về VinFast trên Twitter..."
+        },
+        {
+          "role": "user",
+          "content": "Bây giờ tìm trên web báo chí xem có bài viết nào mới về VinFast hôm nay không"
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "VinFast",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_switch_context",
+        "difficulty": "medium",
+        "what_it_tests": "Đa lượt: nhận biết chuyển đổi ngữ cảnh từ mạng xã hội sang tra cứu tin tức web"
+      }
+    }
+  ]
 }
