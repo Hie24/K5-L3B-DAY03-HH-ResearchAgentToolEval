@@ -8,9 +8,10 @@
 
 ## 1. Thông tin nhóm
 
-- Tên nhóm:
+- Tên nhóm: HH
 - Thành viên và phân công: xem [TEAM.md](../../TEAM.md)
-- Provider/model dùng cho v0–v3:
+  - Nguyễn Mạnh Quân (MSSV: 2A202603776): Phụ trách CP3 & CP4. Chi tiết xem [2A202603776_NguyenManhQuan.md](2A202603776_NguyenManhQuan.md).
+- Provider/model dùng cho v0–v3: `groq` / `openai/gpt-oss-120b`
 
 ## 2. Mục tiêu và cách tiếp cận — PHẦN A: Giới thiệu agent
 
@@ -149,6 +150,10 @@ Lỗi đặc thù của model nhỏ (đếm từ run JSON):
 ## 6. Tổng hợp đóng góp
 
 Chi tiết đóng góp của từng thành viên nằm trong [TEAM.md](../../TEAM.md) và các báo cáo cá nhân `report/team/MSSV_HoTen.md`.
+
+- **Nguyễn Mạnh Quân (MSSV: 2A202603776):**
+  - **CP3 (Tool mới & Unit test):** Cài đặt tool `calculator` bằng AST an toàn (chống code injection, trả dict lỗi khi gặp exception), đăng ký tool và bổ sung quy tắc định tuyến; viết 3 unit tests tại `tests/test_tools_todo.py` (happy path, input xấu, chia cho 0); pytest đạt 63 passed, 0 failed.
+  - **CP4 (10 Eval Cases & Đánh giá):** Thiết kế dataset `data/eval_group.json` gồm 10 cases (5 single-turn, 5 multi-turn) bao gồm routing tool mới và bám sát các lỗi từ CP1/CP2 (R03, R11, R12, M02); thực thi đánh giá trên Groq (`openai/gpt-oss-120b`, đạt 8/10) và Ollama local (`qwen2.5:7b`, đạt 10/10). Chi tiết tại [2A202603776_NguyenManhQuan.md](2A202603776_NguyenManhQuan.md).
 
 ## 7. Hạn chế và hướng cải thiện — B6. Reflection
 
