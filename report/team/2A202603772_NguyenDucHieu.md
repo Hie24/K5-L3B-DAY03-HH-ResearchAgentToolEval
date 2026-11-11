@@ -39,6 +39,15 @@ Ngoài CP1–CP2, tôi review calculator, case eval nhóm và xung đột tích 
 
 ## 5. Tự đánh giá
 
-Phần kỹ thuật CP1–CP2 có đủ baseline và ba vòng tối ưu, accuracy tăng từ 65% lên 85%. V3 không cải thiện so với v2. Ba lỗi còn lại là query khác kỳ vọng (R03), kiểu câu hỏi xác nhận chưa khớp (R12) và thiếu tool tìm mạng xã hội (R13).
+Điểm dưới đây là mức tự chấm đề xuất theo rubric, dựa trên bằng chứng của phần việc phụ trách.
 
-Cần tiếp tục kiểm tra yêu cầu nhiều nguồn và review thủ công các lỗi boundary. Kết quả hiện chỉ phản ánh bộ base 20 case; UI, live chat và gửi Telegram thật chưa thuộc phần bằng chứng triển khai cá nhân này.
+| Tiêu chí | Điểm tự đánh giá | Minh chứng |
+|---|:---:|---|
+| **C1 — Setup, baseline và phân tích lỗi (CP1)** | **9 / 10** | Tích hợp Groq khi Gemini thiếu quota; baseline v0 đo đủ 20 case, không lỗi provider; lưu run, hash và phân tích đủ 7 case FAIL. |
+| **C2 — System prompt và tool declaration (CP2)** | **13 / 15** | Bổ sung quy tắc hỏi lại, xác nhận trước khi gửi, định tuyến nguồn và quy ước arguments; accuracy tăng từ 65% lên 85%, còn lỗi query và phối hợp nhiều tool. |
+| **C3 — Ba vòng tối ưu v1–v3 có bằng chứng (CP2)** | **18 / 20** | Mỗi vòng có giả thuyết, artifact thay đổi, snapshot/hash và run thật trên cùng model; ghi trung thực việc v3 không tăng điểm so với v2. |
+| **Phối hợp nhóm và tích hợp hệ thống** | **Hoàn thành** | Review CP3–CP4, gộp code ba nhánh, sửa lỗi UI/calculator và đồng bộ báo cáo; bản tích hợp đạt 85 passed, 14 skipped, base 17/20, group 9/10 và có transcript Groq thật 4 lượt. |
+
+Bằng chứng tích hợp: [commit f94a52e](https://github.com/Hie24/K5-L3B-DAY03-HH-ResearchAgentToolEval/commit/f94a52e87f1657eaa5523736e1275e323383e5b5). Phần phát triển ban đầu calculator và UI thuộc các thành viên phụ trách; đóng góp bổ sung của tôi là review, sửa lỗi và tích hợp.
+
+Cần tiếp tục xử lý R03 (query), R12 (response_type xác nhận) và R13 (thiếu tool mạng xã hội). Kết quả mới phản ánh bộ case đã đo; bản tích hợp chưa có link UI public và chưa kiểm chứng gửi Telegram thật.
